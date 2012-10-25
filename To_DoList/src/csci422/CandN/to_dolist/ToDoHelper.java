@@ -29,7 +29,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 	public void onCreate(SQLiteDatabase db)
 	{
 		//modify table elements for the todolist rather than restaurants
-		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, type TEXT, notes TEXT, feed TEXT, lat REAL, lon REAL);");
+		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, notes TEXT, date TEXT, state REAL);");
 	}
 
 	@Override
@@ -42,53 +42,43 @@ public class ToDoHelper extends SQLiteOpenHelper
 	{
 		String[] args = {id};
 
-		return getReadableDatabase().rawQuery("SELECT _id, name, address, type, notes, feed, lat, lon FROM restaurants WHERE _ID=?", args);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state FROM todos WHERE _ID=?", args);
 	}
 
-	public void update(String id, String name, String address, String type, String notes, String feed)
+	public void update(String id, String title, String address, String notes, String date, int state)
 	{
 		ContentValues cv = new ContentValues();
 		String[] args = {id};
 
-		cv.put("name", name);
+		cv.put("title", title);
 		cv.put("address", address);
-		cv.put("type", type);
 		cv.put("notes", notes);
-		cv.put("feed", feed);
+		cv.put("date", date);
+		cv.put("state", state);
 
-		getWritableDatabase().update("restaurants", cv, "_ID=?", args);
+		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
 
-	public void insert(String name, String address, String type, String notes, String feed)
+	public void insert(String title, String address, String notes, String date, int state)
 	{
 		ContentValues cv = new ContentValues();
 
-		cv.put("name", name);
+		cv.put("title", title);
 		cv.put("address", address);
-		cv.put("type", type);
 		cv.put("notes", notes);
-		cv.put("feed", feed);
+		cv.put("date", date);
+		cv.put("state", state);
 
-		getWritableDatabase().insert("restaurants", "name", cv);
+		getWritableDatabase().insert("todos", "title", cv);
 	}
 
 	public Cursor getAll(String orderBy)
 	{
-		return getReadableDatabase().rawQuery("SELECT _id, name, address, type, notes, feed, lat, lon FROM restaurants ORDER BY "+orderBy, null);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state FROM restaurants ORDER BY "+orderBy, null);
 	}
 
-	public void updateLocation(String id, double lat, double lon)
-	{
-		ContentValues cv = new ContentValues();
-		String args[] = {id};
 
-		cv.put("lat", lat);
-		cv.put("lon", lon);
-
-		getWritableDatabase().update("restaurants", cv, "_ID=?", args);
-	}
-
-	public String getName(Cursor c)
+	public String getTitle(Cursor c)
 	{
 		return c.getString(1);
 	}
@@ -98,28 +88,18 @@ public class ToDoHelper extends SQLiteOpenHelper
 		return c.getString(2);
 	}
 
-	public String getType(Cursor c)
-	{
-		return c.getString(3);
-	}
-
 	public String getNotes(Cursor c)
 	{
 		return c.getString(4);
 	}
 
-	public String getFeed(Cursor c)
+	public String getDate(Cursor c)
 	{
 		return c.getString(5);
 	}
 
-	public double getLatitude(Cursor c)
+	public int getState(Cursor c)
 	{
-		return c.getDouble(6);
-	}
-
-	public double getLongitude(Cursor c)
-	{
-		return c.getDouble(7);
+		return c.getInt(6);
 	}
 }
