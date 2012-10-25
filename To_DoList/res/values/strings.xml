@@ -4,5 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Add Task</string>
     <string name="title_activity_to_do">ToDo</string>
+    <string name="menuNotice">Please add a task!</string>
 
 </resources>
