@@ -7,9 +7,10 @@ package csci422.CandN.to_dolist;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.view.Menu;
 
-public class ToDo extends Activity {
+public class ToDo extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
