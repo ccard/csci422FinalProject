@@ -17,8 +17,8 @@ import android.content.ContentValues;
 public class ToDoHelper extends SQLiteOpenHelper
 {
 
-	private static final String DATABASE_NAME = "lunchlist.db";
-	private static final int SCHEMA_VERSION = 3;
+	private static final String DATABASE_NAME = "ToDo.db";
+	private static final int SCHEMA_VERSION = 1;
 
 	public ToDoHelper(Context context)
 	{
@@ -28,21 +28,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
-		db.execSQL("CREATE TABLE restaurants (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, type TEXT, notes TEXT, feed TEXT, lat REAL, lon REAL);");
+		//modify table elements for the todolist rather than restaurants
+		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, type TEXT, notes TEXT, feed TEXT, lat REAL, lon REAL);");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
-		if (oldVersion < 2)
-		{
-			db.execSQL("ALTER TABLE restaurants ADD COLUMN feed TEXT");
-		}
-		if (oldVersion < 3) 
-		{
-			db.execSQL("ALTER TABLE restaurants ADD COLUMN lat REAL");
-			db.execSQL("ALTER TABLE restaurants ADD COLUMN lon REAL");
-		}
+	   /*ToDo on upgrade if schema changes*/
 	}
 
 	public Cursor getById(String id)
