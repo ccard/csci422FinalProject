@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 public class ToDo extends ListActivity {
 
+	public final static String ID_EXTRA = "csci422.CandN.to_dolist._ID";
 	private Cursor model;
 	
 	private ToDoAdapter adapter;
