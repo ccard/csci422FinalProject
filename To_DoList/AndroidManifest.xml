@@ -20,6 +20,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".WidgetService" >
+        </service>
+        <service
+            android:name=".ListWidgetService"
+            android:permission="android.permission.BIND_REMOREVIEWS" >
+        </service>
+
+        <reciever
+            android:name=".AppWidget"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider" />
+        </reciever>
     </application>
 
 </manifest>
