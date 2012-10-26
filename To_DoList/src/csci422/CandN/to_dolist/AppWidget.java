@@ -43,12 +43,12 @@ public class AppWidget extends AppWidgetProvider {
 			
 			RemoteViews widget = new RemoteViews(ctxt.getPackageName(), R.layout.widget);
 			
-			widget.setRemoteAdapter(appWidgetIds[i], R.id.restaurants, svcIntent);
+			widget.setRemoteAdapter(appWidgetIds[i], R.id.tasks, svcIntent);
 			
 			//Intent clickIntent = new Intent(ctxt, DetailForm.class); Change to what ever activity we have as that edits the tasks
 			PendingIntent clickPI = PendingIntent.getActivity(ctxt, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-			widget.setPendingIntentTemplate(R.id.restaurants, clickPI);
+			widget.setPendingIntentTemplate(R.id.tasks, clickPI);
 			appWidgetManager.updateAppWidget(appWidgetIds[i], widget);	
 		}
 		super.onUpdate(ctxt, appWidgetManager, appWidgetIds);

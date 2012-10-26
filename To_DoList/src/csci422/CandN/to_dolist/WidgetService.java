@@ -44,7 +44,7 @@ public class WidgetService extends IntentService {
 				//Intent i = new Intent(this, DetailForm.class); replace with class that will manage the content of each task
 				i.putExtra(ToDo.ID_EXTRA, c.getString(0));
 				PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-				updateViews.setOnClickPendingIntent(R.id.name, pi);
+				updateViews.setOnClickPendingIntent(R.id.tasks, pi);
 				c.close();
 			}
 			else 
