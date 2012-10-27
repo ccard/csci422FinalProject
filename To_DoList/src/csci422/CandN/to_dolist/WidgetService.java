@@ -40,8 +40,8 @@ public class WidgetService extends IntentService {
 				String args[] = {String.valueOf(offset)};
 				c = helper.getReadableDatabase().rawQuery("SELECT _ID, name FROM restaurants LIMIT 1 OFFSET ?", args);
 				c.moveToFirst();
-				updateViews.setTextViewText(R.id.name, c.getString(1));
-				//Intent i = new Intent(this, DetailForm.class); replace with class that will manage the content of each task
+				updateViews.setTextViewText(R.id.add, c.getString(1));//TODO change add to the textView we are changing.
+				Intent i = new Intent(this, DetailForm.class); 
 				i.putExtra(ToDo.ID_EXTRA, c.getString(0));
 				PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 				updateViews.setOnClickPendingIntent(R.id.tasks, pi);
@@ -58,7 +58,7 @@ public class WidgetService extends IntentService {
 		}
 		Intent i = new Intent(this, WidgetService.class);
 		PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
-		updateViews.setOnClickPendingIntent(R.id.next, pi);
+		updateViews.setOnClickPendingIntent(R.id.add, pi);//TODO same deal here.
 		mgr.updateAppWidget(me, updateViews);
 	}
 }

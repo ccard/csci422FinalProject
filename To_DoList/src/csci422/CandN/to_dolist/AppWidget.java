@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.widget.RemoteViews;
 
+
 public class AppWidget extends AppWidgetProvider {
 
 	@Override
@@ -45,7 +46,7 @@ public class AppWidget extends AppWidgetProvider {
 			
 			widget.setRemoteAdapter(appWidgetIds[i], R.id.tasks, svcIntent);
 			
-			//Intent clickIntent = new Intent(ctxt, DetailForm.class); Change to what ever activity we have as that edits the tasks
+			Intent clickIntent = new Intent(ctxt, DetailForm.class); 
 			PendingIntent clickPI = PendingIntent.getActivity(ctxt, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			widget.setPendingIntentTemplate(R.id.tasks, clickPI);

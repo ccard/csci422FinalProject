@@ -6,5 +6,6 @@
     <string name="title_activity_to_do">ToDo</string>
     <string name="menuNotice">Please add a task!</string>
     <string name="empty">No Tasks</string>
+    <string name="title_activity_detail_form">Task Details</string>
 
 </resources>

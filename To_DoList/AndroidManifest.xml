@@ -40,6 +40,16 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider" />
         </reciever>
+
+        <activity
+            android:name=".DetailForm"
+            android:label="@string/title_activity_detail_form" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
