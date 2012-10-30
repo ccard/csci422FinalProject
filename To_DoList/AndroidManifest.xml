@@ -20,6 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DetailForm" >
+        </activity>
 
         <service android:name=".WidgetService" >
         </service>
@@ -40,11 +42,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider" />
         </reciever>
-
-        <activity
-            android:name=".DetailForm"
-            android:label="@string/title_activity_detail_form" >
-        </activity>
     </application>
 
 </manifest>
