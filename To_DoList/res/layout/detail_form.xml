@@ -9,6 +9,6 @@
         android:id="@+id/taskName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-        android:hint="Task Name"/>
+        android:hint="Conblabbedy boo"/>
 
 </ScrollView>
