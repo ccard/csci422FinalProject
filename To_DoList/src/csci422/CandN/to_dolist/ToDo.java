@@ -63,13 +63,12 @@ public class ToDo extends ListActivity {
 		setListAdapter(adapter);
 	}
 
-	/*
      @Override
      public void onDestroy()
      {
      	super.onDestroy();
      	helper.close();
-     }*/
+     }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
