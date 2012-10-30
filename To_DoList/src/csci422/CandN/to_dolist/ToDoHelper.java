@@ -74,7 +74,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 
 	public Cursor getAll(String orderBy)
 	{
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state FROM restaurants ORDER BY "+orderBy, null);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state FROM todos ORDER BY "+orderBy, null);
 	}
 
 
