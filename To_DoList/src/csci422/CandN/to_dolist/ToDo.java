@@ -47,6 +47,7 @@ public class ToDo extends ListActivity {
 		initList();
 		
 		newTypeTask = (EditText)findViewById(R.id.newTypeTask);
+		newTypeTask.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
 		newTypeTask.setOnEditorActionListener(new OnEditorActionListener(){
 
 			public boolean onEditorAction(TextView v, int actionId,
