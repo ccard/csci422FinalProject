@@ -55,6 +55,7 @@ public class ToDo extends ListActivity {
 				if (actionId == EditorInfo.IME_ACTION_DONE)
 				{
 					helper.insert(newTypeTask.getText().toString(), "", "", "", 0, 0);
+					newTypeTask.setText("");
 					initList();
 					return true;
 				}
