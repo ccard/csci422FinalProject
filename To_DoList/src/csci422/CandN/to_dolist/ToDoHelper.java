@@ -29,7 +29,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 	public void onCreate(SQLiteDatabase db)
 	{
 		//modify table elements for the todolist rather than restaurants
-		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, notes TEXT, date TEXT, state REAL);");
+		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, notes TEXT, date TEXT, state REAL, priority REAL);");
 	}
 
 	@Override
@@ -42,10 +42,10 @@ public class ToDoHelper extends SQLiteOpenHelper
 	{
 		String[] args = {id};
 
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state FROM todos WHERE _ID=?", args);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state, priority FROM todos WHERE _ID=?", args);
 	}
 
-	public void update(String id, String title, String address, String notes, String date, int state)
+	public void update(String id, String title, String address, String notes, String date, int state, int priority)
 	{
 		ContentValues cv = new ContentValues();
 		String[] args = {id};
@@ -55,11 +55,12 @@ public class ToDoHelper extends SQLiteOpenHelper
 		cv.put("notes", notes);
 		cv.put("date", date);
 		cv.put("state", state);
+		cv.put("priority", priority);
 
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
 
-	public void insert(String title, String address, String notes, String date, int state)
+	public void insert(String title, String address, String notes, String date, int state, int priority)
 	{
 		ContentValues cv = new ContentValues();
 
@@ -68,13 +69,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 		cv.put("notes", notes);
 		cv.put("date", date);
 		cv.put("state", state);
+		cv.put("priority", priority);
 
 		getWritableDatabase().insert("todos", "title", cv);
 	}
 
 	public Cursor getAll(String orderBy)
 	{
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state FROM todos ORDER BY "+orderBy, null);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state, priority FROM todos ORDER BY "+orderBy, null);
 	}
 
 
@@ -101,5 +103,9 @@ public class ToDoHelper extends SQLiteOpenHelper
 	public int getState(Cursor c)
 	{
 		return c.getInt(6);
+	}
+	public int getPriority(Cursor c)
+	{
+		return c.getInt(7);
 	}
 }
