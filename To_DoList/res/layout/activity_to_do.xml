@@ -1,20 +1,23 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <EditText 
+    <EditText
         android:id="@+id/newTypeTask"
-        android:hint="@string/newtask_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="10dp"
-        android:imeOptions="actionDone"/>
-    
+        android:focusableInTouchMode="true"
+        android:hint="@string/newtask_hint"
+        android:imeOptions="actionDone"
+        android:maxLines="@integer/maxline"
+        android:textSize="20dp" />
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
     </ListView>
 
-</RelativeLayout>
+</LinearLayout>
