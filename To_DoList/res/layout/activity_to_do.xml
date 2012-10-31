@@ -11,6 +11,7 @@
         android:focusableInTouchMode="true"
         android:hint="@string/newtask_hint"
         android:imeOptions="actionDone"
+        android:inputType="textImeMultiLine"
         android:maxLines="@integer/maxline"
         android:textSize="20dp" />
 
