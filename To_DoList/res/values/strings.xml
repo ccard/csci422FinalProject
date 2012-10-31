@@ -7,5 +7,6 @@
     <string name="menuNotice">Please add a task!</string>
     <string name="empty">No Tasks</string>
     <string name="title_activity_detail_form">Task Details</string>
+    <string name="newtask_hint">Type new task here</string>
 
 </resources>

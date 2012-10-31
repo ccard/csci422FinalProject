@@ -17,13 +17,14 @@ public final class R {
         public static final int widget_frame=0x7f020003;
     }
     public static final class id {
-        public static final int add=0x7f080006;
-        public static final int add1=0x7f080005;
-        public static final int check=0x7f080001;
-        public static final int date=0x7f080003;
-        public static final int taskName=0x7f080000;
-        public static final int tasks=0x7f080004;
-        public static final int title=0x7f080002;
+        public static final int add=0x7f080007;
+        public static final int add1=0x7f080006;
+        public static final int check=0x7f080002;
+        public static final int date=0x7f080004;
+        public static final int newTypeTask=0x7f080000;
+        public static final int taskName=0x7f080001;
+        public static final int tasks=0x7f080005;
+        public static final int title=0x7f080003;
     }
     public static final class layout {
         public static final int activity_to_do=0x7f030000;
@@ -41,6 +42,7 @@ public final class R {
         public static final int hello_world=0x7f050001;
         public static final int menuNotice=0x7f050004;
         public static final int menu_settings=0x7f050002;
+        public static final int newtask_hint=0x7f050007;
         public static final int title_activity_detail_form=0x7f050006;
         public static final int title_activity_to_do=0x7f050003;
     }

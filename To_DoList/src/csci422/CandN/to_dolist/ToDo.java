@@ -11,16 +11,20 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class ToDo extends ListActivity {
 
@@ -30,6 +34,8 @@ public class ToDo extends ListActivity {
 	private ToDoAdapter adapter=null;
 
 	private ToDoHelper helper=null;
+	
+	private EditText newTypeTask;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,21 @@ public class ToDo extends ListActivity {
 		helper = new ToDoHelper(this);
 
 		initList();
+		
+		newTypeTask = (EditText)findViewById(R.id.newTypeTask);
+		newTypeTask.setOnEditorActionListener(new OnEditorActionListener(){
+
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE)
+				{
+					helper.insert(newTypeTask.getText().toString(), "", "", "", 0, 0);
+					return true;
+				}
+				return false;
+			}
+			
+		});
 	}
 
 
