@@ -2,6 +2,6 @@
 <!-- Chris Card | 10/19/12 | metadata for appwidget -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/widget"
-    android:minHeight="79dip"
-    android:minWidth="300dip"
+    android:minHeight="220dip"
+    android:minWidth="220dip"
     android:updatePeriodMillis="1800000" />
