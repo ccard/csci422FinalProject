@@ -1,13 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Chris Card Nathan Harvey | 10/27/12 | This is the layout for detailForm class -->
+<!-- Chris Card, Nathan Harvey | 10/27/12 | This is the layout for detailForm class -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
-    <EditText
-        android:id="@+id/taskName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        android:hint="Conblabbedy boo"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!-- is this necessary, or does scrollview take care of the vertical direction? -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/taskName"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Conblabbedy boo" />
+            <!-- Do we need a tools:Context ? -->
+
+            <Button
+                android:id="@+id/doneButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:text="Done"
+                android:onClick="whoop"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MO" />
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@string/hello_world" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </ScrollView>

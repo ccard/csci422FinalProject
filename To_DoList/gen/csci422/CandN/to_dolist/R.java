@@ -17,14 +17,16 @@ public final class R {
         public static final int widget_frame=0x7f020003;
     }
     public static final class id {
-        public static final int add=0x7f090007;
-        public static final int add1=0x7f090006;
-        public static final int check=0x7f090002;
-        public static final int date=0x7f090004;
+        public static final int add=0x7f090009;
+        public static final int add1=0x7f090008;
+        public static final int check=0x7f090004;
+        public static final int date=0x7f090006;
+        public static final int doneButton=0x7f090002;
         public static final int newTypeTask=0x7f090000;
+        public static final int spinner1=0x7f090003;
         public static final int taskName=0x7f090001;
-        public static final int tasks=0x7f090005;
-        public static final int title=0x7f090003;
+        public static final int tasks=0x7f090007;
+        public static final int title=0x7f090005;
     }
     public static final class integer {
         public static final int maxline=0x7f050000;

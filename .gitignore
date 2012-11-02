@@ -1,7 +1,8 @@
+## This one is such a pain.
+R.java
 #################
 ## Eclipse
 #################
-
 *.pydevproject
 .project
 .metadata
