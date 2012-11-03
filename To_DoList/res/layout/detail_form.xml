@@ -40,39 +40,39 @@
                	android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:text="Priority:"
-                android:textSize="30"/>
+                android:textSize="16pt"/>
 
             <ImageButton
-                android:id="@id/Priority-q"
+                android:id="@+id/Priorityq"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:background="@drawable/priorityBlank"
-                android:contentDescription="?"
-                android:src="@drawable/ic_action_search" />
+                android:background="@drawable/priorityblank"
+                android:contentDescription="@string/ques"
+                android:src="@drawable/priorityq" />
 
             <ImageButton
-                android:id="@id/Priority0"
+                android:id="@+id/Priority0"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:background="@drawable/priorityBlank"
+                android:background="@drawable/priorityblank"
                 android:contentDescription="."
-                android:src="@drawable/priorityDot" />
+                android:src="@drawable/prioritydot" />
 
             <ImageButton
-                android:id="@id/Priority1"
+                android:id="@+id/Priority1"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:background="@drawable/priorityBlank"
+                android:background="@drawable/priorityblank"
                 android:contentDescription="!"
-                android:src="@drawable/ic_action_search" />
+                android:src="@drawable/priority1" />
 
             <ImageButton
-                android:id="@id/Priority2"
+                android:id="@+id/Priority2"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:background="@drawable/priorityBlank"
+                android:background="@drawable/priorityblank"
                 android:contentDescription="!!"
-                android:src="@drawable/ic_action_search" />
+                android:src="@drawable/priority2" />
 
         </LinearLayout>
  

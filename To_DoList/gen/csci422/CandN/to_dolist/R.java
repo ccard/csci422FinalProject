@@ -17,19 +17,29 @@ public final class R {
         public static final int ic_action_search=0x7f020000;
         public static final int ic_launcher=0x7f020001;
         public static final int ic_menu_add=0x7f020002;
-        public static final int widget_frame=0x7f020003;
+        public static final int priority1=0x7f020003;
+        public static final int priority2=0x7f020004;
+        public static final int priorityblank=0x7f020005;
+        public static final int prioritydot=0x7f020006;
+        public static final int priorityq=0x7f020007;
+        public static final int widget_frame=0x7f020008;
     }
     public static final class id {
-        public static final int add=0x7f0a0009;
-        public static final int add1=0x7f0a0008;
-        public static final int check=0x7f0a0004;
-        public static final int date=0x7f0a0006;
+        public static final int Priority0=0x7f0a0004;
+        public static final int Priority1=0x7f0a0005;
+        public static final int Priority2=0x7f0a0006;
+        public static final int Priorityq=0x7f0a0003;
+        public static final int add=0x7f0a000e;
+        public static final int add1=0x7f0a000d;
+        public static final int check=0x7f0a0009;
+        public static final int completion=0x7f0a0008;
+        public static final int date=0x7f0a000b;
         public static final int doneButton=0x7f0a0002;
         public static final int newTypeTask=0x7f0a0000;
-        public static final int spinner1=0x7f0a0003;
+        public static final int spinner1=0x7f0a0007;
         public static final int taskName=0x7f0a0001;
-        public static final int tasks=0x7f0a0007;
-        public static final int title=0x7f0a0005;
+        public static final int tasks=0x7f0a000c;
+        public static final int title=0x7f0a000a;
     }
     public static final class integer {
         public static final int maxline=0x7f050000;
@@ -51,6 +61,7 @@ public final class R {
         public static final int menuNotice=0x7f070004;
         public static final int menu_settings=0x7f070002;
         public static final int newtask_hint=0x7f070007;
+        public static final int ques=0x7f070008;
         public static final int title_activity_detail_form=0x7f070006;
         public static final int title_activity_to_do=0x7f070003;
     }
