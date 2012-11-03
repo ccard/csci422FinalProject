@@ -27,21 +27,22 @@ public final class R {
         public static final int Priority1=0x7f090006;
         public static final int Priority2=0x7f090007;
         public static final int Priorityq=0x7f090004;
-        public static final int add=0x7f090013;
-        public static final int add1=0x7f090012;
-        public static final int check=0x7f09000e;
+        public static final int add=0x7f090014;
+        public static final int add1=0x7f090013;
+        public static final int check=0x7f09000f;
         public static final int completion=0x7f09000d;
-        public static final int date=0x7f090010;
+        public static final int date=0x7f090011;
         public static final int doneButton=0x7f090002;
         public static final int dueDatePicker=0x7f090009;
         public static final int layoutCompletion=0x7f09000c;
         public static final int layoutDueDate=0x7f090008;
         public static final int layoutPickList=0x7f09000a;
         public static final int newTypeTask=0x7f090000;
+        public static final int notes=0x7f09000e;
         public static final int pickList=0x7f09000b;
         public static final int taskName=0x7f090001;
-        public static final int tasks=0x7f090011;
-        public static final int title=0x7f09000f;
+        public static final int tasks=0x7f090012;
+        public static final int title=0x7f090010;
     }
     public static final class integer {
         public static final int maxline=0x7f050000;

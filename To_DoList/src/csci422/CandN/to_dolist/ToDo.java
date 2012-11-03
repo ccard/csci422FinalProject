@@ -106,10 +106,10 @@ public class ToDo extends ListActivity {
 		if(item.getItemId() == R.id.add)
 		{
 			Intent i = new Intent(ToDo.this, DetailForm.class);
-			i.putExtra("csci422.CandN.to_dolist", "");
+			i.putExtra("csci422.CandN.to_dolist.curItem", "");
 			startActivity(i);
 			return true;
-			/*ToDo here*/
+			/*TODO Double-check*/
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -117,7 +117,10 @@ public class ToDo extends ListActivity {
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) 
 	{
-		/*TODO here */
+		/*TODO Chris, see if I did this correctly.*/
+		Intent i = new Intent(ToDo.this, DetailForm.class);
+		i.putExtra("csci422.CandN.to_dolist.curItem", String.valueOf(id));
+		startActivity(i);
 	}
 
 	/**

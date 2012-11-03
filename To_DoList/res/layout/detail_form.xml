@@ -6,10 +6,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
-
-        <!-- is this necessary, or does scrollview take care of the vertical direction? -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,7 +94,10 @@
             <DatePicker
                 android:id="@+id/dueDatePicker"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp" />
+                android:layout_height="70dp" >
+
+                <requestFocus />
+            </DatePicker>
         </LinearLayout>
 
         <LinearLayout
@@ -108,7 +109,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="List: " 
+                android:text="List: "
                 android:textSize="10pt" />
 
             <ExpandableListView
@@ -135,6 +136,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/notes"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:hint="Notes"
+            android:ems="10"
+            android:inputType="textMultiLine" >
+        </EditText>
+        <!-- How do I make this EditText fill up any remaining space? -->
     </LinearLayout>
 
 </ScrollView>
