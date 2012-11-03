@@ -18,37 +18,75 @@
 
             <EditText
                 android:id="@+id/taskName"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Conblabbedy boo" />
+                android:layout_weight="1"
+                android:hint="Enter Task Title" />
             <!-- Do we need a tools:Context ? -->
 
             <Button
                 android:id="@+id/doneButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:text="Done"
-                android:onClick="whoop"/>
+                android:layout_height="wrap_content"
+                android:onClick="whoop"
+                android:text="Done" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal" >
+            <TextView
+               	android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="Priority:"
+                android:textSize="30"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MO" />
+            <ImageButton
+                android:id="@id/Priority-q"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/priorityBlank"
+                android:contentDescription="?"
+                android:src="@drawable/ic_action_search" />
 
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@string/hello_world" />
+            <ImageButton
+                android:id="@id/Priority0"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/priorityBlank"
+                android:contentDescription="."
+                android:src="@drawable/priorityDot" />
+
+            <ImageButton
+                android:id="@id/Priority1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/priorityBlank"
+                android:contentDescription="!"
+                android:src="@drawable/ic_action_search" />
+
+            <ImageButton
+                android:id="@id/Priority2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/priorityBlank"
+                android:contentDescription="!!"
+                android:src="@drawable/ic_action_search" />
 
         </LinearLayout>
+ 
+        <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:entries="@array/spinnerValues" />
+
+        <SeekBar
+            android:id="@+id/completion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </ScrollView>
