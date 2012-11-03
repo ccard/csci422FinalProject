@@ -28,19 +28,21 @@
                 android:id="@+id/doneButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="whoop"
+                android:onClick="saveStuff"
                 android:text="Done" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Priorities"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal" >
+
             <TextView
-               	android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:text="Priority:"
-                android:textSize="16pt"/>
+                android:textSize="16pt" />
 
             <ImageButton
                 android:id="@+id/Priorityq"
@@ -48,6 +50,7 @@
                 android:layout_height="45dp"
                 android:background="@drawable/priorityblank"
                 android:contentDescription="@string/ques"
+                android:onClick="priq"
                 android:src="@drawable/priorityq" />
 
             <ImageButton
@@ -56,6 +59,7 @@
                 android:layout_height="45dp"
                 android:background="@drawable/priorityblank"
                 android:contentDescription="."
+                android:onClick="prin"
                 android:src="@drawable/prioritydot" />
 
             <ImageButton
@@ -64,6 +68,7 @@
                 android:layout_height="45dp"
                 android:background="@drawable/priorityblank"
                 android:contentDescription="!"
+                android:onClick="prio"
                 android:src="@drawable/priority1" />
 
             <ImageButton
@@ -72,21 +77,64 @@
                 android:layout_height="45dp"
                 android:background="@drawable/priorityblank"
                 android:contentDescription="!!"
+                android:onClick="prit"
                 android:src="@drawable/priority2" />
-
         </LinearLayout>
- 
-        <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:entries="@array/spinnerValues" />
 
-        <SeekBar
-            android:id="@+id/completion"
+        <LinearLayout
+            android:id="@+id/layoutDueDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Due: "
+                android:textSize="10pt" />
+
+            <DatePicker
+                android:id="@+id/dueDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutPickList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="List: " 
+                android:textSize="10pt" />
+
+            <ExpandableListView
+                android:id="@+id/pickList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </ExpandableListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutCompletion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completion:"
+                android:textSize="10pt" />
+
+            <SeekBar
+                android:id="@+id/completion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>
