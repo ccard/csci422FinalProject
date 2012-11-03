@@ -105,7 +105,9 @@ public class ToDo extends ListActivity {
 	{
 		if(item.getItemId() == R.id.add)
 		{
-			startActivity(new Intent(ToDo.this, DetailForm.class));
+			Intent i = new Intent(ToDo.this, DetailForm.class);
+			i.putExtra("csci422.CandN.to_dolist", "");
+			startActivity(i);
 			return true;
 			/*ToDo here*/
 		}
@@ -119,7 +121,7 @@ public class ToDo extends ListActivity {
 	}
 
 	/**
-	 * This class holds the RestaurantAdapter for populating the listview with the restaurants
+	 * This class holds the ToDoAdapter for populating the listview with the ToDo Items.
 	 * @author Chris
 	 *
 	 */
