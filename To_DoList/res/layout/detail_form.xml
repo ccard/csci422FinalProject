@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -94,7 +94,7 @@
             <DatePicker
                 android:id="@+id/dueDatePicker"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp" >
+                android:layout_height="wrap_content" >
 
                 <requestFocus />
             </DatePicker>
@@ -108,15 +108,15 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="List: "
-                android:textSize="10pt" />
+                android:textSize="12pt" />
 
-            <ExpandableListView
+            <Spinner
                 android:id="@+id/pickList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </ExpandableListView>
+                android:layout_height="match_parent" >
+            </Spinner>
         </LinearLayout>
 
         <LinearLayout
@@ -146,6 +146,15 @@
             android:inputType="textMultiLine" >
         </EditText>
         <!-- How do I make this EditText fill up any remaining space? -->
+
+        <Button
+            android:id="@+id/deletebutton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete Task"
+            android:onClick="deleteTask" />
+<!-- Hide the ejector seat levers -->
     </LinearLayout>
 
 </ScrollView>

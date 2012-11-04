@@ -7,29 +7,28 @@
 package csci422.CandN.to_dolist;
 
 import java.sql.Date;
-import java.text.AttributedString;
-import java.text.DateFormat;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 public class DetailForm extends Activity {
 	public static final String tag = "todoDetail";
-	
+
 	private ImageButton[] priors = new ImageButton[4];
 	private DatePicker datepick;
 	private ToDoHelper helper;
 	private Cursor cur = null;
-	private ExpandableListView pickList;
+	private Spinner pickList;
 	private EditText taskName;
 	private EditText notes;
 	private String[] Listnames = {"Main","Homework","Shopping"};
@@ -49,15 +48,13 @@ public class DetailForm extends Activity {
 		priors[2] = (ImageButton) findViewById(R.id.Priority1);
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
 		datepick = ((DatePicker) findViewById(R.id.dueDatePicker));
-		pickList = ((ExpandableListView) findViewById(R.id.pickList));
+		pickList = ((Spinner) findViewById(R.id.pickList));
 		taskName = ((EditText) findViewById(R.id.taskName));
 		notes = ((EditText) findViewById(R.id.notes));
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
-		for(String listname:Listnames){
-			TextView t = new TextView(this);
-			t.setText(listname);
-			pickList.addView(t, 50, 20);
-		}
+
+		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
+		pickList.setAdapter(adpt);
 	}
 	@SuppressWarnings("deprecation")
 	private void loadCurrent() {
@@ -98,7 +95,7 @@ public class DetailForm extends Activity {
 
 	/**
 	 * Clears the backgrounds for all priority buttons except one.
-	 * @param v the view to give an active background
+	 * @param v the view to give an active background.
 	 */
 	public void clr(View v){
 		Log.d(tag, "Priority: "+priority);
@@ -107,4 +104,10 @@ public class DetailForm extends Activity {
 		}
 		v.setBackgroundResource(R.drawable.widget_frame);
 	}
+	
+	public void deleteTask(View v){
+		Toast.makeText(this, "Not implemented", Toast.LENGTH_LONG).show();
+	}
+
+
 }

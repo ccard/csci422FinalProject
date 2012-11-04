@@ -1,0 +1,3 @@
+(A) Make Textarea fill remaining space
+(A) Add delete functionality
+(B) add address field

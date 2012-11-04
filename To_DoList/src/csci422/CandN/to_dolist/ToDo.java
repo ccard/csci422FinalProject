@@ -34,7 +34,7 @@ public class ToDo extends ListActivity {
 	private ToDoAdapter adapter=null;
 
 	private ToDoHelper helper=null;
-	
+
 	private EditText newTypeTask;
 
 	@Override
@@ -45,7 +45,7 @@ public class ToDo extends ListActivity {
 		helper = new ToDoHelper(this);
 
 		initList();
-		
+
 		newTypeTask = (EditText)findViewById(R.id.newTypeTask);
 		newTypeTask.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
 		newTypeTask.setOnEditorActionListener(new OnEditorActionListener(){
@@ -61,7 +61,7 @@ public class ToDo extends ListActivity {
 				}
 				return false;
 			}
-			
+
 		});
 	}
 
@@ -81,18 +81,17 @@ public class ToDo extends ListActivity {
 		startManagingCursor(model);
 
 		//sets adapter with this activity passed in a simple list item
-		//and the list of restaurants
 		adapter = new ToDoAdapter(model);
 
 		setListAdapter(adapter);
 	}
 
-     @Override
-     public void onDestroy()
-     {
-     	super.onDestroy();
-     	helper.close();
-     }
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		helper.close();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,7 +138,7 @@ public class ToDo extends ListActivity {
 		@Override
 		public void bindView(View row, Context ctxt, Cursor c)
 		{
-			RestaurantHolder holder = (RestaurantHolder)row.getTag();
+			ItemHolder holder = (ItemHolder)row.getTag();
 
 			holder.populateForm(c, helper);
 		}
@@ -149,7 +148,7 @@ public class ToDo extends ListActivity {
 		{
 			LayoutInflater inflater = getLayoutInflater();
 			View row = inflater.inflate(R.layout.row, parent, false);
-			RestaurantHolder holder = new RestaurantHolder(row);
+			ItemHolder holder = new ItemHolder(row);
 
 			row.setTag(holder);
 
@@ -162,14 +161,14 @@ public class ToDo extends ListActivity {
 	 * @author Chris
 	 *
 	 */
-	static class RestaurantHolder
+	static class ItemHolder
 	{
 
 		private TextView title = null;
 		private TextView date = null;
 		private CheckBox check = null;
 
-		RestaurantHolder(View row)
+		ItemHolder(View row)
 		{
 			title = (TextView)row.findViewById(R.id.title);
 			date = (TextView)row.findViewById(R.id.date);
