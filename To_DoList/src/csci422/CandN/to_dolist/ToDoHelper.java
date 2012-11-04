@@ -44,6 +44,10 @@ public class ToDoHelper extends SQLiteOpenHelper
 
 		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state, priority FROM todos WHERE _ID=?", args);
 	}
+	
+	public String getId(Cursor c){
+		return c.getString(0);//TODO is this the right number?
+	}
 
 	public void update(String id, String title, String address, String notes, String date, int state, int priority)
 	{

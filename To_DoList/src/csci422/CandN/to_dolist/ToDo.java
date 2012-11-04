@@ -36,6 +36,7 @@ public class ToDo extends ListActivity {
 	private ToDoHelper helper=null;
 
 	private EditText newTypeTask;
+	public static final int DONE=95;//If task is more than this complete, it is done.
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,7 @@ public class ToDo extends ListActivity {
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) 
 	{
-		/*TODO Chris, see if I did this correctly.*/
+		/*TODO Chris, why isn't this function getting called?*/
 		Intent i = new Intent(ToDo.this, DetailForm.class);
 		i.putExtra("csci422.CandN.to_dolist.curItem", String.valueOf(id));
 		startActivity(i);
@@ -180,13 +181,13 @@ public class ToDo extends ListActivity {
 			title.setText(helper.getTitle(c));
 			date.setText(helper.getDate(c));
 
-			if(helper.getState(c) == 0)
+			if(helper.getState(c) >= DONE)
 			{
-				check.setChecked(false);
+				check.setChecked(true);
 			}
 			else
 			{
-				check.setChecked(true);
+				check.setChecked(false);
 			}
 		}
 	}

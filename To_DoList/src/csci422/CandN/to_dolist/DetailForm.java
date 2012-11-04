@@ -84,7 +84,7 @@ public class DetailForm extends Activity {
 		if(cur==null){//make a new one
 			helper.insert(taskName.getText().toString(), "", notes.getText().toString(), dueDate.toString(), state, priority);
 		}else {//edit current
-			helper.update(helper.getAddress(cur), taskName.getText().toString(), "", notes.getText().toString(), dueDate.toString(), state, priority);
+			helper.update(helper.getId(cur), taskName.getText().toString(), "", notes.getText().toString(), dueDate.toString(), state, priority);
 		}
 		this.finish();
 	}
