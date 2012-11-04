@@ -36,12 +36,14 @@ public class DetailForm extends Activity {
 	/** -1 is ?, 0 is a dot, 1 is one !, 2 is two !!  */
 	private int priority = 0;
 	private java.sql.Date dueDate = new Date(0);
+	
+	private String id = "";//id needs to be acceable to whole class to it can be used with todo helper
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
-		loadCurrent();
+		
 		completion = (SeekBar) findViewById(R.id.completion);
 		priors[0] = (ImageButton) findViewById(R.id.Priorityq);
 		priors[1] = (ImageButton) findViewById(R.id.Priority0);
@@ -51,6 +53,7 @@ public class DetailForm extends Activity {
 		pickList = ((Spinner) findViewById(R.id.pickList));
 		taskName = ((EditText) findViewById(R.id.taskName));
 		notes = ((EditText) findViewById(R.id.notes));
+		loadCurrent();
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
 
 		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
@@ -62,14 +65,17 @@ public class DetailForm extends Activity {
 		String id = getIntent().getStringExtra("csci422.CandN.to_dolist.curItem");
 		if(id.length()==0)return;
 		cur = helper.getById(id);
+		cur.moveToFirst();//need to set cursor to the beginning 
 		taskName.setText(helper.getTitle(cur));
 		//TODO address
 		notes.setText(helper.getNotes(cur));
-		dueDate.setTime(Date.parse(helper.getDate(cur)));
+		dueDate.setTime(Date.parse(helper.getDate(cur)));//some how the date you save into the data base can't be parsed back in by your date picker
 		completion.setProgress(helper.getState(cur));
 		priority = helper.getPriority(cur);
 		priors[priority+1].setBackgroundResource(R.drawable.widget_frame);
 	}
+	
+	
 	public void saveStuff(View v){
 		Log.v(tag, "Progress: "+completion.getProgress());
 		Log.v(tag, completion.getKeyProgressIncrement()+" was done with keys");
@@ -84,7 +90,7 @@ public class DetailForm extends Activity {
 		if(cur==null){//make a new one
 			helper.insert(taskName.getText().toString(), "", notes.getText().toString(), dueDate.toString(), state, priority);
 		}else {//edit current
-			helper.update(helper.getId(cur), taskName.getText().toString(), "", notes.getText().toString(), dueDate.toString(), state, priority);
+			helper.update(id, taskName.getText().toString(), "", notes.getText().toString(), dueDate.toString(), state, priority);
 		}
 		this.finish();
 	}
