@@ -6,7 +6,6 @@
 package csci422.CandN.to_dolist;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +20,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -173,7 +171,7 @@ public class ToDo extends ListActivity {
 		{
 			title = (TextView)row.findViewById(R.id.title);
 			date = (TextView)row.findViewById(R.id.date);
-			check = (CheckBox)row.findViewById(R.id.check);
+			//check = (CheckBox)row.findViewById(R.id.check);
 		}
 
 		void populateForm(Cursor c, ToDoHelper helper)
@@ -181,14 +179,14 @@ public class ToDo extends ListActivity {
 			title.setText(helper.getTitle(c));
 			date.setText(helper.getDate(c));
 
-			if(helper.getState(c) >= DONE)
+			/*if(helper.getState(c) >= DONE)
 			{
 				check.setChecked(true);
 			}
 			else
 			{
 				check.setChecked(false);
-			}
+			}*/
 		}
 	}
 }
