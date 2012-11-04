@@ -115,7 +115,6 @@ public class ToDo extends ListActivity {
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) 
 	{
-		/*TODO Chris, why isn't this function getting called?*/
 		Intent i = new Intent(ToDo.this, DetailForm.class);
 		i.putExtra("csci422.CandN.to_dolist.curItem", String.valueOf(id));
 		startActivity(i);
