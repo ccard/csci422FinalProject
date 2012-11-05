@@ -6,6 +6,7 @@
 */
 package csci422.CandN.to_dolist;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -41,6 +42,7 @@ public class ListViewsFactory implements RemoteViewsFactory {
 		return null;
 	}
 
+	@TargetApi(11)
 	public RemoteViews getViewAt(int position) 
 	{
 		RemoteViews row = new RemoteViews(ctxt.getPackageName(), R.layout.widget_row);
@@ -69,7 +71,7 @@ public class ListViewsFactory implements RemoteViewsFactory {
 	public void onCreate() 
 	{
 		helper = new ToDoHelper(ctxt);
-		tasks = helper.getReadableDatabase().rawQuery("SELECT _ID, name FROM restaurants", null);
+		tasks = helper.getReadableDatabase().rawQuery("SELECT _ID, title FROM todos", null);
 	}
 
 	public void onDataSetChanged() {
