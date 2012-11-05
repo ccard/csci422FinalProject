@@ -30,7 +30,7 @@ public class WidgetService extends IntentService {
 		AppWidgetManager mgr = AppWidgetManager.getInstance(this);
 		try 
 		{
-			Cursor c = helper.getReadableDatabase().rawQuery("SELECT COUNT(*) FROM restaurants", null);
+			Cursor c = helper.getReadableDatabase().rawQuery("SELECT COUNT(*) FROM todos", null);
 			c.moveToFirst();
 			int count = c.getInt(0);
 			c.close();
@@ -38,13 +38,13 @@ public class WidgetService extends IntentService {
 			{
 				int offset = (int)(count*Math.random());
 				String args[] = {String.valueOf(offset)};
-				c = helper.getReadableDatabase().rawQuery("SELECT _ID, name FROM restaurants LIMIT 1 OFFSET ?", args);
+				c = helper.getReadableDatabase().rawQuery("SELECT _ID, title FROM todos LIMIT 1 OFFSET ?", args);
 				c.moveToFirst();
-				updateViews.setTextViewText(R.id.add1, c.getString(1));//TODO change add to the textView we are changing.
+				updateViews.setTextViewText(R.id.name, c.getString(1));//TODO change add to the textView we are changing.
 				Intent i = new Intent(this, DetailForm.class); 
 				i.putExtra(ToDo.ID_EXTRA, c.getString(0));
 				PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-				updateViews.setOnClickPendingIntent(R.id.tasks, pi);
+				updateViews.setOnClickPendingIntent(R.id.name, pi);
 				c.close();
 			}
 			else 
@@ -58,7 +58,7 @@ public class WidgetService extends IntentService {
 		}
 		Intent i = new Intent(this, WidgetService.class);
 		PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
-		updateViews.setOnClickPendingIntent(R.id.add, pi);//TODO same deal here.
+		updateViews.setOnClickPendingIntent(R.id.add1, pi);//TODO same deal here.
 		mgr.updateAppWidget(me, updateViews);
 	}
 }
