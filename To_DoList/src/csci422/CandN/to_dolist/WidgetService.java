@@ -25,7 +25,7 @@ public class WidgetService extends IntentService {
 	public void onHandleIntent(Intent intent) 
 	{
 		ComponentName me = new ComponentName(this, AppWidget.class);
-		RemoteViews updateViews = new RemoteViews("csci422.CandN.to_dolist", R.layout.widget);
+		RemoteViews updateViews = new RemoteViews("to_dolist", R.layout.widget);
 		ToDoHelper helper = new ToDoHelper(this);
 		AppWidgetManager mgr = AppWidgetManager.getInstance(this);
 		try 
