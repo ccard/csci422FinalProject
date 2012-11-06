@@ -36,14 +36,14 @@ public class DetailForm extends Activity {
 	/** -1 is ?, 0 is a dot, 1 is one !, 2 is two !!  */
 	private int priority = 0;
 	private java.sql.Date dueDate = new Date(0);
-	
+
 	private String id = "";//id needs to be acceable to whole class to it can be used with todo helper
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
-		
+
 		completion = (SeekBar) findViewById(R.id.completion);
 		priors[0] = (ImageButton) findViewById(R.id.Priorityq);
 		priors[1] = (ImageButton) findViewById(R.id.Priority0);
@@ -74,8 +74,13 @@ public class DetailForm extends Activity {
 		priority = helper.getPriority(cur);
 		priors[priority+1].setBackgroundResource(R.drawable.widget_frame);
 	}
-	
-	
+
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		saveStuff(null);
+	}
 	public void saveStuff(View v){
 		Log.v(tag, "Progress: "+completion.getProgress());
 		Log.v(tag, completion.getKeyProgressIncrement()+" was done with keys");
@@ -110,7 +115,7 @@ public class DetailForm extends Activity {
 		}
 		v.setBackgroundResource(R.drawable.widget_frame);
 	}
-	
+
 	public void deleteTask(View v){
 		Toast.makeText(this, "Not implemented", Toast.LENGTH_LONG).show();
 	}
