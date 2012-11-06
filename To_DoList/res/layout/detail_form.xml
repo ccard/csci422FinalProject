@@ -91,13 +91,59 @@
                 android:text="Due: "
                 android:textSize="10pt" />
 
-            <DatePicker
+            <EditText
                 android:id="@+id/dueDatePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:hint="09/12/10" />
 
-                <requestFocus />
-            </DatePicker>
+            <ImageButton
+                android:id="@+id/pickDateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="openCal"
+                android:src="@drawable/calendar" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutHere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Location: "
+                    android:textSize="10pt" />
+
+                <Button
+                    android:layout_width="53dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Here"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="123 Anystreet" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="openMaps"
+                android:src="@drawable/treasuremap" />
         </LinearLayout>
 
         <LinearLayout
@@ -141,8 +187,8 @@
             android:id="@+id/notes"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:hint="Notes"
             android:ems="10"
+            android:hint="Notes"
             android:inputType="textMultiLine" >
         </EditText>
         <!-- How do I make this EditText fill up any remaining space? -->
@@ -152,9 +198,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete Task"
-            android:onClick="deleteTask" />
-<!-- Hide the ejector seat levers -->
+            android:onClick="deleteTask"
+            android:text="Delete Task" />
+        <!-- Hide the ejector seat levers -->
     </LinearLayout>
 
 </ScrollView>

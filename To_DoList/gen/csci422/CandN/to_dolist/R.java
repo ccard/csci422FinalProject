@@ -11,15 +11,17 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_action_search=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int ic_menu_add=0x7f020002;
-        public static final int priority1=0x7f020003;
-        public static final int priority2=0x7f020004;
-        public static final int priorityblank=0x7f020005;
-        public static final int prioritydot=0x7f020006;
-        public static final int priorityq=0x7f020007;
-        public static final int widget_frame=0x7f020008;
+        public static final int calendar=0x7f020000;
+        public static final int ic_action_search=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int ic_menu_add=0x7f020003;
+        public static final int priority1=0x7f020004;
+        public static final int priority2=0x7f020005;
+        public static final int priorityblank=0x7f020006;
+        public static final int prioritydot=0x7f020007;
+        public static final int priorityq=0x7f020008;
+        public static final int treasuremap=0x7f020009;
+        public static final int widget_frame=0x7f02000a;
     }
     public static final class id {
         public static final int Priorities=0x7f090003;
@@ -27,24 +29,27 @@ public final class R {
         public static final int Priority1=0x7f090006;
         public static final int Priority2=0x7f090007;
         public static final int Priorityq=0x7f090004;
-        public static final int add=0x7f090016;
-        public static final int add1=0x7f090014;
-        public static final int check=0x7f090010;
-        public static final int completion=0x7f09000d;
-        public static final int date=0x7f090012;
-        public static final int deletebutton=0x7f09000f;
+        public static final int add=0x7f090019;
+        public static final int add1=0x7f090017;
+        public static final int check=0x7f090013;
+        public static final int completion=0x7f090010;
+        public static final int date=0x7f090015;
+        public static final int deletebutton=0x7f090012;
         public static final int doneButton=0x7f090002;
         public static final int dueDatePicker=0x7f090009;
-        public static final int layoutCompletion=0x7f09000c;
+        public static final int layoutCompletion=0x7f09000f;
         public static final int layoutDueDate=0x7f090008;
-        public static final int layoutPickList=0x7f09000a;
-        public static final int name=0x7f090013;
+        public static final int layoutHere=0x7f09000b;
+        public static final int layoutPickList=0x7f09000d;
+        public static final int location=0x7f09000c;
+        public static final int name=0x7f090016;
         public static final int newTypeTask=0x7f090000;
-        public static final int notes=0x7f09000e;
-        public static final int pickList=0x7f09000b;
+        public static final int notes=0x7f090011;
+        public static final int pickDateButton=0x7f09000a;
+        public static final int pickList=0x7f09000e;
         public static final int taskName=0x7f090001;
-        public static final int tasks=0x7f090015;
-        public static final int title=0x7f090011;
+        public static final int tasks=0x7f090018;
+        public static final int title=0x7f090014;
     }
     public static final class integer {
         public static final int maxline=0x7f050000;

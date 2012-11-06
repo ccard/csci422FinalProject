@@ -133,6 +133,14 @@ public class DetailForm extends Activity {
 	public void deleteTask(View v){
 		Toast.makeText(this, "Not implemented", Toast.LENGTH_LONG).show();
 	}
+	
+	public void openCal(View v){
+		//TODO implement
+	}
+	
+	public void openMaps(View v){
+		//TODO implement
+	}
 
 
 }
