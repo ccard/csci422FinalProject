@@ -170,7 +170,7 @@ public class ToDo extends ListActivity {
 		{
 			title = (TextView)row.findViewById(R.id.title);
 			date = (TextView)row.findViewById(R.id.date);
-			//check = (CheckBox)row.findViewById(R.id.check);
+			check = (CheckBox)row.findViewById(R.id.check);
 		}
 
 		void populateForm(Cursor c, ToDoHelper helper)
@@ -178,14 +178,14 @@ public class ToDo extends ListActivity {
 			title.setText(helper.getTitle(c));
 			date.setText(helper.getDate(c));
 
-			/*if(helper.getState(c) >= DONE)
+			if(helper.getState(c) >= DONE)
 			{
 				check.setChecked(true);
 			}
 			else
 			{
 				check.setChecked(false);
-			}*/
+			}
 		}
 	}
 }
