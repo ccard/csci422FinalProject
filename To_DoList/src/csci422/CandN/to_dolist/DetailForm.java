@@ -6,10 +6,13 @@
  */
 package csci422.CandN.to_dolist;
 
-import java.sql.Date;
+import java.util.Date;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import java.text.DateFormat;
+import java.text.ParseException;
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
+
 public class DetailForm extends Activity {
 	public static final String tag = "todoDetail";
 
@@ -35,7 +39,8 @@ public class DetailForm extends Activity {
 	private SeekBar completion;
 	/** -1 is ?, 0 is a dot, 1 is one !, 2 is two !!  */
 	private int priority = 0;
-	private java.sql.Date dueDate = new Date(0);
+	private Date dueDate;
+	private DateFormat dateFormat;
 
 	private String id = "";//id needs to be acceable to whole class to it can be used with todo helper
 	@Override
@@ -50,6 +55,8 @@ public class DetailForm extends Activity {
 		priors[2] = (ImageButton) findViewById(R.id.Priority1);
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
 		datepick = ((DatePicker) findViewById(R.id.dueDatePicker));
+		dueDate = new Date(0);//current time
+		dateFormat = DateFormat.getDateTimeInstance();
 		pickList = ((Spinner) findViewById(R.id.pickList));
 		taskName = ((EditText) findViewById(R.id.taskName));
 		notes = ((EditText) findViewById(R.id.notes));
@@ -59,6 +66,7 @@ public class DetailForm extends Activity {
 		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
 		pickList.setAdapter(adpt);
 	}
+
 	@SuppressWarnings("deprecation")
 	private void loadCurrent() {
 		helper=new ToDoHelper(this);
@@ -69,7 +77,11 @@ public class DetailForm extends Activity {
 		taskName.setText(helper.getTitle(cur));
 		//TODO address
 		notes.setText(helper.getNotes(cur));
-		dueDate.setTime(Date.parse(helper.getDate(cur)));//some how the date you save into the data base can't be parsed back in by your date picker
+		try {
+			dueDate = dateFormat.parse(helper.getDate(cur));
+		} catch (ParseException e) {
+			Log.e(tag, "Can't parse the date.");
+		}
 		completion.setProgress(helper.getState(cur));
 		priority = helper.getPriority(cur);
 		priors[priority+1].setBackgroundResource(R.drawable.widget_frame);
@@ -89,13 +101,15 @@ public class DetailForm extends Activity {
 		Log.v(tag, "Max is: "+completion.getMax());
 		int state = completion.getProgress();
 		//float percent= completion.getProgress()/((float)completion.getMax());
-		dueDate.setDate(datepick.getDayOfMonth());
-		dueDate.setMonth(datepick.getMonth());
-		dueDate.setYear(datepick.getYear()-1900);
+		try {
+			dueDate = dateFormat.parse("");//TODO change to read from the field
+		} catch (ParseException e) {
+			Log.e(tag, "Can't parse the date.");
+		}
 		if(cur==null){//make a new one
-			helper.insert(taskName.getText().toString(), "", notes.getText().toString(), dueDate.toString(), state, priority);
+			helper.insert(taskName.getText().toString(), "", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 		}else {//edit current
-			helper.update(id, taskName.getText().toString(), "", notes.getText().toString(), dueDate.toString(), state, priority);
+			helper.update(id, taskName.getText().toString(), "", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 		}
 		this.finish();
 	}
