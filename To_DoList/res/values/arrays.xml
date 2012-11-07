@@ -1,0 +1,23 @@
+<!-- Chris Card Nathan Harvey | 11/6/2012 | list of prefrences for sorting todos tasks -->
+    <resources>
+        <string-array name="sort_titles">
+            <item >By Title, Ascending</item>
+            <item >By Title, Descending</item>
+            <item >By Prority, Ascending</item>
+            <item >By Prority, Desending</item>
+            <item >By Date, Ascending</item>
+            <item >By Date, Descending</item>
+            <item >By Completion, Ascending</item>
+            <item >By Completion, Descending</item>
+        </string-array>
+        <string-array name="sort_clauses">
+            <item >title ASC</item>
+            <item >title DESC</item>
+            <item >priority ASC</item>
+            <item >priority DESC</item>
+            <item >date ASC</item>
+            <item >date DESC</item>
+            <item >state ASC</item>
+            <item >state DESC</item>
+        </string-array>
+    </resources>
