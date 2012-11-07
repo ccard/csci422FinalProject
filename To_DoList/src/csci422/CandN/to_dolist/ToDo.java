@@ -72,6 +72,13 @@ public class ToDo extends ListActivity {
 		});
 	}
 	
+	@Override
+	public void onResume()
+	{
+		initList();
+		super.onResume();
+	}
+	
 	/**
 	 * this initializes the list from the cursor
 	 */

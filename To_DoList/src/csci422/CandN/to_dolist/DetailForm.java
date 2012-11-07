@@ -70,7 +70,7 @@ public class DetailForm extends Activity {
 	@SuppressWarnings("deprecation")
 	private void loadCurrent() {
 		helper=new ToDoHelper(this);
-		String id = getIntent().getStringExtra("csci422.CandN.to_dolist.curItem");
+		id = getIntent().getStringExtra("csci422.CandN.to_dolist.curItem");
 		if(id.length()==0)return;
 		cur = helper.getById(id);
 		cur.moveToFirst();//need to set cursor to the beginning 
