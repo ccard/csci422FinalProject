@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -69,8 +71,7 @@ public class ToDo extends ListActivity {
 
 		});
 	}
-
-
+	
 	/**
 	 * this initializes the list from the cursor
 	 */
@@ -190,16 +191,37 @@ public class ToDo extends ListActivity {
 		private TextView title = null;
 		private TextView date = null;
 		private CheckBox check = null;
+		private String ID;
+		private ToDoHelper help;
 
 		ItemHolder(View row)
 		{
 			title = (TextView)row.findViewById(R.id.title);
 			date = (TextView)row.findViewById(R.id.date);
 			check = (CheckBox)row.findViewById(R.id.check);
+			check.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
+					Cursor save = help.getById(ID);
+					save.moveToFirst();
+					if (isChecked)
+					{
+						help.update(ID, help.getTitle(save), help.getAddress(save), help.getNotes(save), help.getDate(save), 100, help.getPriority(save));
+					}
+					else
+					{
+						help.update(ID, help.getTitle(save), help.getAddress(save), help.getNotes(save), help.getDate(save), 0, help.getPriority(save));
+					}
+				}
+				
+			});
 		}
 
 		void populateForm(Cursor c, ToDoHelper helper)
 		{
+			ID = c.getString(0);
+			help = helper;
 			title.setText(helper.getTitle(c));
 			date.setText(helper.getDate(c));
 
