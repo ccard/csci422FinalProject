@@ -29,7 +29,7 @@ public class DetailForm extends Activity {
 	public static final String tag = "todoDetail";
 
 	private ImageButton[] priors = new ImageButton[4];
-	private DatePicker datepick;
+	private EditText datepick;
 	private ToDoHelper helper;
 	private Cursor cur = null;
 	private Spinner pickList;
@@ -54,7 +54,7 @@ public class DetailForm extends Activity {
 		priors[1] = (ImageButton) findViewById(R.id.Priority0);
 		priors[2] = (ImageButton) findViewById(R.id.Priority1);
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
-		datepick = ((DatePicker) findViewById(R.id.dueDatePicker));
+		datepick = (EditText)findViewById(R.id.dueDatePicker);
 		dueDate = new Date(0);//current time
 		dateFormat = DateFormat.getDateTimeInstance();
 		pickList = ((Spinner) findViewById(R.id.pickList));
