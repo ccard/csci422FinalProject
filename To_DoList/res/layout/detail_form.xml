@@ -96,14 +96,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:hint="09/12/10" />
+                android:hint="09/12/10"
+                android:inputType="date" />
 
             <ImageButton
                 android:id="@+id/pickDateButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="openCal"
-                android:src="@drawable/calendar" />
+                android:src="@drawable/ic_menu_my_calendar" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,13 +138,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:hint="123 Anystreet" />
+                android:hint="123 Anystreet"
+                android:inputType="textPostalAddress" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="openMaps"
-                android:src="@drawable/treasuremap" />
+                android:src="@drawable/ic_menu_mapmode" />
         </LinearLayout>
 
         <LinearLayout
