@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".DetailForm" >
         </activity>
+        <activity android:name=".Preferences"></activity>
 
         <service android:name=".WidgetService" >
         </service>

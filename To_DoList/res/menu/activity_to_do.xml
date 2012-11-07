@@ -4,4 +4,7 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_menu_add"
         android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/settings"
+        android:title="@string/prefs"
+        android:icon="@drawable/ic_menu_settings_holo_light"/>
 </menu>

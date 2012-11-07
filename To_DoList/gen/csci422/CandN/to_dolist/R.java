@@ -52,6 +52,7 @@ public final class R {
         public static final int notes=0x7f0a0011;
         public static final int pickDateButton=0x7f0a000a;
         public static final int pickList=0x7f0a000e;
+        public static final int settings=0x7f0a001a;
         public static final int taskName=0x7f0a0001;
         public static final int tasks=0x7f0a0018;
         public static final int title=0x7f0a0014;
@@ -76,6 +77,7 @@ public final class R {
         public static final int menuNotice=0x7f070004;
         public static final int menu_settings=0x7f070002;
         public static final int newtask_hint=0x7f070007;
+        public static final int prefs=0x7f070009;
         public static final int ques=0x7f070008;
         public static final int title_activity_detail_form=0x7f070006;
         public static final int title_activity_to_do=0x7f070003;

@@ -49,6 +49,7 @@ public class ToDo extends ListActivity {
 		helper = new ToDoHelper(this);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		initList();
+		prefs.registerOnSharedPreferenceChangeListener(prefListener); 
 
 		newTypeTask = (EditText)findViewById(R.id.newTypeTask);
 		newTypeTask.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
@@ -114,6 +115,11 @@ public class ToDo extends ListActivity {
 			return true;
 			/*TODO Double-check*/
 		}
+		else if(item.getItemId() == R.id.settings)
+		{
+			startActivity(new Intent(this, Preferences.class));
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -125,6 +131,20 @@ public class ToDo extends ListActivity {
 		startActivity(i);
 	}
 
+	 /**
+	* This is a listener for a preference change from preferences
+	*/
+	    private SharedPreferences.OnSharedPreferenceChangeListener prefListener= new SharedPreferences.OnSharedPreferenceChangeListener()
+	    {
+	    	public void onSharedPreferenceChanged(SharedPreferences sharedPrefs, String key)
+	    	{
+	    		if(key.equals("sort_order"))
+	    		{
+	    			initList();
+	    		}
+	    	}
+	    };
+	
 	/**
 	 * This class holds the ToDoAdapter for populating the listview with the ToDo Items.
 	 * @author Chris
