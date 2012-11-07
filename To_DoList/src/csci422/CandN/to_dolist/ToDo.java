@@ -6,9 +6,11 @@
 package csci422.CandN.to_dolist;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -34,6 +36,9 @@ public class ToDo extends ListActivity {
 	private ToDoHelper helper=null;
 
 	private EditText newTypeTask;
+	
+	private SharedPreferences prefs;
+	
 	public static final int DONE=95;//If task is more than this complete, it is done.
 
 	@Override
@@ -42,7 +47,7 @@ public class ToDo extends ListActivity {
 		setContentView(R.layout.activity_to_do);
 
 		helper = new ToDoHelper(this);
-
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		initList();
 
 		newTypeTask = (EditText)findViewById(R.id.newTypeTask);
@@ -76,7 +81,7 @@ public class ToDo extends ListActivity {
 			model.close();
 		}
 
-		model = helper.getAll("Title");
+		model = helper.getAll(prefs.getString("sort_order", "title"));
 		startManagingCursor(model);
 
 		//sets adapter with this activity passed in a simple list item
