@@ -8,7 +8,9 @@ package csci422.CandN.to_dolist;
 
 import java.util.Date;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -30,6 +32,7 @@ public class DetailForm extends Activity {
 
 	private ImageButton[] priors = new ImageButton[4];
 	private EditText datepick;
+	private EditText address;
 	private ToDoHelper helper;
 	private Cursor cur = null;
 	private Spinner pickList;
@@ -63,6 +66,7 @@ public class DetailForm extends Activity {
 		pickList = ((Spinner) findViewById(R.id.pickList));
 		taskName = ((EditText) findViewById(R.id.taskName));
 		notes = ((EditText) findViewById(R.id.notes));
+		address = (EditText)findViewById(R.id.location);
 		loadCurrent();
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
 
@@ -146,7 +150,11 @@ public class DetailForm extends Activity {
 	}
 	
 	public void openMaps(View v){
-		//TODO implement
+		if(!address.getText().toString().isEmpty())
+		{
+			String uri = "geo:0,)?q="+address.getText().toString();
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+		}
 	}
 
 
