@@ -41,6 +41,8 @@ public class DetailForm extends Activity {
 	private int priority = 0;
 	private Date dueDate;
 	private DateFormat dateFormat;
+	
+	private boolean hasSaved;
 
 	private String id = "";//id needs to be acceable to whole class to it can be used with todo helper
 	@Override
@@ -48,6 +50,7 @@ public class DetailForm extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
+		hasSaved = false;
 
 		completion = (SeekBar) findViewById(R.id.completion);
 		priors[0] = (ImageButton) findViewById(R.id.Priorityq);
@@ -91,7 +94,10 @@ public class DetailForm extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		saveStuff(null);
+		if(!hasSaved)
+		{
+			saveStuff(null);
+		}
 	}
 	public void saveStuff(View v){
 		Log.v(tag, "Progress: "+completion.getProgress());
@@ -111,6 +117,7 @@ public class DetailForm extends Activity {
 		}else {//edit current
 			helper.update(id, taskName.getText().toString(), "", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 		}
+		hasSaved = true;
 		this.finish();
 	}
 	public void priq(View v){priority=-1;clr(v);}
