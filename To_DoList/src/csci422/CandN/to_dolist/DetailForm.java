@@ -6,6 +6,7 @@
  */
 package csci422.CandN.to_dolist;
 
+
 import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import java.text.DateFormat;
 import java.text.ParseException;
-
+//import csci422.CandN.to_dolist.R;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,16 +46,14 @@ public class DetailForm extends Activity {
 	private Date dueDate;
 	private DateFormat dateFormat;
 	
-	private boolean hasSaved;
-
+	//private boolean hasSaved;
+ 
 	private String id = "";//id needs to be acceable to whole class to it can be used with todo helper
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
-		hasSaved = false;
-
 		completion = (SeekBar) findViewById(R.id.completion);
 		priors[0] = (ImageButton) findViewById(R.id.Priorityq);
 		priors[1] = (ImageButton) findViewById(R.id.Priority0);
@@ -74,7 +73,6 @@ public class DetailForm extends Activity {
 		pickList.setAdapter(adpt);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void loadCurrent() {
 		helper=new ToDoHelper(this);
 		id = getIntent().getStringExtra("csci422.CandN.to_dolist.curItem");
@@ -91,19 +89,20 @@ public class DetailForm extends Activity {
 		}
 		completion.setProgress(helper.getState(cur));
 		priority = helper.getPriority(cur);
-		priors[priority+1].setBackgroundResource(R.drawable.widget_frame);
+		priors[priority+1].setBackgroundResource(R.drawable.highlight);
 	}
 
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
-		if(!hasSaved)
-		{
-			saveStuff(null);
-		}
+		super.onDestroy();//TODO is this really a good idea?
+		saveStuff();
 	}
-	public void saveStuff(View v){
+	public void onDone(View v){
+		saveStuff();
+		finish();
+	}
+	public void saveStuff(){
 		Log.v(tag, "Progress: "+completion.getProgress());
 		Log.v(tag, completion.getKeyProgressIncrement()+" was done with keys");
 		Log.v(tag, "Secondary progress: "+completion.getSecondaryProgress());
@@ -121,9 +120,8 @@ public class DetailForm extends Activity {
 		}else {//edit current
 			helper.update(id, taskName.getText().toString(), "", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 		}
-		hasSaved = true;
-		this.finish();
 	}
+	
 	public void priq(View v){priority=-1;clr(v);}
 	public void prin(View v){priority=0;clr(v);}
 	public void prio(View v){priority=1;clr(v);}
@@ -138,7 +136,7 @@ public class DetailForm extends Activity {
 		for(ImageButton b : priors){
 			b.setBackgroundResource(R.drawable.priorityblank);
 		}
-		v.setBackgroundResource(R.drawable.widget_frame);
+		v.setBackgroundResource(R.drawable.highlight);
 	}
 
 	public void deleteTask(View v){
@@ -147,6 +145,7 @@ public class DetailForm extends Activity {
 	
 	public void openCal(View v){
 		//TODO implement
+		//pass the string 
 	}
 	
 	public void openMaps(View v){
