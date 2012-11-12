@@ -99,7 +99,6 @@ public class DetailForm extends Activity {
 		saveStuff();
 	}
 	public void onDone(View v){
-		saveStuff();
 		finish();
 	}
 	public void saveStuff(){
