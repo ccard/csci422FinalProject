@@ -137,6 +137,7 @@ public class ToDo extends ListActivity {
 		Intent i = new Intent(ToDo.this, DetailForm.class);
 		i.putExtra("csci422.CandN.to_dolist.curItem", String.valueOf(id));
 		startActivity(i);
+		initList();
 	}
 
 	 /**
