@@ -212,12 +212,14 @@ public class ToDo extends ListActivity {
 		private CheckBox check = null;
 		private String ID;
 		private ToDoHelper help;
+		private Handler postDelay;
 
 		ItemHolder(View row)
 		{
 			title = (TextView)row.findViewById(R.id.title);
 			date = (TextView)row.findViewById(R.id.date);
 			check = (CheckBox)row.findViewById(R.id.check);
+			postDelay = new Handler();
 			check.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
 				public void onCheckedChanged(CompoundButton buttonView,
@@ -241,6 +243,8 @@ public class ToDo extends ListActivity {
 		{
 			ID = c.getString(0);
 			help = helper;
+			c = help.getById(ID);
+			c.moveToFirst();
 			title.setText(helper.getTitle(c));
 			date.setText(helper.getDate(c));
 
