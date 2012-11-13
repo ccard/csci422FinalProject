@@ -6,6 +6,7 @@
 package csci422.CandN.to_dolist;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.app.ListActivity;
 import android.content.Context;
@@ -41,12 +42,18 @@ public class ToDo extends ListActivity {
 	
 	private SharedPreferences prefs;
 	
+	private Handler delay;
+	
+	private static final int timeDelay = 600;
+	
 	public static final int DONE=95;//If task is more than this complete, it is done.
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_to_do);
+		
+		delay = new Handler();
 
 		helper = new ToDoHelper(this);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -75,8 +82,12 @@ public class ToDo extends ListActivity {
 	@Override
 	public void onResume()
 	{
-		initList();
 		super.onResume();
+		delay.postDelayed(new Runnable(){
+			public void run() {
+				initList();
+			}
+		}, timeDelay);
 	}
 	
 	/**
@@ -137,7 +148,6 @@ public class ToDo extends ListActivity {
 		Intent i = new Intent(ToDo.this, DetailForm.class);
 		i.putExtra("csci422.CandN.to_dolist.curItem", String.valueOf(id));
 		startActivity(i);
-		initList();
 	}
 
 	 /**
