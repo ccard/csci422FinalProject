@@ -34,6 +34,7 @@ public class DetailForm extends Activity {
 	private ImageButton[] priors = new ImageButton[4];
 	private EditText datepick;
 	private EditText address;
+	private EditText street;
 	private ToDoHelper helper;
 	private Cursor cur = null;
 	private Spinner pickList;
@@ -65,7 +66,8 @@ public class DetailForm extends Activity {
 		pickList = ((Spinner) findViewById(R.id.pickList));
 		taskName = ((EditText) findViewById(R.id.taskName));
 		notes = ((EditText) findViewById(R.id.notes));
-		address = (EditText)findViewById(R.id.location);
+		address = (EditText)findViewById(R.id.address);
+		street = (EditText)findViewById(R.id.street);
 		loadCurrent();
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
 
@@ -80,7 +82,7 @@ public class DetailForm extends Activity {
 		cur = helper.getById(id);
 		cur.moveToFirst();//need to set cursor to the beginning 
 		taskName.setText(helper.getTitle(cur));
-		//TODO address
+		loadAddressFields(helper.getAddress(cur));
 		notes.setText(helper.getNotes(cur));
 		try {
 			dueDate = dateFormat.parse(helper.getDate(cur));
@@ -115,9 +117,45 @@ public class DetailForm extends Activity {
 			Log.e(tag, "Can't parse the date.");
 		}
 		if(cur==null){//make a new one
-			helper.insert(taskName.getText().toString(), "", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.insert(taskName.getText().toString(), parseAddressSave(), notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 		}else {//edit current
-			helper.update(id, taskName.getText().toString(), "", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.update(id, taskName.getText().toString(), parseAddressSave(), notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+		}
+	}
+	
+	/**
+	 * This method takes the text from street and address text fields and parses it for
+	 * the data base
+	 * @return the string with the two fields seperated by a + or empty string
+	 */
+	private String parseAddressSave()
+	{
+		String ret;
+		if(!address.getText().toString().isEmpty() || !street.getText().toString().isEmpty())
+		{
+			ret = street.getText().toString()+"+"+address.getText().toString();
+			return ret;
+		}
+		else
+		{
+			ret = "";
+			return ret;
+		}
+	}
+	
+	/**
+	 * This method sets the two address fields if to the passed in string
+	 * or nothing if empty passed in string 
+	 * @param addre the street and address fields seperated by + or empty
+	 */
+	private void loadAddressFields(String addre)
+	{
+		if(!addre.isEmpty())
+		{
+			String words[] = addre.split("\\+");
+			
+			street.setText(words[0]);
+			address.setText(words[1]);
 		}
 	}
 	
@@ -148,10 +186,14 @@ public class DetailForm extends Activity {
 	}
 	
 	public void openMaps(View v){
-		if(!address.getText().toString().isEmpty())
+		if(!address.getText().toString().isEmpty() && !street.getText().toString().isEmpty())
 		{
-			String uri = "geo:0,)?q="+address.getText().toString();
+			String uri = "geo:0,0?q="+street.getText().toString()+"+"+address.getText().toString();
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+		}
+		else
+		{
+			Toast.makeText(this, "Please fill out the two address fields or click the here button", Toast.LENGTH_LONG).show();
 		}
 	}
 
