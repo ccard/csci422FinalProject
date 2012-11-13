@@ -44,7 +44,7 @@ public class ToDo extends ListActivity {
 	
 	private Handler delay;
 	
-	private static final int timeDelay = 600;
+	private static final int timeDelay = 650;
 	
 	public static final int DONE=95;//If task is more than this complete, it is done.
 
@@ -71,6 +71,7 @@ public class ToDo extends ListActivity {
 					helper.insert(newTypeTask.getText().toString(), "", "", "", 0, 0);
 					newTypeTask.setText("");
 					initList();
+					findViewById(R.id.mainLayout).requestFocus();
 					return true;
 				}
 				return false;
