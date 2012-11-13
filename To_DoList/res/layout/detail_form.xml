@@ -3,7 +3,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                 android:layout_height="match_parent"
                 android:text="Due: "
                 android:textSize="10pt" />
-
+
             <EditText
                 android:id="@+id/dueDatePicker"
                 android:layout_width="0dp"
@@ -131,14 +131,27 @@
                     android:text="Here"
                     android:textSize="13dp" />
             </LinearLayout>
-
+		<LinearLayout 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical">
             <EditText
-                android:id="@+id/location"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:id="@+id/street"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="2"
-                android:hint="123 Anystreet"
+                android:hint="example drive"
                 android:inputType="textPostalAddress" />
+            
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:hint="town city zip"
+                android:inputType="textPostalAddress" />
+            
+            </LinearLayout>
 
             <ImageButton
                 android:layout_width="wrap_content"
