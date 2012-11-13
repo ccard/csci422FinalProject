@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:hint="example drive"
+                android:hint="@string/streethint"
                 android:inputType="textPostalAddress" />
             
             <EditText
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:hint="town city zip"
+                android:hint="@string/addresshint"
                 android:inputType="textPostalAddress" />
             
             </LinearLayout>
