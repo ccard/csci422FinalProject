@@ -3,7 +3,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                 android:layout_height="match_parent"
                 android:text="Due: "
                 android:textSize="10pt" />
-
+
             <EditText
                 android:id="@+id/dueDatePicker"
                 android:layout_width="0dp"
@@ -125,33 +125,34 @@
                     android:textSize="10pt" />
 
                 <Button
-                    android:layout_width="53dp"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="Here"
                     android:onClick="getLoc"
+                    android:text="Here"
                     android:textSize="13dp" />
             </LinearLayout>
-		<LinearLayout 
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:orientation="vertical">
-            <EditText
-                android:id="@+id/street"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:hint="@string/streethint"
-                android:inputType="textPostalAddress" />
-            
-            <EditText
-                android:id="@+id/address"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:hint="@string/addresshint"
-                android:inputType="textPostalAddress" />
-            
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/street"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:hint="@string/streethint"
+                    android:inputType="textPostalAddress" />
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:hint="@string/addresshint"
+                    android:inputType="textPostalAddress" />
             </LinearLayout>
 
             <ImageButton
@@ -192,10 +193,27 @@
                 android:text="Completion:"
                 android:textSize="10pt" />
 
-            <SeekBar
-                android:id="@+id/completion"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView android:layout_weight="2" 
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:layout_width="0dp"/>
+
+                <SeekBar
+                    android:id="@+id/completion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="95" />
+
+                <TextView android:layout_weight="2" 
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:layout_width="0dp"/>
+            </LinearLayout>
         </LinearLayout>
 
         <EditText

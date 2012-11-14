@@ -7,6 +7,7 @@
 package csci422.CandN.to_dolist;
 
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -27,7 +28,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 //import csci422.CandN.to_dolist.R;
 import android.util.Log;
 import android.view.View;
@@ -70,7 +75,7 @@ public class DetailForm extends Activity {
 	
 	private WaitForLocation gpsWait;
 	
-	//strings for telling user about latitude and longitued
+	//strings for telling user about latitude and longitude
 	private static final String Lat = "LATITUDE:";
 	private static final String Lon = "LONGITUDE:";
 	
@@ -83,7 +88,7 @@ public class DetailForm extends Activity {
 	
 	//private boolean hasSaved;
  
-	private String id = "";//id needs to be acceable to whole class to it can be used with todo helper
+	private String id = "";//id needs to be accessible to whole class so it can be used with todo helper
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -100,7 +105,8 @@ public class DetailForm extends Activity {
 		//date pickers
 		datepick = (EditText)findViewById(R.id.dueDatePicker);
 		dueDate = new Date(0);//current time
-		dateFormat = DateFormat.getDateTimeInstance();
+		dateFormat = new SimpleDateFormat();
+		dateFormat.setLenient(true);
 		pickList = ((Spinner) findViewById(R.id.pickList));
 		taskName = ((EditText) findViewById(R.id.taskName));
 		notes = ((EditText) findViewById(R.id.notes));
@@ -192,9 +198,11 @@ public class DetailForm extends Activity {
 		int state = completion.getProgress();
 		//float percent= completion.getProgress()/((float)completion.getMax());
 		try {
-			dueDate = dateFormat.parse("");//TODO change to read from the field
+			dueDate = dateFormat.parse(datepick.getText().toString());//TODO change to read from the field
 		} catch (ParseException e) {
 			Log.e(tag, "Can't parse the date.");
+			Log.e(tag, e.getMessage());
+			dueDate = new Date();
 		}
 		if(cur==null){//make a new one
 			helper.insert(taskName.getText().toString(), parseAddressSave(), notes.getText().toString(), dateFormat.format(dueDate), state, priority);
@@ -261,6 +269,13 @@ public class DetailForm extends Activity {
 	}
 	
 	public void openCal(View v){
+		Calendar cal = Calendar.getInstance();              
+		Intent intent = new Intent(Intent.ACTION_EDIT);
+		intent.setType("vnd.android.cursor.item/event");
+		intent.putExtra("beginTime", cal.getTimeInMillis());//TODO pass in string instead
+		intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+		intent.putExtra("title", "A Test Event from android app");
+		startActivityForResult(intent,1);
 		//TODO implement
 		//pass the string 
 	}
