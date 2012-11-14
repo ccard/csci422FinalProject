@@ -64,7 +64,9 @@ public class DetailForm extends Activity {
 	
 	private AtomicBoolean cancelLocation = new AtomicBoolean(false);//thread safe boolean will be using with a listener for location
 	
-	private AtomicBoolean continueSearch = new AtomicBoolean(false);
+	private AtomicBoolean continueSearch = new AtomicBoolean(true);
+	
+	private AtomicBoolean hasDilogShown = new AtomicBoolean(false);
 	
 	private WaitForLocation gpsWait;
 	
@@ -74,7 +76,8 @@ public class DetailForm extends Activity {
 	
 	private static final long gpsWaitDuration = 120000;//wait time for async task
 	
-	private Builder promptContin;//builder for alert dialog
+	private Builder alertBuild;
+	private AlertDialog promptContin;//builder for alert dialog
 	
 	//end code get gps location
 	
@@ -119,17 +122,18 @@ public class DetailForm extends Activity {
 		pd.setOnCancelListener(cancel);
 		
 		//inits alertdialog with appropriate listenere and message
-		promptContin = new AlertDialog.Builder(this);
-		promptContin.setPositiveButton("Yes", new OnClickListener(){
+		alertBuild = new AlertDialog.Builder(this);
+		alertBuild.setPositiveButton("Yes", new OnClickListener(){
 
 			public void onClick(DialogInterface arg0, int arg1) {
 				//nothing needed to be done
 				arg0.dismiss();
+				continueSearch.set(true);
 			}
 			
 		});
 		
-		promptContin.setNegativeButton("No", new OnClickListener(){
+		alertBuild.setNegativeButton("No", new OnClickListener(){
 
 			public void onClick(DialogInterface arg0, int arg1) {
 				continueSearch.set(false);
@@ -138,7 +142,9 @@ public class DetailForm extends Activity {
 			
 		});
 		
-		promptContin.setMessage("Do you wish to continue to find your location?");
+		alertBuild.setMessage("Do you wish to continue to find your location?");
+		
+		promptContin = alertBuild.create();
 		
 		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
 		pickList.setAdapter(adpt);
@@ -324,6 +330,10 @@ public class DetailForm extends Activity {
 	{
 		locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
 		pd.show();
+		if(gpsWait.getStatus() != AsyncTask.Status.PENDING)
+		{
+			gpsWait = new WaitForLocation();
+		}
 		gpsWait.execute("");
 		
 	}
@@ -333,21 +343,25 @@ public class DetailForm extends Activity {
 	 * @author Ch
 	 *
 	 */
-	private class WaitForLocation extends AsyncTask<String, Void, String>
+	private class WaitForLocation extends AsyncTask<String, String, String>
 	{
 		@Override
 		protected String doInBackground(String... params)
 		{
 			//while the atomic booleans both are false
-			while(!cancelLocation.get() && !continueSearch.get())
+			while(!cancelLocation.get() && continueSearch.get())
 			{
+				
 				try{
-					Thread.sleep(gpsWaitDuration);//sleeps the async task thread
+					Thread.sleep(30);//sleeps the async task thread
 					
-					if(!cancelLocation.get() && !continueSearch.get())//checks both attomic booleans
+					if(!cancelLocation.get() && continueSearch.get())//checks both attomic booleans
 					{//not sure if this part works haven't got here yer
 						pd.dismiss();
-						promptContin.show();
+						publishProgress(params);
+						
+						Thread.sleep(4000);
+						publishProgress(params);
 					}
 				}catch (InterruptedException e)
 				{
@@ -358,17 +372,33 @@ public class DetailForm extends Activity {
 		}
 		
 		@Override
+		protected void onProgressUpdate(String... prog)
+		{
+			if(continueSearch.get() && hasDilogShown.get())
+			{
+				pd.show();
+				hasDilogShown.set(false);
+			}
+			else if(continueSearch.get())
+			{
+				promptContin.show();
+				hasDilogShown.set(true);
+			}
+			
+		}
+		
+		@Override
 		protected void onPostExecute(String result)
 		{
 			pd.dismiss();//dismiss the progress dialog
-			if(cancelLocation.get() || continueSearch.get())
+			if(cancelLocation.get() || !continueSearch.get())
 			{
 				//remove location listener
 				locmgr.removeUpdates(onLocChange);
 			}
 			//reset atomic booleans
 			cancelLocation.set(false);
-			continueSearch.set(false);
+			continueSearch.set(true);
 		}
 		
 		@Override
@@ -378,7 +408,7 @@ public class DetailForm extends Activity {
 			locmgr.removeUpdates(onLocChange);
 			pd.dismiss();
 			cancelLocation.set(false);
-			continueSearch.set(false);
+			continueSearch.set(true);
 		}
 		
 	}
