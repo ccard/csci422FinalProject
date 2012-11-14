@@ -35,6 +35,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 //import csci422.CandN.to_dolist.R;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -71,7 +72,7 @@ public class DetailForm extends Activity {
 	
 	private AtomicBoolean continueSearch = new AtomicBoolean(true);
 	
-	private AtomicBoolean hasDilogShown = new AtomicBoolean(false);
+	private AtomicBoolean hasDialogShown = new AtomicBoolean(false);
 	
 	private WaitForLocation gpsWait;
 	
@@ -168,6 +169,7 @@ public class DetailForm extends Activity {
 		notes.setText(helper.getNotes(cur));
 		try {
 			dueDate = dateFormat.parse(helper.getDate(cur));
+			datepick.setText(helper.getDate(cur));
 		} catch (ParseException e) {
 			Log.e(tag, "Can't parse the date.");
 		}
@@ -179,7 +181,7 @@ public class DetailForm extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();//TODO is this really a good idea?
+		super.onDestroy();
 		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
 		{
 			gpsWait.cancel(true);
@@ -199,7 +201,7 @@ public class DetailForm extends Activity {
 		int state = completion.getProgress();
 		//float percent= completion.getProgress()/((float)completion.getMax());
 		try {
-			dueDate = dateFormat.parse(datepick.getText().toString());//TODO change to read from the field
+			dueDate = dateFormat.parse(datepick.getText().toString());
 		} catch (ParseException e) {
 			Log.e(tag, "Can't parse the date.");
 			Log.e(tag, e.getMessage());
@@ -270,6 +272,16 @@ public class DetailForm extends Activity {
 	}
 	
 	public void openCal(View v){
+		Builder calDialog = new Builder(this);
+		LayoutInflater inf = getLayoutInflater();
+		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
+		calDialog.setPositiveButton("Done", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//TODO save the cal stuff.
+				dialog.dismiss();
+			}
+		});
 		Calendar cal = Calendar.getInstance();              
 		Intent intent = new Intent(Intent.ACTION_EDIT);
 		intent.setType("vnd.android.cursor.item/event");
@@ -364,7 +376,7 @@ public class DetailForm extends Activity {
 	
 	/**
 	 * This async task will do waits until the user cancels or the location is found
-	 * @author Ch
+	 * @author Chris Card
 	 *
 	 */
 	private class WaitForLocation extends AsyncTask<String, String, String>
@@ -398,15 +410,15 @@ public class DetailForm extends Activity {
 		@Override
 		protected void onProgressUpdate(String... prog)
 		{
-			if(continueSearch.get() && hasDilogShown.get())
+			if(continueSearch.get() && hasDialogShown.get())
 			{
 				pd.show();
-				hasDilogShown.set(false);
+				hasDialogShown.set(false);
 			}
 			else if(continueSearch.get())
 			{
 				promptContin.show();
-				hasDilogShown.set(true);
+				hasDialogShown.set(true);
 			}
 			
 		}
@@ -423,7 +435,7 @@ public class DetailForm extends Activity {
 			//reset atomic booleans
 			cancelLocation.set(false);
 			continueSearch.set(true);
-			hasDilogShown.set(false);
+			hasDialogShown.set(false);
 		}
 		
 		@Override
@@ -434,7 +446,7 @@ public class DetailForm extends Activity {
 			pd.dismiss();
 			cancelLocation.set(false);
 			continueSearch.set(true);
-			hasDilogShown.set(false);
+			hasDialogShown.set(false);
 		}
 		
 	}
