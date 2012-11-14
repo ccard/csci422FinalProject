@@ -8,24 +8,34 @@ package csci422.CandN.to_dolist;
 
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import java.text.DateFormat;
 import java.text.ParseException;
 //import csci422.CandN.to_dolist.R;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 public class DetailForm extends Activity {
@@ -47,6 +57,27 @@ public class DetailForm extends Activity {
 	private Date dueDate;
 	private DateFormat dateFormat;
 	
+	//this code is all for waiting to get the gps location
+	private LocationManager locmgr = null;
+	
+	private ProgressDialog pd;//show spinning wheel while it is finding the location
+	
+	private AtomicBoolean cancelLocation = new AtomicBoolean(false);//thread safe boolean will be using with a listener for location
+	
+	private AtomicBoolean continueSearch = new AtomicBoolean(false);
+	
+	private WaitForLocation gpsWait;
+	
+	//strings for telling user about latitude and longitued
+	private static final String Lat = "LATITUDE:";
+	private static final String Lon = "LONGITUDE:";
+	
+	private static final long gpsWaitDuration = 120000;//wait time for async task
+	
+	private Builder promptContin;//builder for alert dialog
+	
+	//end code get gps location
+	
 	//private boolean hasSaved;
  
 	private String id = "";//id needs to be acceable to whole class to it can be used with todo helper
@@ -55,11 +86,15 @@ public class DetailForm extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
+		
 		completion = (SeekBar) findViewById(R.id.completion);
+		
+		//initializes priortity buttons
 		priors[0] = (ImageButton) findViewById(R.id.Priorityq);
 		priors[1] = (ImageButton) findViewById(R.id.Priority0);
 		priors[2] = (ImageButton) findViewById(R.id.Priority1);
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
+		//date pickers
 		datepick = (EditText)findViewById(R.id.dueDatePicker);
 		dueDate = new Date(0);//current time
 		dateFormat = DateFormat.getDateTimeInstance();
@@ -71,6 +106,40 @@ public class DetailForm extends Activity {
 		loadCurrent();
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
 
+		locmgr = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		
+		gpsWait = new WaitForLocation();//creates new async task
+		
+		//inits the progress dialog with title message
+		pd = new ProgressDialog(this);
+		pd.setTitle("Finding location");
+		pd.setMessage("This could take a few minutes depending on your location.");
+		pd.setCancelable(true);//allows the dialog to be cancelable
+		pd.setIndeterminate(true);//this sets the spinning animation instead of progress
+		pd.setOnCancelListener(cancel);
+		
+		//inits alertdialog with appropriate listenere and message
+		promptContin = new AlertDialog.Builder(this);
+		promptContin.setPositiveButton("Yes", new OnClickListener(){
+
+			public void onClick(DialogInterface arg0, int arg1) {
+				//nothing needed to be done
+				arg0.dismiss();
+			}
+			
+		});
+		
+		promptContin.setNegativeButton("No", new OnClickListener(){
+
+			public void onClick(DialogInterface arg0, int arg1) {
+				continueSearch.set(false);
+				arg0.dismiss();
+			}
+			
+		});
+		
+		promptContin.setMessage("Do you wish to continue to find your location?");
+		
 		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
 		pickList.setAdapter(adpt);
 	}
@@ -98,6 +167,11 @@ public class DetailForm extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();//TODO is this really a good idea?
+		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
+		{
+			gpsWait.cancel(true);
+		}
+		
 		saveStuff();
 	}
 	public void onDone(View v){
@@ -187,7 +261,7 @@ public class DetailForm extends Activity {
 	
 	public void openMaps(View v){
 		if(!address.getText().toString().isEmpty() && !street.getText().toString().isEmpty())
-		{
+		{//add code here for lat and lon if applicable
 			String uri = "geo:0,0?q="+street.getText().toString()+"+"+address.getText().toString();
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
 		}
@@ -195,6 +269,118 @@ public class DetailForm extends Activity {
 		{
 			Toast.makeText(this, "Please fill out the two address fields or click the here button", Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	//gets location from gps
+	private LocationListener onLocChange = new LocationListener(){
+
+		public void onLocationChanged(Location location) 
+		{	
+			if(null != location)
+			{
+				//brings the latitude and longitude into something google maps can intemperate
+				//correctly
+				street.setText(Lat+(int)(location.getLatitude()*1E6));
+				address.setText(Lon+(int)(location.getLongitude()*1E6));
+				
+				cancelLocation.set(true);
+				
+				gpsWait.cancel(true);//cancels the async task if the location is gotten
+			}	
+		}
+
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
+	//this is a listener for the spinner dialog so when the back button is pressed it performes that tasks bellow
+	private OnCancelListener cancel = new OnCancelListener(){
+
+		public void onCancel(DialogInterface arg0) {
+			cancelLocation.set(true);
+			gpsWait.cancel(true);
+		}
+	};
+	
+	/**
+	 * The method is called by the here button add a locationlistenere to start gps to look for the users location
+	 * shows spinner dialog and starts the async task to wait for the location change
+	 * @param v
+	 */
+	public void getLoc(View v)
+	{
+		locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
+		pd.show();
+		gpsWait.execute("");
+		
+	}
+	
+	/**
+	 * This async task will do waits until the user cancels or the location is found
+	 * @author Ch
+	 *
+	 */
+	private class WaitForLocation extends AsyncTask<String, Void, String>
+	{
+		@Override
+		protected String doInBackground(String... params)
+		{
+			//while the atomic booleans both are false
+			while(!cancelLocation.get() && !continueSearch.get())
+			{
+				try{
+					Thread.sleep(gpsWaitDuration);//sleeps the async task thread
+					
+					if(!cancelLocation.get() && !continueSearch.get())//checks both attomic booleans
+					{//not sure if this part works haven't got here yer
+						pd.dismiss();
+						promptContin.show();
+					}
+				}catch (InterruptedException e)
+				{
+					Log.e("DetailForm", e.getMessage());
+				}
+			}
+			return "Finished";
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			pd.dismiss();//dismiss the progress dialog
+			if(cancelLocation.get() || continueSearch.get())
+			{
+				//remove location listener
+				locmgr.removeUpdates(onLocChange);
+			}
+			//reset atomic booleans
+			cancelLocation.set(false);
+			continueSearch.set(false);
+		}
+		
+		@Override
+		protected void onCancelled()
+		{
+			//removes listener
+			locmgr.removeUpdates(onLocChange);
+			pd.dismiss();
+			cancelLocation.set(false);
+			continueSearch.set(false);
+		}
+		
 	}
 
 
