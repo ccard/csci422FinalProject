@@ -143,6 +143,7 @@ public class DetailForm extends Activity {
 
 			public void onClick(DialogInterface arg0, int arg1) {
 				continueSearch.set(false);
+				gpsWait.cancel(true);
 				arg0.dismiss();
 			}
 			
@@ -343,13 +344,21 @@ public class DetailForm extends Activity {
 	 */
 	public void getLoc(View v)
 	{
-		locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
-		pd.show();
-		if(gpsWait.getStatus() != AsyncTask.Status.PENDING)
+		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
 		{
-			gpsWait = new WaitForLocation();
+			gpsWait.cancel(true);
 		}
-		gpsWait.execute("");
+		
+		gpsWait = new WaitForLocation();
+		
+		
+		if(gpsWait.getStatus() == AsyncTask.Status.PENDING)
+		{
+			locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
+			pd.show();
+			gpsWait.execute("");
+		}
+		
 		
 	}
 	
@@ -368,7 +377,7 @@ public class DetailForm extends Activity {
 			{
 				
 				try{
-					Thread.sleep(30);//sleeps the async task thread
+					Thread.sleep(gpsWaitDuration);//sleeps the async task thread
 					
 					if(!cancelLocation.get() && continueSearch.get())//checks both attomic booleans
 					{//not sure if this part works haven't got here yer
@@ -414,6 +423,7 @@ public class DetailForm extends Activity {
 			//reset atomic booleans
 			cancelLocation.set(false);
 			continueSearch.set(true);
+			hasDilogShown.set(false);
 		}
 		
 		@Override
@@ -424,6 +434,7 @@ public class DetailForm extends Activity {
 			pd.dismiss();
 			cancelLocation.set(false);
 			continueSearch.set(true);
+			hasDilogShown.set(false);
 		}
 		
 	}
