@@ -87,6 +87,12 @@ public class DetailForm extends Activity {
 	
 	//end code get gps location
 	
+	//delte code
+	
+	private boolean delete = false;
+	
+	//end delete code
+	
 	//private boolean hasSaved;
  
 	private String id = "";//id needs to be accessible to whole class so it can be used with todo helper
@@ -187,7 +193,10 @@ public class DetailForm extends Activity {
 			gpsWait.cancel(true);
 		}
 		
-		saveStuff();
+		if(!delete)
+		{
+			saveStuff();
+		}
 	}
 	public void onDone(View v){
 		finish();
@@ -267,8 +276,20 @@ public class DetailForm extends Activity {
 		v.setBackgroundResource(R.drawable.highlight);
 	}
 
-	public void deleteTask(View v){
-		Toast.makeText(this, "Not implemented", Toast.LENGTH_LONG).show();
+	public void deleteTask(View v)
+	{
+		if(!id.isEmpty())
+		{
+			helper.delete(id);
+			delete = true;
+			finish();
+		}
+		else
+		{
+			delete = true;
+			finish();
+		}
+
 	}
 	
 	public void openCal(View v){

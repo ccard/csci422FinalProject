@@ -45,6 +45,13 @@ public class ToDoHelper extends SQLiteOpenHelper
 		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state, priority FROM todos WHERE _ID=?", args);
 	}
 	
+	public void delete(String id)
+	{
+		String ID[] ={id};
+		
+		getWritableDatabase().delete("todos", "_ID=?", ID);
+	}
+	
 //	public String getId(Cursor c){
 //		return c.getString(0);//TODO is this the right number?
 //	}
