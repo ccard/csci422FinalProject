@@ -102,6 +102,19 @@ public class DetailForm extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
 		
+		initWidets();
+
+		loadCurrent();
+		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
+
+		initFindLocation();
+		
+		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
+		pickList.setAdapter(adpt);
+	}
+
+	public void initWidets()
+	{
 		completion = (SeekBar) findViewById(R.id.completion);
 		
 		//initializes priortity buttons
@@ -119,9 +132,10 @@ public class DetailForm extends Activity {
 		notes = ((EditText) findViewById(R.id.notes));
 		address = (EditText)findViewById(R.id.address);
 		street = (EditText)findViewById(R.id.street);
-		loadCurrent();
-		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
+	}
 
+	public void initFindLocation()
+	{
 		locmgr = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		
 		gpsWait = new WaitForLocation();//creates new async task
@@ -159,9 +173,6 @@ public class DetailForm extends Activity {
 		alertBuild.setMessage("Do you wish to continue to find your location?");
 		
 		promptContin = alertBuild.create();
-		
-		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
-		pickList.setAdapter(adpt);
 	}
 
 	private void loadCurrent() {
