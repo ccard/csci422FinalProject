@@ -87,7 +87,7 @@ public class DetailForm extends Activity {
 	
 	//end code get gps location
 	
-	//delte code
+	//delete fields
 	
 	private boolean delete = false;
 	
