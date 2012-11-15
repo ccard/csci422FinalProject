@@ -8,4 +8,14 @@
         android:key="sort_order"
         android:summary="Choose the order the list uses"
         android:title="Sort Order" />
+    
+    <CheckBoxPreference 
+        android:key="syncCal"
+        android:title="@string/titleSync"
+        android:summary="@string/syncSumm"/>
+    <CheckBoxPreference
+        android:key="syncWcal"
+        android:title="@string/calSync"
+        android:summary="@string/calSumm"
+        android:dependency="syncCal"/>
 </PreferenceScreen>

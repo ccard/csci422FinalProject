@@ -12,5 +12,9 @@
     <string name="prefs">Settings</string>
     <string name="streethint">street</string>
     <string name="addresshint">City State Zip</string>
-
+	<string name="titleSync">Sync todo list with:</string>
+	<string name="syncSumm">Sync with google calenders or save to a file</string>
+    <string name="calSync">Sync with Google calenders</string>
+    <string name="calSumm">Check this if you want to sync with Google Calenders</string>
+	
 </resources>

@@ -77,6 +77,8 @@ public final class R {
     public static final class string {
         public static final int addresshint=0x7f07000b;
         public static final int app_name=0x7f070000;
+        public static final int calSumm=0x7f07000f;
+        public static final int calSync=0x7f07000e;
         public static final int empty=0x7f070005;
         public static final int hello_world=0x7f070001;
         public static final int menuNotice=0x7f070004;
@@ -85,6 +87,8 @@ public final class R {
         public static final int prefs=0x7f070009;
         public static final int ques=0x7f070008;
         public static final int streethint=0x7f07000a;
+        public static final int syncSumm=0x7f07000d;
+        public static final int titleSync=0x7f07000c;
         public static final int title_activity_detail_form=0x7f070006;
         public static final int title_activity_to_do=0x7f070003;
     }
