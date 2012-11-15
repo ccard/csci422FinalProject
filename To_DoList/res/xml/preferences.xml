@@ -17,5 +17,6 @@
         android:key="syncWcal"
         android:title="@string/calSync"
         android:summary="@string/calSumm"
+        android:defaultValue="true"
         android:dependency="syncCal"/>
 </PreferenceScreen>
