@@ -29,7 +29,6 @@
 
         <service android:name=".WidgetService" >
         </service>
-        <service android:name=".SyncFiles"></service>
 
         <service
             android:name=".ListWidgetService"
