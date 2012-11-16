@@ -76,15 +76,19 @@ public class FileSync {
 		c.close();
 	}
 	
+	/**
+	 * This saves the current state of the flags to SyncHelper data base
+	 * @param h place to save to
+	 */
 	public void save(SyncHelper h)
 	{
 		Cursor c = h.getAll();
 		if(c.moveToFirst())
-		{
+		{//if the data base has at least one only needs one entry
 			h.update(c.getString(0), toSyncCal, toSaveFile);
 		}
 		else
-		{
+		{//other wise insert into the data base
 			h.insert(toSyncCal, toSaveFile);
 		}
 		c.close();
