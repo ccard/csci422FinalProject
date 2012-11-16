@@ -87,7 +87,7 @@ public class DetailForm extends Activity {
 	
 	//end code get gps location
 	
-	//delte code
+	//delete fields
 	
 	private boolean delete = false;
 	
@@ -102,6 +102,19 @@ public class DetailForm extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
 		
+		initWidets();
+
+		loadCurrent();
+		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
+
+		initFindLocation();
+		
+		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
+		pickList.setAdapter(adpt);
+	}
+
+	public void initWidets()
+	{
 		completion = (SeekBar) findViewById(R.id.completion);
 		
 		//initializes priortity buttons
@@ -119,9 +132,10 @@ public class DetailForm extends Activity {
 		notes = ((EditText) findViewById(R.id.notes));
 		address = (EditText)findViewById(R.id.address);
 		street = (EditText)findViewById(R.id.street);
-		loadCurrent();
-		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
+	}
 
+	public void initFindLocation()
+	{
 		locmgr = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		
 		gpsWait = new WaitForLocation();//creates new async task
@@ -159,9 +173,6 @@ public class DetailForm extends Activity {
 		alertBuild.setMessage("Do you wish to continue to find your location?");
 		
 		promptContin = alertBuild.create();
-		
-		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
-		pickList.setAdapter(adpt);
 	}
 
 	private void loadCurrent() {
@@ -317,8 +328,19 @@ public class DetailForm extends Activity {
 	public void openMaps(View v){
 		if(!address.getText().toString().isEmpty() && !street.getText().toString().isEmpty())
 		{//add code here for lat and lon if applicable
-			String uri = "geo:0,0?q="+street.getText().toString()+"+"+address.getText().toString();
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+			if(street.getText().toString().contains(Lat) && address.getText().toString().contains(Lon))
+			{
+				String lat[] = street.getText().toString().split(":");
+				String lon[] = address.getText().toString().split(":");
+				
+				String uri = "geo:"+lat[1]+","+lon[1];
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+			}
+			else
+			{
+				String uri = "geo:0,0?q="+street.getText().toString()+"+"+address.getText().toString();
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+			}
 		}
 		else
 		{
@@ -448,11 +470,8 @@ public class DetailForm extends Activity {
 		protected void onPostExecute(String result)
 		{
 			pd.dismiss();//dismiss the progress dialog
-			if(cancelLocation.get() || !continueSearch.get())
-			{
 				//remove location listener
 				locmgr.removeUpdates(onLocChange);
-			}
 			//reset atomic booleans
 			cancelLocation.set(false);
 			continueSearch.set(true);
@@ -463,8 +482,8 @@ public class DetailForm extends Activity {
 		protected void onCancelled()
 		{
 			//removes listener
-			locmgr.removeUpdates(onLocChange);
 			pd.dismiss();
+			locmgr.removeUpdates(onLocChange);
 			cancelLocation.set(false);
 			continueSearch.set(true);
 			hasDialogShown.set(false);
