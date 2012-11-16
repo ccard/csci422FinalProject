@@ -117,6 +117,7 @@ public class FileSync {
 			//TODO: Nathan put the calander contract code here
 			
 
+			c.close();
 			isRunning = false;//don't remove could cause problems
 		}//else do nothing
 	}
@@ -141,7 +142,7 @@ public class FileSync {
 
 			//TODO: put function to save to the file
 			
-
+			c.close();
 			isRunning = false;//dont remove could cause problems
 		}//else do nothing
 	}
