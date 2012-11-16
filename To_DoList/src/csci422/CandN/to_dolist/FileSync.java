@@ -22,6 +22,10 @@ public class FileSync {
 	//to be used later but for sync the data base
 	//with the todo.txt file format or just a file
 	private boolean toSaveFile;
+
+	//this tells other methods that sync is running so that they will not
+	//with the state of this class
+	private static boolean isRunning;
 	
 	/**
 	 * Private constructor so that this class controls
@@ -31,7 +35,7 @@ public class FileSync {
 	{
 		toSyncCal = false;
 		toSaveFile = false;
-
+		isRunning = false;
 	}
 	
 	/**
@@ -48,6 +52,11 @@ public class FileSync {
 		}
 		
 		return instance;
+	}
+
+	public static boolean isItRunning()
+	{
+		return isRunning;
 	}
 
 	/**
@@ -101,11 +110,14 @@ public class FileSync {
 	{
 		if (toSyncCal) 
 		{
+			isRunning = true;//dont remove could cause problems
 			Cursor c = help.getAll("title");
 			c.moveToFirst();
 
 			//TODO: Nathan put the calander contract code here
 			
+
+			isRunning = false;//don't remove could cause problems
 		}//else do nothing
 	}
 
@@ -123,11 +135,14 @@ public class FileSync {
 	{
 		if (toSaveFile) 
 		{
+			isRunning = true;//dont remove could cause problems
 			Cursor c = help.getAll("title");
 			c.moveToFirst();
 
 			//TODO: put function to save to the file
 			
+
+			isRunning = false;//dont remove could cause problems
 		}//else do nothing
 	}
 
