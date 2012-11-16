@@ -56,6 +56,8 @@ public class ToDo extends ListActivity {
 	private ProgressDialog pd;
 	
 	private WaitForSync syncing;
+	
+	private SyncHelper syncHelp;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,10 @@ public class ToDo extends ListActivity {
 		delay = new Handler();
 
 		helper = new ToDoHelper(this);
+		syncHelp = new SyncHelper(this);
+		
+		FileSync.getInstance().load(syncHelp);
+		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		initList();
 		prefs.registerOnSharedPreferenceChangeListener(prefListener); 
@@ -135,6 +141,7 @@ public class ToDo extends ListActivity {
 	{
 		super.onDestroy();
 		helper.close();
+		FileSync.getInstance().save(syncHelp);
 	}
 
 	@Override
@@ -173,11 +180,11 @@ public class ToDo extends ListActivity {
 	{
 		if (FileSync.getInstance().isSyncCal() || FileSync.getInstance().isSaveFile()) 
 		{
-			menu.getItem(R.id.sync).setEnabled(true);
+			menu.findItem(R.id.sync).setEnabled(true);
 		}
 		else
 		{
-			menu.getItem(R.id.sync).setEnabled(false);
+			menu.findItem(R.id.sync).setEnabled(false);
 		}
 		
 		return super.onPrepareOptionsMenu(menu);
