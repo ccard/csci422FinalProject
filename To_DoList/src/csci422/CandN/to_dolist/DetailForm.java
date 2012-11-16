@@ -9,6 +9,7 @@ package csci422.CandN.to_dolist;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.Activity;
@@ -38,10 +39,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class DetailForm extends Activity {
@@ -303,15 +306,20 @@ public class DetailForm extends Activity {
 
 	}
 	
-	public void openCal(View v){
+	public void openCal(View v){ 
 		Builder calDialog = new Builder(this);
 		LayoutInflater inf = getLayoutInflater();
 		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
 		calDialog.setPositiveButton("Done", new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				//TODO save the cal stuff.
+				//TODO set an editText to "Saving..."
 				dialog.dismiss();
+				DatePicker dp = ((DatePicker)findViewById(R.id.datePicker1));
+				TimePicker tp = ((TimePicker)findViewById(R.id.timePicker1));
+				GregorianCalendar gc = new GregorianCalendar(dp.getYear(),dp.getMonth(),dp.getDayOfMonth(),
+						tp.getCurrentHour(),tp.getCurrentMinute());//Is this the current, or selected?
+				DetailForm.this.setDueDate(gc.getTime());
 			}
 		});
 		Calendar cal = Calendar.getInstance();              
@@ -489,6 +497,15 @@ public class DetailForm extends Activity {
 			hasDialogShown.set(false);
 		}
 		
+	}
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+		datepick.setText(dateFormat.format(dueDate));
 	}
 
 
