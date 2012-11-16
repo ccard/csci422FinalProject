@@ -44,6 +44,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -313,8 +314,7 @@ public class DetailForm extends Activity {
 		calDialog.setPositiveButton("Done", new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				//TODO set an editText to "Saving..."
-				dialog.dismiss();
+				((TextView)findViewById(R.id.pleaseWaitMessage)).setText("Saving...");
 				DatePicker dp = ((DatePicker)findViewById(R.id.datePicker1));
 				TimePicker tp = ((TimePicker)findViewById(R.id.timePicker1));
 
@@ -324,8 +324,10 @@ public class DetailForm extends Activity {
 							tp.getCurrentHour(),tp.getCurrentMinute());//Is this the current, or selected?
 					DetailForm.this.setDueDate(gc.getTime());
 				}catch(NullPointerException e){
-					//Log.e(tag, e.getCause().toString());
+					Log.e(tag, dp.toString());
+					Log.e(tag, tp.toString());
 				}
+				dialog.dismiss();
 			}
 		});
 		calDialog.show();
