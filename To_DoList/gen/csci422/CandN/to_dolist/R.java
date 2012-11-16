@@ -22,12 +22,13 @@ public final class R {
         public static final int ic_menu_mapmode=0x7f020004;
         public static final int ic_menu_my_calendar=0x7f020005;
         public static final int ic_menu_settings_holo_light=0x7f020006;
-        public static final int priority1=0x7f020007;
-        public static final int priority2=0x7f020008;
-        public static final int priorityblank=0x7f020009;
-        public static final int prioritydot=0x7f02000a;
-        public static final int priorityq=0x7f02000b;
-        public static final int widget_frame=0x7f02000c;
+        public static final int ic_popup_sync_1=0x7f020007;
+        public static final int priority1=0x7f020008;
+        public static final int priority2=0x7f020009;
+        public static final int priorityblank=0x7f02000a;
+        public static final int prioritydot=0x7f02000b;
+        public static final int priorityq=0x7f02000c;
+        public static final int widget_frame=0x7f02000d;
     }
     public static final class id {
         public static final int Priorities=0x7f0a0004;
@@ -57,6 +58,7 @@ public final class R {
         public static final int priority=0x7f0a0018;
         public static final int settings=0x7f0a001d;
         public static final int street=0x7f0a000d;
+        public static final int sync=0x7f0a001e;
         public static final int taskName=0x7f0a0002;
         public static final int tasks=0x7f0a001b;
         public static final int title=0x7f0a0016;
@@ -87,7 +89,10 @@ public final class R {
         public static final int prefs=0x7f070009;
         public static final int ques=0x7f070008;
         public static final int streethint=0x7f07000a;
+        public static final int syncMenTitle=0x7f070010;
         public static final int syncSumm=0x7f07000d;
+        /**  preference layout strings 
+         */
         public static final int titleSync=0x7f07000c;
         public static final int title_activity_detail_form=0x7f070006;
         public static final int title_activity_to_do=0x7f070003;
