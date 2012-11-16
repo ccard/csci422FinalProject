@@ -12,14 +12,21 @@ import android.content.Intent;
 
 public class SyncFiles extends IntentService {
 
+	public static final String HELPER = "csci422.CandN.to_dolist.ToDoHelper";
+
+
 	public SyncFiles(String name) {
 		super("SyncFiles");
 	}
 
 	@Override
-	protected void onHandleIntent(Intent arg0) {
-		// TODO Auto-generated method stub
+	protected void onHandleIntent(Intent i) 
+	{
+		ToDoHelper help = (ToDoHelper)i.getExtras().get(HELPER);
 
+		FileSync.getInstance().syncWithCal(help);
+
+		//TODO: if we sync with file put here
 	}
 
 }
