@@ -317,20 +317,26 @@ public class DetailForm extends Activity {
 				dialog.dismiss();
 				DatePicker dp = ((DatePicker)findViewById(R.id.datePicker1));
 				TimePicker tp = ((TimePicker)findViewById(R.id.timePicker1));
-				GregorianCalendar gc = new GregorianCalendar(dp.getYear(),dp.getMonth(),dp.getDayOfMonth(),
-						tp.getCurrentHour(),tp.getCurrentMinute());//Is this the current, or selected?
-				DetailForm.this.setDueDate(gc.getTime());
+
+				GregorianCalendar gc;
+				try{
+					gc = new GregorianCalendar(dp.getYear(),dp.getMonth(),dp.getDayOfMonth(),
+							tp.getCurrentHour(),tp.getCurrentMinute());//Is this the current, or selected?
+					DetailForm.this.setDueDate(gc.getTime());
+				}catch(NullPointerException e){
+					//Log.e(tag, e.getCause().toString());
+				}
 			}
 		});
+		calDialog.show();
+		/*
 		Calendar cal = Calendar.getInstance();              
 		Intent intent = new Intent(Intent.ACTION_EDIT);
 		intent.setType("vnd.android.cursor.item/event");
 		intent.putExtra("beginTime", cal.getTimeInMillis());//TODO pass in string instead
 		intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
 		intent.putExtra("title", "A Test Event from android app");
-		startActivityForResult(intent,1);
-		//TODO implement
-		//pass the string 
+		startActivityForResult(intent,1); */
 	}
 	
 	public void openMaps(View v){
@@ -478,8 +484,8 @@ public class DetailForm extends Activity {
 		protected void onPostExecute(String result)
 		{
 			pd.dismiss();//dismiss the progress dialog
-				//remove location listener
-				locmgr.removeUpdates(onLocChange);
+			//remove location listener
+			locmgr.removeUpdates(onLocChange);
 			//reset atomic booleans
 			cancelLocation.set(false);
 			continueSearch.set(true);
