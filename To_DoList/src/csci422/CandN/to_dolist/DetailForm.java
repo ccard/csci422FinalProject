@@ -317,17 +317,13 @@ public class DetailForm extends Activity {
 				((TextView)findViewById(R.id.pleaseWaitMessage)).setText("Saving...");
 				DatePicker dp = ((DatePicker)findViewById(R.id.datePicker1));
 				TimePicker tp = ((TimePicker)findViewById(R.id.timePicker1));
-
 				GregorianCalendar gc;
-				try{
-					gc = new GregorianCalendar(dp.getYear(),dp.getMonth(),dp.getDayOfMonth(),
-							tp.getCurrentHour(),tp.getCurrentMinute());//Is this the current, or selected?
-					DetailForm.this.setDueDate(gc.getTime());
-				}catch(NullPointerException e){
-					Log.e(tag, dp.toString());
-					Log.e(tag, tp.toString());
-				}
-				dialog.dismiss();
+				gc = new GregorianCalendar(dp.getYear(),dp.getMonth(),dp.getDayOfMonth(),
+						tp.getCurrentHour(),tp.getCurrentMinute());//Is this the current, or selected?
+				DetailForm.this.setDueDate(gc.getTime());
+
+
+				//dialog.dismiss();
 			}
 		});
 		calDialog.show();

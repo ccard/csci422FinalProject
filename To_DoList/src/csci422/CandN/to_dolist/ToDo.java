@@ -5,6 +5,7 @@
  */
 package csci422.CandN.to_dolist;
 
+import android.media.audiofx.Visualizer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,7 +16,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.WebView.FindListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -56,7 +61,6 @@ public class ToDo extends ListActivity {
 	private ProgressDialog pd;
 	
 	private WaitForSync syncing;
-	
 	private SyncHelper syncHelp;
 
 	@Override
@@ -260,13 +264,13 @@ public class ToDo extends ListActivity {
 		private String ID;
 		private ToDoHelper help;
 		private ImageView view = null;
+		private Drawable progress = null;
 		
 		ItemHolder(View row)
 		{
 			title = (TextView)row.findViewById(R.id.title);
 			date = (TextView)row.findViewById(R.id.date);
 			view = (ImageView)row.findViewById(R.id.priority);
-
 			check = (CheckBox)row.findViewById(R.id.check);
 			check.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 				public void onCheckedChanged(CompoundButton buttonView,
@@ -301,6 +305,9 @@ public class ToDo extends ListActivity {
 			else
 			{
 				check.setChecked(false);
+				progress = Drawable.createFromPath("res/drawable/highlight.png");//TODO change image
+				progress.getBounds().top = 100-helper.getState(c);
+				check.setBackgroundDrawable(progress);
 			}
 
 			switch(help.getPriority(c))
