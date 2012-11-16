@@ -53,6 +53,42 @@ public class FileSync {
 		
 		return instance;
 	}
+	
+	/**
+	 * this method loads the past state of this class from synchelper
+	 * @param h data base from which it will get the previous state
+	 */
+	public void load(SyncHelper h)
+	{
+		Cursor c = h.getAll();
+		if(c.moveToFirst())
+		{
+			if(h.getSync(c).equals("true"))
+			{
+				toSyncCal = true;
+			}
+			
+			if(h.getSave(c).equals("true"))
+			{
+				toSaveFile = true;
+			}
+		}
+		c.close();
+	}
+	
+	public void save(SyncHelper h)
+	{
+		Cursor c = h.getAll();
+		if(c.moveToFirst())
+		{
+			h.update(c.getString(0), toSyncCal, toSaveFile);
+		}
+		else
+		{
+			h.insert(toSyncCal, toSaveFile);
+		}
+		c.close();
+	}
 
 	public static boolean isItRunning()
 	{
