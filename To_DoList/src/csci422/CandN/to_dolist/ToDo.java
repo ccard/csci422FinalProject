@@ -5,7 +5,6 @@
  */
 package csci422.CandN.to_dolist;
 
-import android.media.audiofx.Visualizer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -305,8 +304,9 @@ public class ToDo extends ListActivity {
 			else
 			{
 				check.setChecked(false);
-				progress = Drawable.createFromPath("res/drawable/highlight.png");//TODO change image
-				progress.getBounds().top = 100-helper.getState(c);
+				//BitmapFactory.decodeResource(, R.id.)
+				progress = Drawable.createFromPath("/home/nathan/Documents/csci422FinalProject/To_DoList/res/drawable/highlight.png");//TODO change image
+				progress.setBounds(0, (100-helper.getState(c))*40/100, 40, 40);
 				check.setBackgroundDrawable(progress);
 			}
 
