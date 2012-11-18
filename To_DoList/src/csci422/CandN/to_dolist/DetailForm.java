@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -314,9 +315,9 @@ public class DetailForm extends Activity {
 		calDialog.setPositiveButton("Done", new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				((TextView)findViewById(R.id.pleaseWaitMessage)).setText("Saving...");
-				DatePicker dp = ((DatePicker)findViewById(R.id.datePicker1));
-				TimePicker tp = ((TimePicker)findViewById(R.id.timePicker1));
+				((TextView)((Dialog)dialog).findViewById(R.id.pleaseWaitMessage)).setText("Saving...");
+				DatePicker dp = ((DatePicker)((Dialog)dialog).findViewById(R.id.datePicker1));
+				TimePicker tp = ((TimePicker)((Dialog)dialog).findViewById(R.id.timePicker1));
 				GregorianCalendar gc;
 				gc = new GregorianCalendar(dp.getYear(),dp.getMonth(),dp.getDayOfMonth(),
 						tp.getCurrentHour(),tp.getCurrentMinute());//Is this the current, or selected?
