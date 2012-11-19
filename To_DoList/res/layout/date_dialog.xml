@@ -8,15 +8,13 @@
         android:id="@+id/datePicker1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleX="0.5"
-        android:scaleY="0.5" />
+         />
 
     <TimePicker
         android:id="@+id/timePicker1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleX="0.5"
-        android:scaleY="0.5" />
+         />
 
     <TextView
         android:id="@+id/pleaseWaitMessage"
