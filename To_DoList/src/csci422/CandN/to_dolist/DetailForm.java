@@ -7,7 +7,6 @@
 package csci422.CandN.to_dolist;
 
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -30,10 +29,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 //import csci422.CandN.to_dolist.R;
 import android.util.Log;
@@ -313,7 +309,7 @@ public class DetailForm extends Activity {
 		LayoutInflater inf = getLayoutInflater();
 		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
 		calDialog.setPositiveButton("Done", new OnClickListener() {
-			@Override
+			
 			public void onClick(DialogInterface dialog, int which) {
 				((TextView)((Dialog)dialog).findViewById(R.id.pleaseWaitMessage)).setText("Saving...");
 				DatePicker dp = ((DatePicker)((Dialog)dialog).findViewById(R.id.datePicker1));
