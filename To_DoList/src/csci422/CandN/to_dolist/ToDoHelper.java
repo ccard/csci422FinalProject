@@ -90,12 +90,19 @@ public class ToDoHelper extends SQLiteOpenHelper
 	}
 
 
-	public void notified(String id, int val)
+	public void notified(String id, boolean val)
 	{
 		String args[] = {id};
 		ContentValues cv = new ContentValues();
 		
-		cv.put("notified", val);
+		if(val)
+		{
+			cv.put("notified", 1);
+		}
+		else
+		{
+			cv.put("notified", 0);
+		}
 		
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
@@ -128,8 +135,13 @@ public class ToDoHelper extends SQLiteOpenHelper
 	{
 		return c.getInt(6);
 	}
-	public int getNotified(Cursor c)
+	public boolean getNotified(Cursor c)
 	{
-		return c.getInt(7);
+		if(c.getInt(7) == 1)
+		{
+			return true;
+		}
+		
+		return false;
 	}
 }
