@@ -301,9 +301,9 @@ public class ToDo extends ListActivity {
 			{
 				check.setChecked(false);
 				//BitmapFactory.decodeResource(, R.id.)
-				progress = Drawable.createFromPath("/home/nathan/Documents/csci422FinalProject/To_DoList/res/drawable/highlight.png");//TODO change image
-				progress.setBounds(0, (100-helper.getState(c))*40/100, 40, 40);
-				check.setBackgroundDrawable(progress);
+//				progress = getResources().getDrawable(R.drawable.highlight);
+//				progress.setBounds(0, (100-helper.getState(c))*40/100, 40, 40);
+//				check.setBackgroundDrawable(progress);
 			}
 
 			switch(help.getPriority(c))
