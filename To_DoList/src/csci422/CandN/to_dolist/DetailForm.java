@@ -114,7 +114,10 @@ public class DetailForm extends Activity {
 		pickList.setAdapter(adpt);
 	}
 
-	public void initWidets()
+	/**
+	 *This method initializes the widgets in the detail form layout
+	 */
+	private void initWidets()
 	{
 		completion = (SeekBar) findViewById(R.id.completion);
 		
@@ -135,7 +138,10 @@ public class DetailForm extends Activity {
 		street = (EditText)findViewById(R.id.street);
 	}
 
-	public void initFindLocation()
+	/**
+	 *This method sets up everything needed for the task of finding users location
+	 */
+	private void initFindLocation()
 	{
 		locmgr = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		
@@ -176,12 +182,19 @@ public class DetailForm extends Activity {
 		promptContin = alertBuild.create();
 	}
 
-	private void loadCurrent() {
-		helper=new ToDoHelper(this);
+	/**
+	 *This method loads the current task and populates widgets if there was an id passed in
+	 *by the intent
+	 */
+	private void loadCurrent() 
+	{
+		helper = new ToDoHelper(this);
 		id = getIntent().getStringExtra("csci422.CandN.to_dolist.curItem");
-		if(id.length()==0)return;
+		if(id.length() == 0)return;
+
 		cur = helper.getById(id);
-		cur.moveToFirst();//need to set cursor to the beginning 
+		cur.moveToFirst();//need to set cursor to the beginning
+
 		taskName.setText(helper.getTitle(cur));
 		loadAddressFields(helper.getAddress(cur));
 		notes.setText(helper.getNotes(cur));
@@ -191,6 +204,7 @@ public class DetailForm extends Activity {
 		} catch (ParseException e) {
 			Log.e(tag, "Can't parse the date.");
 		}
+
 		completion.setProgress(helper.getState(cur));
 		priority = helper.getPriority(cur);
 		priors[priority+1].setBackgroundResource(R.drawable.highlight);
@@ -198,27 +212,40 @@ public class DetailForm extends Activity {
 
 
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy() 
+	{
 		super.onDestroy();
+
 		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
-		{
+		{//if the asyntask is still running for finding the location
 			gpsWait.cancel(true);
 		}
 		
 		if(!delete)
-		{
+		{//if the user decided to delete the task make sure that
+	     //it doesn't save again
 			saveStuff();
 		}
 	}
-	public void onDone(View v){
+
+	/**
+	 *This method is called by the Done button in the detail_form layout
+	 */
+	public void onDone(View v)
+	{
 		finish();
 	}
+
+	/**
+	 *This method is called 
+	 */
 	public void saveStuff(){
 		Log.v(tag, "Progress: "+completion.getProgress());
 		Log.v(tag, completion.getKeyProgressIncrement()+" was done with keys");
 		Log.v(tag, "Secondary progress: "+completion.getSecondaryProgress());
 		Log.v(tag, "Thumb offset: "+completion.getThumbOffset());
 		Log.v(tag, "Max is: "+completion.getMax());
+
 		int state = completion.getProgress();
 		//float percent= completion.getProgress()/((float)completion.getMax());
 		try {
@@ -228,6 +255,7 @@ public class DetailForm extends Activity {
 			Log.e(tag, e.getMessage());
 			dueDate = new Date();
 		}
+
 		if(cur==null){//make a new one
 			helper.insert(taskName.getText().toString(), parseAddressSave(), notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 		}else {//edit current
@@ -244,7 +272,7 @@ public class DetailForm extends Activity {
 	{
 		String ret;
 		if(!address.getText().toString().isEmpty() || !street.getText().toString().isEmpty())
-		{
+		{//if at least one of them has text
 			ret = street.getText().toString()+"+"+address.getText().toString();
 			return ret;
 		}
@@ -291,13 +319,13 @@ public class DetailForm extends Activity {
 	public void deleteTask(View v)
 	{
 		if(!id.isEmpty())
-		{
+		{//if there is an id 
 			helper.delete(id);
 			delete = true;
-			finish();
+			finish();//kill activity
 		}
 		else
-		{
+		{//if no id just don't save
 			delete = true;
 			finish();
 		}
@@ -305,9 +333,11 @@ public class DetailForm extends Activity {
 	}
 	
 	public void openCal(View v){ 
+
 		Builder calDialog = new Builder(this);
 		LayoutInflater inf = getLayoutInflater();
 		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
+
 		calDialog.setPositiveButton("Done", new OnClickListener() {
 			
 			public void onClick(DialogInterface dialog, int which) {
@@ -323,6 +353,7 @@ public class DetailForm extends Activity {
 				//dialog.dismiss();
 			}
 		});
+
 		calDialog.show();
 		/*
 		Calendar cal = Calendar.getInstance();              
@@ -334,11 +365,12 @@ public class DetailForm extends Activity {
 		startActivityForResult(intent,1); */
 	}
 	
-	public void openMaps(View v){
+	public void openMaps(View v)
+	{
 		if(!address.getText().toString().isEmpty() && !street.getText().toString().isEmpty())
 		{//add code here for lat and lon if applicable
 			if(street.getText().toString().contains(Lat) && address.getText().toString().contains(Lon))
-			{
+			{//if lat and lon keywords are in the text fields
 				String lat[] = street.getText().toString().split(":");
 				String lon[] = address.getText().toString().split(":");
 				
@@ -346,13 +378,13 @@ public class DetailForm extends Activity {
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
 			}
 			else
-			{
+			{//send query to google maps
 				String uri = "geo:0,0?q="+street.getText().toString()+"+"+address.getText().toString();
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
 			}
 		}
 		else
-		{
+		{//ask user to fill the fields out before clicking the button
 			Toast.makeText(this, "Please fill out the two address fields or click the here button", Toast.LENGTH_LONG).show();
 		}
 	}
@@ -409,7 +441,7 @@ public class DetailForm extends Activity {
 	public void getLoc(View v)
 	{
 		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
-		{
+		{//if the spwwait is still running
 			gpsWait.cancel(true);
 		}
 		
@@ -417,7 +449,7 @@ public class DetailForm extends Activity {
 		
 		
 		if(gpsWait.getStatus() == AsyncTask.Status.PENDING)
-		{
+		{//if gpsWait is waiting to run
 			locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
 			pd.show();
 			gpsWait.execute("");
@@ -427,7 +459,7 @@ public class DetailForm extends Activity {
 	}
 	
 	/**
-	 * This async task will do waits until the user cancels or the location is found
+	 * This async task will wait until the user cancels or the location is found
 	 * @author Chris Card
 	 *
 	 */
