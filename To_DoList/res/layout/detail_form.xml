@@ -140,9 +140,9 @@
 
                 <EditText
                     android:id="@+id/street"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1.98"
                     android:hint="@string/streethint"
                     android:inputType="textPostalAddress" />
 
@@ -225,14 +225,6 @@
             android:inputType="textMultiLine" >
         </EditText>
         <!-- How do I make this EditText fill up any remaining space? -->
-
-        <Button
-            android:id="@+id/deletebutton"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="deleteTask"
-            android:text="Delete Task" />
         <!-- Hide the ejector seat levers -->
     </LinearLayout>
 
