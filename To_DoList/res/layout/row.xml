@@ -10,14 +10,14 @@
         android:layout_height="wrap_content" >
 
 
-        <ImageView
+       <!-- <ImageView
             android:id="@+id/checkPrg"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:adjustViewBounds="false"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/progress" />
+            android:src="@drawable/progress" /> -->
         
         
         <CheckBox
@@ -57,6 +57,14 @@
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="10dp" />
+
+        <ProgressBar
+            android:id="@+id/completionbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        
     </LinearLayout>
 
     <ImageView
