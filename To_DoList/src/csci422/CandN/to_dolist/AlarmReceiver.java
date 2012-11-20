@@ -14,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -22,6 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) 
 	{
+		Log.d("AlaramReceiver","got here");
 		String id = intent.getExtras().getString(OnBootReceiver.NOTIFY_EXTRA);
 		
 		ToDoHelper help = new ToDoHelper(context);

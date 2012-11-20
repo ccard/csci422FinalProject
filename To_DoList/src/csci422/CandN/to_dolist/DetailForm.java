@@ -260,6 +260,7 @@ public class DetailForm extends Activity {
 			helper.insert(taskName.getText().toString(), parseAddressSave(), notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 		}else {//edit current
 			helper.update(id, taskName.getText().toString(), parseAddressSave(), notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.notified(id, false);
 		}
 	}
 	

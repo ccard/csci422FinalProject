@@ -17,6 +17,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 
 public class OnBootReceiver extends BroadcastReceiver {
 
@@ -45,7 +46,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 	{
 		nowDate = Calendar.getInstance();
 		
-		Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+		Calendar cal = new GregorianCalendar();
 		
 		AlarmManager mgr = (AlarmManager)ctxt.getSystemService(Context.ALARM_SERVICE);
 		
@@ -64,7 +65,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 				{
 					cal.set(Calendar.AM_PM, Calendar.AM);
 				}
-				
+				Log.v("OnBootReceiver", cal.getTimeInMillis()+" cur: "+ nowDate.getTimeInMillis());
 				if(cal.getTimeInMillis() < System.currentTimeMillis())
 				{
 					h.notified(c.getString(0), true);
@@ -102,7 +103,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 		if(words.length == 3)
 		{
 			String tempString = "20"+words[2];
-			return (1990+Integer.parseInt(tempString));
+			return (Integer.parseInt(tempString));
 		}
 		else
 		{
@@ -116,7 +117,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 		
 		if(words.length == 3)
 		{
-			return Integer.parseInt(words[0]);
+			return (Integer.parseInt(words[0])-1);
 		}
 		else
 		{
@@ -130,7 +131,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 		
 		if(words.length == 3)
 		{
-			return Integer.parseInt(words[0]);
+			return Integer.parseInt(words[1]);
 		}
 		else
 		{
