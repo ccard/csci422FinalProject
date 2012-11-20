@@ -60,7 +60,7 @@ public class DetailForm extends Activity {
 	private String[] Listnames = {"Main","Homework","Shopping"};
 	private SeekBar completion;
 	/** -1 is ?, 0 is a dot, 1 is one !, 2 is two !!  */
-	private int priority = 0;
+	private int priority = -1;
 	private Date dueDate;
 	private DateFormat dateFormat;
 	
@@ -154,6 +154,15 @@ public class DetailForm extends Activity {
 		pd.setCancelable(true);//allows the dialog to be cancelable
 		pd.setIndeterminate(true);//this sets the spinning animation instead of progress
 		pd.setOnCancelListener(cancel);
+		pd.setButton(pd.BUTTON_NEUTRAL, "Cancel", new OnClickListener(){
+
+			public void onClick(DialogInterface dialog, int which) 
+			{
+				cancelLocation.set(true);
+				gpsWait.cancel(true);
+			}
+			
+		});
 		
 		//inits alertdialog with appropriate listenere and message
 		alertBuild = new AlertDialog.Builder(this);
@@ -359,14 +368,6 @@ public class DetailForm extends Activity {
 		});
 
 		calDialog.show();
-		/*
-		Calendar cal = Calendar.getInstance();              
-		Intent intent = new Intent(Intent.ACTION_EDIT);
-		intent.setType("vnd.android.cursor.item/event");
-		intent.putExtra("beginTime", cal.getTimeInMillis());//TODO pass in string instead
-		intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
-		intent.putExtra("title", "A Test Event from android app");
-		startActivityForResult(intent,1); */
 	}
 	
 	public void openMaps(View v)

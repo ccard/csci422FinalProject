@@ -40,10 +40,10 @@ public final class R {
         public static final int add=0x7f0a0020;
         public static final int add1=0x7f0a001e;
         public static final int address=0x7f0a0011;
-        public static final int check=0x7f0a0019;
-        public static final int checkPrg=0x7f0a0018;
+        public static final int check=0x7f0a0018;
         public static final int completion=0x7f0a0015;
-        public static final int date=0x7f0a001b;
+        public static final int completionbar=0x7f0a001b;
+        public static final int date=0x7f0a001a;
         public static final int datePicker1=0x7f0a0002;
         public static final int deletebutton=0x7f0a0017;
         public static final int doneButton=0x7f0a0006;
@@ -66,7 +66,7 @@ public final class R {
         public static final int taskName=0x7f0a0005;
         public static final int tasks=0x7f0a001f;
         public static final int timePicker1=0x7f0a0003;
-        public static final int title=0x7f0a001a;
+        public static final int title=0x7f0a0019;
     }
     public static final class integer {
         public static final int maxline=0x7f060000;
