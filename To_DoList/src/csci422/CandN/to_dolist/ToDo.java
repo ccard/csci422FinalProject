@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -279,7 +280,7 @@ public class ToDo extends ListActivity {
 		private String ID;
 		private ToDoHelper help;
 		private ImageView view = null;
-		private ImageView progress = null;
+		private ProgressBar progress = null;
 
 		ItemHolder(View row)
 		{
@@ -287,7 +288,7 @@ public class ToDo extends ListActivity {
 			date = (TextView)row.findViewById(R.id.date);
 			view = (ImageView)row.findViewById(R.id.priority);
 			check = (CheckBox)row.findViewById(R.id.check);
-			progress = (ImageView)row.findViewById(R.id.checkPrg);
+			progress = (ProgressBar)row.findViewById(R.id.completionbar);
 			check.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 				public void onCheckedChanged(CompoundButton buttonView,
 						boolean isChecked) {
@@ -301,6 +302,9 @@ public class ToDo extends ListActivity {
 					{
 						help.update(ID, help.getTitle(save), help.getAddress(save), help.getNotes(save), help.getDate(save), 0, help.getPriority(save));
 					}
+					save = help.getById(ID);
+					save.moveToFirst();
+					progress.setProgress(help.getState(save));
 				}
 			});
 		}
@@ -322,14 +326,9 @@ public class ToDo extends ListActivity {
 			{
 				check.setChecked(false);
 			}
-			//check.setAlpha(helper.getState(c)*255/100);
-			/*  Alternate method:*/
-			progress.setAdjustViewBounds(false); //not being obeyed for some reason.
-			MarginLayoutParams sizes = new MarginLayoutParams(20, helper.getState(c)*20/100);
-			sizes.setMargins(10, 20, 0, 0);
-			//sizes = new RelativeLayout.LayoutParams(40, helper.getState(c));
-			progress.setLayoutParams(new RelativeLayout.LayoutParams(sizes)); 
-			progress.requestLayout();
+			
+			progress.setProgress(helper.getState(c));
+			
 			switch(help.getPriority(c))
 			{
 			case -1:
