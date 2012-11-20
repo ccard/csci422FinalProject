@@ -133,6 +133,8 @@ public class ToDo extends ListActivity {
 		adapter = new ToDoAdapter(model);
 
 		setListAdapter(adapter);
+		
+		updateNotifications();
 	}
 	
 	private void updateNotifications()
