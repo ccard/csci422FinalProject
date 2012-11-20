@@ -359,8 +359,8 @@ public class DetailForm extends Activity {
 	{
 		if(item.getItemId() == R.id.delete)
 		{
-			new Builder(this).setTitle("Are you sure?")
-							 .setMessage("Do you want to delete the task?")
+			new Builder(this).setTitle("Do you want to delete the task?")
+							 .setMessage("This action cannot be undone!")
 							 .setPositiveButton("Yes", new OnClickListener(){
 
 								public void onClick(DialogInterface dialog,
