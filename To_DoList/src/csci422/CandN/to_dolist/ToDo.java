@@ -30,6 +30,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -44,17 +45,17 @@ public class ToDo extends ListActivity {
 	private ToDoHelper helper=null;
 
 	private EditText newTypeTask;
-	
+
 	private SharedPreferences prefs;
-	
+
 	private Handler delay;
-	
+
 	private static final int timeDelay = 650;
-	
+
 	public static final int DONE=95;//If task is more than this complete, it is done.
-	
+
 	private ProgressDialog pd;
-	
+
 	private WaitForSync syncing;
 	private SyncHelper syncHelp;
 
@@ -62,18 +63,18 @@ public class ToDo extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_to_do);
-		
+
 		delay = new Handler();
 
 		helper = new ToDoHelper(this);
 		syncHelp = new SyncHelper(this);
-		
+
 		FileSync.getInstance().load(syncHelp);
-		
+
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		initList();
 		prefs.registerOnSharedPreferenceChangeListener(prefListener); 
-		
+
 		initPD();
 		newTypeTask = (EditText)findViewById(R.id.newTypeTask);
 		newTypeTask.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
@@ -94,7 +95,7 @@ public class ToDo extends ListActivity {
 
 		});
 	}
-	
+
 	public void initPD()
 	{	
 		//inits the progress dialog with title message
@@ -103,7 +104,7 @@ public class ToDo extends ListActivity {
 		pd.setMessage("Please wait...");
 		pd.setIndeterminate(true);//this sets the spinning animation instead of progress
 	}
-	
+
 	@Override
 	public void onResume()
 	{
@@ -114,7 +115,7 @@ public class ToDo extends ListActivity {
 			}
 		}, timeDelay);
 	}
-	
+
 	/**
 	 * this initializes the list from the cursor
 	 */
@@ -134,11 +135,11 @@ public class ToDo extends ListActivity {
 
 		setListAdapter(adapter);
 	}
-	
+
 	private void updateNotifications()
 	{
 		Cursor c = helper.getAll("date");
-		
+
 		while(c.moveToNext())
 		{
 			OnBootReceiver.setAlarm(this, helper, c);
@@ -195,7 +196,7 @@ public class ToDo extends ListActivity {
 		{
 			menu.findItem(R.id.sync).setEnabled(false);
 		}
-		
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -207,20 +208,20 @@ public class ToDo extends ListActivity {
 		startActivity(i);
 	}
 
-	 /**
-	* This is a listener for a preference change from preferences
-	*/
-	    private SharedPreferences.OnSharedPreferenceChangeListener prefListener= new SharedPreferences.OnSharedPreferenceChangeListener()
-	    {
-	    	public void onSharedPreferenceChanged(SharedPreferences sharedPrefs, String key)
-	    	{
-	    		if(key.equals("sort_order"))
-	    		{
-	    			initList();
-	    		}
-	    	}
-	    };
-	
+	/**
+	 * This is a listener for a preference change from preferences
+	 */
+	private SharedPreferences.OnSharedPreferenceChangeListener prefListener= new SharedPreferences.OnSharedPreferenceChangeListener()
+	{
+		public void onSharedPreferenceChanged(SharedPreferences sharedPrefs, String key)
+		{
+			if(key.equals("sort_order"))
+			{
+				initList();
+			}
+		}
+	};
+
 	/**
 	 * This class holds the ToDoAdapter for populating the listview with the ToDo Items.
 	 * @author Chris
@@ -269,14 +270,15 @@ public class ToDo extends ListActivity {
 		private String ID;
 		private ToDoHelper help;
 		private ImageView view = null;
-		private Drawable progress = null;
-		
+		private ImageView progress = null;
+
 		ItemHolder(View row)
 		{
 			title = (TextView)row.findViewById(R.id.title);
 			date = (TextView)row.findViewById(R.id.date);
 			view = (ImageView)row.findViewById(R.id.priority);
 			check = (CheckBox)row.findViewById(R.id.check);
+			progress = (ImageView)row.findViewById(R.id.checkPrg);
 			check.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 				public void onCheckedChanged(CompoundButton buttonView,
 						boolean isChecked) {
@@ -310,33 +312,30 @@ public class ToDo extends ListActivity {
 			else
 			{
 				check.setChecked(false);
-				//BitmapFactory.decodeResource(, R.id.)
-//				progress = getResources().getDrawable(R.drawable.highlight);
-//				progress.setBounds(0, (100-helper.getState(c))*40/100, 40, 40);
-//				check.setBackgroundDrawable(progress);
 			}
+			progress.setMaxHeight(helper.getState(c));
 
 			switch(help.getPriority(c))
 			{
-				case -1:
-					view.setImageResource(R.drawable.priorityq);
-					break;
-				case 0:
-					view.setImageResource(R.drawable.prioritydot);
-					break;
-				case 1:
-					view.setImageResource(R.drawable.priority1);
-					break;
-				case 2:
-					view.setImageResource(R.drawable.priority2);
-					break;
-				default:
-					view.setImageResource(R.drawable.priorityblank);
-					break;
+			case -1:
+				view.setImageResource(R.drawable.priorityq);
+				break;
+			case 0:
+				view.setImageResource(R.drawable.prioritydot);
+				break;
+			case 1:
+				view.setImageResource(R.drawable.priority1);
+				break;
+			case 2:
+				view.setImageResource(R.drawable.priority2);
+				break;
+			default:
+				view.setImageResource(R.drawable.priorityblank);
+				break;
 			}
 		}
 	}
-	
+
 	/**
 	 * This async task will do waits until the user cancels or the location is found
 	 * @author Chris Card
@@ -357,14 +356,14 @@ public class ToDo extends ListActivity {
 			}
 			return "Finished";
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result)
 		{
 			pd.dismiss();//dismiss the progress dialog
-			
+
 			new AlertDialog.Builder(ToDo.this).setTitle("Finished").setMessage("Sync has Finished").setNeutralButton("Ok", null).create().show();
 		}
-		
+
 	}
 }

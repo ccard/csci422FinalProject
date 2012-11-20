@@ -5,13 +5,26 @@
     android:layout_height="wrap_content"
     android:padding="4dip" >
 
-    <CheckBox
+    <AbsoluteLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/check"
-        android:checked="false" 
-        android:focusable="false"/>
-
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/checkPrg"
+            android:layout_x="0"
+            android:layout_y="0"
+            android:src="@drawable/progress" />
+
+        <CheckBox
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="0"
+            android:layout_y="0"
+            android:checked="false"
+            android:focusable="false" />
+    </AbsoluteLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +38,6 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="TextView"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -37,9 +49,8 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="10dp"
-            android:text="TextView"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="10dp" />
     </LinearLayout>
 
     <ImageView
@@ -47,6 +58,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:src="@drawable/priorityblank"/>
+        android:src="@drawable/priorityblank" />
 
 </LinearLayout>
