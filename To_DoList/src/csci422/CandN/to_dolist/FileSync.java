@@ -94,10 +94,6 @@ public class FileSync {
 		c.close();
 	}
 
-	public static boolean isItRunning()
-	{
-		return isRunning;
-	}
 
 	/**
 	 * Toggles toSyncCal to the opposite value of what it is at the moment
@@ -150,7 +146,6 @@ public class FileSync {
 	{
 		if (toSyncCal) 
 		{
-			isRunning = true;//dont remove could cause problems
 			Cursor c = help.getAll("title");
 			c.moveToFirst();
 
@@ -158,7 +153,6 @@ public class FileSync {
 			
 
 			c.close();
-			isRunning = false;//don't remove could cause problems
 		}//else do nothing
 	}
 
@@ -176,14 +170,12 @@ public class FileSync {
 	{
 		if (toSaveFile) 
 		{
-			isRunning = true;//dont remove could cause problems
 			Cursor c = help.getAll("title");
 			c.moveToFirst();
 
-			//TODO: put function to save to the file
+			//TODO: Nathan put function to save to the file LATER NOT NOW
 			
 			c.close();
-			isRunning = false;//dont remove could cause problems
 		}//else do nothing
 	}
 
