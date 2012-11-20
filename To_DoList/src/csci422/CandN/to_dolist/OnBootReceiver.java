@@ -71,6 +71,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 				}
 				else
 				{
+					h.notified(c.getString(0), false);
 					Intent i = new Intent(ctxt,AlarmReceiver.class);
 					
 					i.putExtra(NOTIFY_EXTRA, c.getString(0));
