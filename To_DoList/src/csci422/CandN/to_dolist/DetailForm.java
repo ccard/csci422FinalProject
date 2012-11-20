@@ -320,6 +320,9 @@ public class DetailForm extends Activity {
 	{
 		if(!id.isEmpty())
 		{//if there is an id 
+			Cursor c = helper.getById(id);
+			c.moveToFirst();
+			OnBootReceiver.cancelAlarm(this, helper, c);
 			helper.delete(id);
 			delete = true;
 			finish();//kill activity

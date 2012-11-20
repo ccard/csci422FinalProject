@@ -134,6 +134,16 @@ public class ToDo extends ListActivity {
 
 		setListAdapter(adapter);
 	}
+	
+	private void updateNotifications()
+	{
+		Cursor c = helper.getAll("date");
+		
+		while(c.moveToNext())
+		{
+			OnBootReceiver.setAlarm(this, helper, c);
+		}
+	}
 
 	@Override
 	public void onDestroy()
