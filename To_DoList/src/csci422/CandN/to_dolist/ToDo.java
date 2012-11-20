@@ -134,6 +134,8 @@ public class ToDo extends ListActivity {
 		adapter = new ToDoAdapter(model);
 
 		setListAdapter(adapter);
+		
+		updateNotifications();
 	}
 
 	private void updateNotifications()
@@ -142,7 +144,11 @@ public class ToDo extends ListActivity {
 
 		while(c.moveToNext())
 		{
-			OnBootReceiver.setAlarm(this, helper, c);
+			if(!helper.getNotified(c))
+			{
+				OnBootReceiver.setAlarm(this, helper, c);
+				
+			}
 		}
 	}
 
