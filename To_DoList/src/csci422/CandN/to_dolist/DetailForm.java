@@ -31,9 +31,12 @@ import android.os.Bundle;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 //import csci422.CandN.to_dolist.R;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -326,7 +329,7 @@ public class DetailForm extends Activity {
 		v.setBackgroundResource(R.drawable.highlight);
 	}
 
-	public void deleteTask(View v)
+	public void deleteTask()
 	{
 		if(!id.isEmpty())
 		{//if there is an id 
@@ -345,6 +348,37 @@ public class DetailForm extends Activity {
 
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.detail_form_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if(item.getItemId() == R.id.delete)
+		{
+			new Builder(this).setTitle("Are you sure?")
+							 .setMessage("Do you want to delete the task?")
+							 .setPositiveButton("Yes", new OnClickListener(){
+
+								public void onClick(DialogInterface dialog,
+										int which) {
+									deleteTask();
+									
+								}
+								 
+							 })
+							 .setNegativeButton("No", null)
+							 .create()
+							 .show();
+			return true;
+			/*TODO Double-check*/
+		}
+		
+		return super.onOptionsItemSelected(item);
+	}
 	public void openCal(View v){ 
 
 		Builder calDialog = new Builder(this);
