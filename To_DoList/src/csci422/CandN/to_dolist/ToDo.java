@@ -23,6 +23,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -32,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -319,8 +322,14 @@ public class ToDo extends ListActivity {
 			{
 				check.setChecked(false);
 			}
-			progress.setMaxHeight(helper.getState(c));
-
+			//check.setAlpha(helper.getState(c)*255/100);
+			/*  Alternate method:*/
+			progress.setAdjustViewBounds(false); //not being obeyed for some reason.
+			MarginLayoutParams sizes = new MarginLayoutParams(20, helper.getState(c)*20/100);
+			sizes.setMargins(10, 20, 0, 0);
+			//sizes = new RelativeLayout.LayoutParams(40, helper.getState(c));
+			progress.setLayoutParams(new RelativeLayout.LayoutParams(sizes)); 
+			progress.requestLayout();
 			switch(help.getPriority(c))
 			{
 			case -1:
