@@ -123,6 +123,7 @@ public class ToDo extends ListActivity {
 	/**
 	 * this initializes the list from the cursor
 	 */
+	@SuppressWarnings({ "deprecation", "deprecation", "deprecation", "deprecation" })
 	private void initList()
 	{
 		if(model != null)
