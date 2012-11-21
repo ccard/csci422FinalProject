@@ -82,8 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:enabled="false"
-                android:inputType="date"
-                android:onClick="openCal" />
+                android:focusable="true"
+                android:onClick="openCal"/>
 
             <ImageButton
                 android:id="@+id/pickDateButton"
