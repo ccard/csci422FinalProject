@@ -27,7 +27,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 	public void onCreate(SQLiteDatabase db)
 	{
 		//modify table elements for the todolist rather than restaurants
-		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, notes TEXT, date TEXT, state REAL, priority REAL, notified REAL);");
+		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, list TEXT, notes TEXT, date TEXT, state REAL, priority REAL, notified REAL);");
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 	{
 		String[] args = {id};
 
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state, priority, notified FROM todos WHERE _ID=?", args);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified FROM todos WHERE _ID=?", args);
 	}
 	
 	public void delete(String id)
@@ -50,31 +50,33 @@ public class ToDoHelper extends SQLiteOpenHelper
 		getWritableDatabase().delete("todos", "_ID=?", ID);
 	}
 	
-//	public String getId(Cursor c){
-//		return c.getString(0);//TODO is this the right number?
-//	}
+	public String getId(Cursor c){
+		return c.getString(0);//TODO is this the right number?
+	}
 
-	public void update(String id, String title, String address, String notes, String date, int state, int priority)
+	public void update(String id, String title, String address, String list, String notes, String date, int state, int priority, int notified)
 	{
 		ContentValues cv = new ContentValues();
 		String[] args = {id};
 
 		cv.put("title", title);
 		cv.put("address", address);
+		cv.put("list", list);
 		cv.put("notes", notes);
 		cv.put("date", date);
 		cv.put("state", state);
 		cv.put("priority", priority);
+		cv.put("notified", notified);
 
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
 
-	public void insert(String title, String address, String notes, String date, int state, int priority)
+	public void insert(String title, String address, String list, String notes, String date, int state, int priority, int notified)
 	{
 		ContentValues cv = new ContentValues();
-
 		cv.put("title", title);
 		cv.put("address", address);
+		cv.put("list", list);
 		cv.put("notes", notes);
 		cv.put("date", date);
 		cv.put("state", state);
@@ -86,7 +88,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 
 	public Cursor getAll(String orderBy)
 	{
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, notes, date, state, priority, notified FROM todos ORDER BY "+orderBy, null);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified FROM todos ORDER BY "+orderBy, null);
 	}
 
 
@@ -95,14 +97,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 		String args[] = {id};
 		ContentValues cv = new ContentValues();
 		
-		if(val)
-		{
-			cv.put("notified", 1);
-		}
-		else
-		{
-			cv.put("notified", 0);
-		}
+		cv.put("notified", val?1:0);//Chris, learn to use the ternary operator. Much less code.
 		
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
@@ -117,31 +112,31 @@ public class ToDoHelper extends SQLiteOpenHelper
 		return c.getString(2);
 	}
 
-	public String getNotes(Cursor c)
+	public String getList(Cursor c)
 	{
 		return c.getString(3);
 	}
 
-	public String getDate(Cursor c)
+	public String getNotes(Cursor c)
 	{
 		return c.getString(4);
 	}
 
-	public int getState(Cursor c)
+	public String getDate(Cursor c)
 	{
-		return c.getInt(5);
+		return c.getString(5);
 	}
-	public int getPriority(Cursor c)
+
+	public int getState(Cursor c)
 	{
 		return c.getInt(6);
 	}
+	public int getPriority(Cursor c)
+	{
+		return c.getInt(7);
+	}
 	public boolean getNotified(Cursor c)
 	{
-		if(c.getInt(7) == 1)
-		{
-			return true;
-		}
-		
-		return false;
+		return c.getInt(8)>0;
 	}
 }

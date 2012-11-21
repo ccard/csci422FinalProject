@@ -269,9 +269,9 @@ public class DetailForm extends Activity {
 		}
 
 		if(cur==null){//make a new one
-			helper.insert(taskName.getText().toString(), parseAddressSave(), notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.insert(taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority, 0);
 		}else {//edit current
-			helper.update(id, taskName.getText().toString(), parseAddressSave(), notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority, 0);
 			helper.notified(id, false);
 		}
 	}

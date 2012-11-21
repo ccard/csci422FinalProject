@@ -55,8 +55,9 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@android:color/black"
             android:textSize="10dp" />
+        <!-- Let the theme determine the color.
+        deleted:             android:textColor="@android:color/black" -->
 
         <ProgressBar
             android:id="@+id/completionbar"
