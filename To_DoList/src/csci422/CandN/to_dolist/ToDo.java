@@ -88,7 +88,7 @@ public class ToDo extends ListActivity {
 					KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE)
 				{
-					helper.insert(newTypeTask.getText().toString(), "", "Main", "", "", 0, -1, 0);
+					helper.insert(newTypeTask.getText().toString(), "", "Main", "", "", 0, -1);
 					newTypeTask.setText("");
 					initList();
 					findViewById(R.id.mainLayout).requestFocus();
@@ -297,11 +297,11 @@ public class ToDo extends ListActivity {
 					save.moveToFirst();
 					if (isChecked)
 					{
-						help.update(ID, help.getTitle(save), help.getAddress(save), "Main", help.getNotes(save), help.getDate(save), 100, help.getPriority(save), 0);
+						help.update(ID, help.getTitle(save), help.getAddress(save), "Main", help.getNotes(save), help.getDate(save), 100, help.getPriority(save));
 					}
 					else
 					{
-						help.update(ID, help.getTitle(save), help.getAddress(save), "Main", help.getNotes(save), help.getDate(save), 0, help.getPriority(save), 0);
+						help.update(ID, help.getTitle(save), help.getAddress(save), "Main", help.getNotes(save), help.getDate(save), 0, help.getPriority(save));
 					}
 					save = help.getById(ID);
 					save.moveToFirst();
