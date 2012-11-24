@@ -1,5 +1,5 @@
-(A) Make Textarea fill remaining space
-(A) Add delete functionality
+
+
 (B) add address field
 (A) Why does making a priority of 2 cause it to look completed?
 (B) Ondestroy

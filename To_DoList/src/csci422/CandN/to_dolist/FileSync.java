@@ -25,7 +25,7 @@ import android.content.ContentValues;
 
 public class FileSync {
 
-	//Singleton patter stores its own instance
+	//Singleton pattern stores its own instance
 	private static FileSync instance = null;
 
 	//this flag will be set true if the user updated preferences to
@@ -164,7 +164,7 @@ public class FileSync {
 		Cursor c = help.getAll("title");
 		SimpleDateFormat df = new SimpleDateFormat();
 		df.setLenient(true);
-		for(c.moveToFirst(); !c.isLast(); c.moveToNext()){
+		for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 			ContentValues cvEvent = new ContentValues();
 			cvEvent.put("calendar_id", 1);
 			cvEvent.put("title", help.getTitle(c));
