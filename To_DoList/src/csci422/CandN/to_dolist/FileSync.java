@@ -111,7 +111,7 @@ public class FileSync {
 
 	/**
 	 * This method returns if it is to sync with google calender
-	 * @return: true if it is to sync with file
+	 * @return: true if it is to sync with calendar
 	 */
 	public boolean isSyncCal()
 	{
@@ -119,7 +119,7 @@ public class FileSync {
 	}
 
 	/**
-	 * This method returns if it is to sync with google calender
+	 * This method returns if it is to sync with a todo.txt file
 	 * @return: true if it is to sync with file
 	 */
 	public boolean isSaveFile()

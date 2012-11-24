@@ -51,10 +51,6 @@ public class SyncHelper extends SQLiteOpenHelper
 		
 		getWritableDatabase().delete("sync", "_ID=?", ID);
 	}
-	
-//	public String getId(Cursor c){
-//		return c.getString(0);//TODO is this the right number?
-//	}
 
 	public void update(String id, boolean issync, boolean issave)
 	{

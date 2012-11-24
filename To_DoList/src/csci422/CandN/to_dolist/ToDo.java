@@ -5,6 +5,9 @@
  */
 package csci422.CandN.to_dolist;
 
+import java.util.Calendar;
+
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -180,7 +184,6 @@ public class ToDo extends ListActivity {
 			i.putExtra("csci422.CandN.to_dolist.curItem", "");
 			startActivity(i);
 			return true;
-			/*TODO Double-check*/
 		}
 		else if(item.getItemId() == R.id.settings)
 		{
@@ -190,7 +193,7 @@ public class ToDo extends ListActivity {
 		else if(item.getItemId() == R.id.sync)
 		{
 			pd.show();
-			syncing  = new WaitForSync();
+			syncing  = new WaitForSync();//TODO this looks fishy...
 			syncing.execute("");
 		}
 		return super.onOptionsItemSelected(item);
@@ -363,7 +366,14 @@ public class ToDo extends ListActivity {
 		{
 			if (FileSync.getInstance().isSyncCal())
 			{
-				FileSync.getInstance().syncWithCal(helper);
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.HOUR_OF_DAY, 3);
+				ContentValues cvEvent = new ContentValues();
+				cvEvent.put("calendar_id", 1);
+				cvEvent.put("title", "Hardcoded String event test");
+				cvEvent.put("dtstart", cal.getTimeInMillis());
+				getContentResolver().insert(Uri.parse("content://com.android.calendar/events"), cvEvent);			
+				//FileSync.getInstance().syncWithCal(helper);
 			}
 			if (FileSync.getInstance().isSaveFile())
 			{
