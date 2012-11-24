@@ -5,3 +5,5 @@
 (B) Ondestroy
 (A) Is 0 the id?
 look for a db file on the phone that stores the list
+On focus of date text field, bring up dialog
+Export data to goolge cal

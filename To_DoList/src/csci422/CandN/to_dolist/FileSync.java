@@ -9,6 +9,10 @@
 package csci422.CandN.to_dolist;
 
 import android.database.Cursor;
+import android.net.Uri;
+import android.provider.CalendarContract;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 
 public class FileSync {
 
@@ -26,7 +30,7 @@ public class FileSync {
 	//this tells other methods that sync is running so that they will not
 	//with the state of this class
 	private static boolean isRunning;
-	
+
 	/**
 	 * Private constructor so that this class controls
 	 * and ensures only one instance of the class
@@ -37,7 +41,7 @@ public class FileSync {
 		toSaveFile = false;
 		isRunning = false;
 	}
-	
+
 	/**
 	 * This class returns an instance of its self if instance exists
 	 * or creates a new instance (enforces the singleton pattern)
@@ -50,10 +54,10 @@ public class FileSync {
 		{
 			instance = new FileSync();
 		}
-		
+
 		return instance;
 	}
-	
+
 	/**
 	 * this method loads the past state of this class from synchelper
 	 * @param h data base from which it will get the previous state
@@ -67,7 +71,7 @@ public class FileSync {
 			{
 				toSyncCal = true;
 			}
-			
+
 			if(h.getSave(c).equals("true"))
 			{
 				toSaveFile = true;
@@ -75,7 +79,7 @@ public class FileSync {
 		}
 		c.close();
 	}
-	
+
 	/**
 	 * This saves the current state of the flags to SyncHelper data base
 	 * @param h place to save to
@@ -147,11 +151,16 @@ public class FileSync {
 		if (toSyncCal) 
 		{
 			Cursor c = help.getAll("title");
-			c.moveToFirst();
+			for(c.moveToFirst(); !c.isLast(); c.moveToNext()){
+				ContentValues cvEvent = new ContentValues();
+				cvEvent.put("calendar_id", 1);
+				cvEvent.put("title", help.getTitle(c));
+				cvEvent.put("dtstart", help.getDate(c));
+				//cvEvent.put("hasAlarm", 1);
+				cvEvent.put("dtend", help.getDate(c));//need to add some time
 
-			//TODO: Nathan put the calander contract code here
-			
-
+				getContentResolver().insert(Uri.parse("content://com.android.calendar/events"), cvEvent);			
+			}
 			c.close();
 		}//else do nothing
 	}
@@ -174,7 +183,7 @@ public class FileSync {
 			c.moveToFirst();
 
 			//TODO: Nathan put function to save to the file LATER NOT NOW
-			
+
 			c.close();
 		}//else do nothing
 	}
