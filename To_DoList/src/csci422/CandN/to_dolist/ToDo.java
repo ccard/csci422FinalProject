@@ -5,6 +5,7 @@
  */
 package csci422.CandN.to_dolist;
 
+import java.text.ParseException;
 import java.util.Calendar;
 
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -366,14 +368,11 @@ public class ToDo extends ListActivity {
 		{
 			if (FileSync.getInstance().isSyncCal())
 			{
-				Calendar cal = Calendar.getInstance();
-				cal.add(Calendar.HOUR_OF_DAY, 3);
-				ContentValues cvEvent = new ContentValues();
-				cvEvent.put("calendar_id", 1);
-				cvEvent.put("title", "Hardcoded String event test");
-				cvEvent.put("dtstart", cal.getTimeInMillis());
-				getContentResolver().insert(Uri.parse("content://com.android.calendar/events"), cvEvent);			
-				//FileSync.getInstance().syncWithCal(helper);
+				try {
+					FileSync.getInstance().syncWithCal(helper,getContentResolver());
+				} catch (ParseException e) {
+					Log.e("TodoSync", e.getMessage());
+				}
 			}
 			if (FileSync.getInstance().isSaveFile())
 			{

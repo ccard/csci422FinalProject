@@ -62,6 +62,7 @@ public class DetailForm extends Activity {
 	private EditText notes;
 	private String[] Listnames = {"Main","Homework","Shopping"};
 	private SeekBar completion;
+	
 	/** -1 is ?, 0 is a dot, 1 is one !, 2 is two !!  */
 	private int priority = -1;
 	private Date dueDate;
@@ -395,9 +396,6 @@ public class DetailForm extends Activity {
 				gc = new GregorianCalendar(dp.getYear(),dp.getMonth(),dp.getDayOfMonth(),
 						tp.getCurrentHour(),tp.getCurrentMinute());//Is this the current, or selected?
 				DetailForm.this.setDueDate(gc.getTime());
-
-
-				//dialog.dismiss();
 			}
 		});
 
