@@ -54,7 +54,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 		return c.getString(0);//TODO is this the right number?
 	}
 
-	public void update(String id, String title, String address, String list, String notes, String date, int state, int priority, int notified)
+	public void update(String id, String title, String address, String list, String notes, String date, int state, int priority)
 	{
 		ContentValues cv = new ContentValues();
 		String[] args = {id};
@@ -66,12 +66,11 @@ public class ToDoHelper extends SQLiteOpenHelper
 		cv.put("date", date);
 		cv.put("state", state);
 		cv.put("priority", priority);
-		cv.put("notified", notified);
 
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
 
-	public void insert(String title, String address, String list, String notes, String date, int state, int priority, int notified)
+	public void insert(String title, String address, String list, String notes, String date, int state, int priority)
 	{
 		ContentValues cv = new ContentValues();
 		cv.put("title", title);
