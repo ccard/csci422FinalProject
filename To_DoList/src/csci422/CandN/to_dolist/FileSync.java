@@ -9,6 +9,7 @@
 package csci422.CandN.to_dolist;
 
 import android.database.Cursor;
+import android.net.MailTo;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.content.ContentResolver;
@@ -151,6 +152,8 @@ public class FileSync {
 		if (toSyncCal) 
 		{
 			Cursor c = help.getAll("title");
+			ContentResolver cr = new ContentResolver(null) {
+			};
 			for(c.moveToFirst(); !c.isLast(); c.moveToNext()){
 				ContentValues cvEvent = new ContentValues();
 				cvEvent.put("calendar_id", 1);
@@ -159,7 +162,7 @@ public class FileSync {
 				//cvEvent.put("hasAlarm", 1);
 				cvEvent.put("dtend", help.getDate(c));//need to add some time
 
-				getContentResolver().insert(Uri.parse("content://com.android.calendar/events"), cvEvent);			
+				cr.insert(Uri.parse("content://com.android.calendar/events"), cvEvent);			
 			}
 			c.close();
 		}//else do nothing
