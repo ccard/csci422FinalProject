@@ -32,6 +32,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 //import csci422.CandN.to_dolist.R;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,7 +54,7 @@ public class DetailForm extends Activity {
 	public static final String tag = "todoDetail";
 
 	private ImageButton[] priors = new ImageButton[4];
-	private EditText datepick;
+	private EditText datetext;
 	private EditText address;
 	private EditText street;
 	private ToDoHelper helper;
@@ -107,7 +109,7 @@ public class DetailForm extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
 		
-		initWidets();
+		initWidgets();
 
 		loadCurrent();
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
@@ -121,7 +123,7 @@ public class DetailForm extends Activity {
 	/**
 	 *This method initializes the widgets in the detail form layout
 	 */
-	private void initWidets()
+	private void initWidgets()
 	{
 		completion = (SeekBar) findViewById(R.id.completion);
 		
@@ -131,7 +133,27 @@ public class DetailForm extends Activity {
 		priors[2] = (ImageButton) findViewById(R.id.Priority1);
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
 		//date pickers
-		datepick = (EditText)findViewById(R.id.dueDatePicker);
+		datetext = (EditText)findViewById(R.id.dueDatePicker);
+		datetext.addTextChangedListener(new TextWatcher() {
+			public void afterTextChanged(Editable s){}
+			public void onTextChanged(CharSequence s, int t, int b, int c) {}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+				alertBuild = new AlertDialog.Builder(getApplicationContext());
+				alertBuild.setPositiveButton("Yes", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						openCal(null);
+					}
+				});
+				alertBuild.setNegativeButton("No", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {}
+				});
+				alertBuild.setMessage("Editing the date manually tends to lead to Date Parse Errors. \n Would you like to select a date instead?");
+				alertBuild.show();
+			}
+		});
 		dueDate = new Date(0);//current time
 		dateFormat = new SimpleDateFormat();
 		dateFormat.setLenient(true);
@@ -213,7 +235,7 @@ public class DetailForm extends Activity {
 		notes.setText(helper.getNotes(cur));
 		try {
 			dueDate = dateFormat.parse(helper.getDate(cur));
-			datepick.setText(helper.getDate(cur));
+			datetext.setText(helper.getDate(cur));
 		} catch (ParseException e) {
 			Log.e(tag, "Can't parse the date.");
 		}
@@ -262,7 +284,7 @@ public class DetailForm extends Activity {
 		int state = completion.getProgress();
 		//float percent= completion.getProgress()/((float)completion.getMax());
 		try {
-			dueDate = dateFormat.parse(datepick.getText().toString());
+			dueDate = dateFormat.parse(datetext.getText().toString());
 		} catch (ParseException e) {
 			Log.e(tag, "Can't parse the date.");
 			Log.e(tag, e.getMessage());
@@ -385,7 +407,7 @@ public class DetailForm extends Activity {
 		Builder calDialog = new Builder(this);
 		LayoutInflater inf = getLayoutInflater();
 		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
-
+		calDialog.setCancelable(true);
 		calDialog.setPositiveButton("Done", new OnClickListener() {
 			
 			public void onClick(DialogInterface dialog, int which) {
@@ -575,7 +597,7 @@ public class DetailForm extends Activity {
 
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
-		datepick.setText(dateFormat.format(dueDate));
+		datetext.setText(dateFormat.format(dueDate));
 	}
 
 
