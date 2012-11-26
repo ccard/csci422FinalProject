@@ -32,8 +32,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 //import csci422.CandN.to_dolist.R;
 import android.util.Log;
 import android.view.LayoutInflater;
