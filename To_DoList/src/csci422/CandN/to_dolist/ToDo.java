@@ -181,7 +181,7 @@ public class ToDo extends ListActivity {
 		if(item.getItemId() == R.id.add)
 		{
 			Intent i = new Intent(ToDo.this, DetailForm.class);
-			i.putExtra("csci422.CandN.to_dolist.curItem", "");
+			i.putExtra(DetailForm.DETAIL_EXTRA, "");
 			startActivity(i);
 			return true;
 		}
@@ -218,7 +218,7 @@ public class ToDo extends ListActivity {
 	public void onListItemClick(ListView list, View view, int position, long id) 
 	{
 		Intent i = new Intent(ToDo.this, DetailForm.class);
-		i.putExtra("csci422.CandN.to_dolist.curItem", String.valueOf(id));
+		i.putExtra(DetailForm.DETAIL_EXTRA, String.valueOf(id));
 		startActivity(i);
 	}
 
