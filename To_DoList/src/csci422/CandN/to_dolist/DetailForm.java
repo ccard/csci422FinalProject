@@ -40,6 +40,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -90,6 +91,7 @@ public class DetailForm extends Activity {
 	private static final long gpsWaitDuration = 120000;//wait time for async task
 	
 	private Builder alertBuild;
+	private Builder dateAlert;
 	private AlertDialog promptContin;//builder for alert dialog
 	
 	//end code get gps location
@@ -134,23 +136,36 @@ public class DetailForm extends Activity {
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
 		//date pickers
 		datetext = (EditText)findViewById(R.id.dueDatePicker);
-		datetext.addTextChangedListener(new TextWatcher() {
+		datetext.setOnFocusChangeListener(new OnFocusChangeListener(){
+
+			public void onFocusChange(View arg0, boolean arg1) {
+				// TODO Auto-generated method stub
+				openCal(null);
+			}
+			
+		});
+		
+		//nathan the code below is causing massive runtime errors that i don't know how to solve so
+		//changed it to the above for now until we meet. the error is steming from the alertbuilder show method for some reason
+		/*.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable s){}
 			public void onTextChanged(CharSequence s, int t, int b, int c) {}
 			public void beforeTextChanged(CharSequence s, int start, int count,int after) {
-				alertBuild = new AlertDialog.Builder(getApplicationContext());
-				alertBuild.setPositiveButton("Yes", new OnClickListener() {
+				dateAlert = new AlertDialog.Builder(getApplicationContext());
+				dateAlert.setPositiveButton("Yes", new OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						openCal(null);
 					}
 				});
-				alertBuild.setNegativeButton("No", new OnClickListener() {
+				dateAlert.setNegativeButton("No", new OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {}
 				});
-				alertBuild.setMessage("Editing the date manually tends to lead to Date Parse Errors. \n Would you like to select a date instead?");
-				alertBuild.show();
+				dateAlert.setMessage("Editing the date manually tends to lead to Date Parse Errors.  Would you like to select a date instead?");
+				dateAlert.create().show();
 			}
-		});
+		});*/
+		
+		
 		dueDate = new Date(0);//current time
 		dateFormat = new SimpleDateFormat();
 		dateFormat.setLenient(true);
@@ -377,7 +392,11 @@ public class DetailForm extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		if(item.getItemId() == R.id.delete)
+		if(item.getItemId() == R.id.done)
+		{
+			finish();
+		}
+		else if(item.getItemId() == R.id.delete)
 		{
 			new Builder(this).setTitle("Do you want to delete the task?")
 							 .setMessage("This action cannot be undone!")
