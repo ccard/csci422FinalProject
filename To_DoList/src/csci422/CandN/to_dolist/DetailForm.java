@@ -137,17 +137,14 @@ public class DetailForm extends Activity {
 		datetext.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable s){}
 			public void onTextChanged(CharSequence s, int t, int b, int c) {}
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,int after) {
 				alertBuild = new AlertDialog.Builder(getApplicationContext());
 				alertBuild.setPositiveButton("Yes", new OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						openCal(null);
 					}
 				});
 				alertBuild.setNegativeButton("No", new OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {}
 				});
 				alertBuild.setMessage("Editing the date manually tends to lead to Date Parse Errors. \n Would you like to select a date instead?");
