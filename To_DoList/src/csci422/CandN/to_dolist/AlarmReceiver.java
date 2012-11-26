@@ -56,8 +56,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 		
 		note.contentIntent = PendingIntent.getActivity(context, Integer.parseInt(id), i, 0);
 		
-		mgr.notify(NOTIFY_ME_ID,note);
 		Log.v("AlarmReceiver","got here");
+		c.close();
+		mgr.notify(NOTIFY_ME_ID,note);
 	}
 
 }
