@@ -33,6 +33,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 //import csci422.CandN.to_dolist.R;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -110,7 +112,9 @@ public class DetailForm extends Activity {
 		setContentView(R.layout.detail_form);
 		
 		initWidgets();
-
+		
+		initDateDialog();
+		
 		loadCurrent();
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
 
@@ -134,34 +138,15 @@ public class DetailForm extends Activity {
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
 		//date pickers
 		datetext = (EditText)findViewById(R.id.dueDatePicker);
+		
 		datetext.setOnFocusChangeListener(new OnFocusChangeListener(){
 
 			public void onFocusChange(View arg0, boolean arg1) {
-				// TODO Auto-generated method stub
-				openCal(null);
+	
+				dateAlert.create().show();
 			}
 			
 		});
-		
-		//nathan the code below is causing massive runtime errors that i don't know how to solve so
-		//changed it to the above for now until we meet. the error is steming from the alertbuilder show method for some reason
-		/*.addTextChangedListener(new TextWatcher() {
-			public void afterTextChanged(Editable s){}
-			public void onTextChanged(CharSequence s, int t, int b, int c) {}
-			public void beforeTextChanged(CharSequence s, int start, int count,int after) {
-				dateAlert = new AlertDialog.Builder(getApplicationContext());
-				dateAlert.setPositiveButton("Yes", new OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						openCal(null);
-					}
-				});
-				dateAlert.setNegativeButton("No", new OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {}
-				});
-				dateAlert.setMessage("Editing the date manually tends to lead to Date Parse Errors.  Would you like to select a date instead?");
-				dateAlert.create().show();
-			}
-		});*/
 		
 		
 		dueDate = new Date(0);//current time
@@ -172,6 +157,22 @@ public class DetailForm extends Activity {
 		notes = ((EditText) findViewById(R.id.notes));
 		address = (EditText)findViewById(R.id.address);
 		street = (EditText)findViewById(R.id.street);
+	}
+	
+	/**
+	 * This initalizes datedialog conformation edit
+	 */
+	private void initDateDialog()
+	{
+		dateAlert = new AlertDialog.Builder(this);
+		dateAlert.setPositiveButton("Yes", new OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				openCal(null);
+			}
+		});
+		dateAlert.setNegativeButton("No", null);
+		dateAlert.setTitle("Warning");
+		dateAlert.setMessage("Editing the date manually tends to lead to Date Parse Errors.\n  Would you like to select a date instead?");
 	}
 
 	/**
