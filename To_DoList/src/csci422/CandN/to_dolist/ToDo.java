@@ -159,6 +159,7 @@ public class ToDo extends ListActivity {
 				OnBootReceiver.cancelAlarm(this, helper, c);
 			}
 		}
+		c.close();
 	}
 
 	@Override
