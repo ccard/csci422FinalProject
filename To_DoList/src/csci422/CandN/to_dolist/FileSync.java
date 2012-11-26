@@ -137,39 +137,6 @@ public class FileSync {
 		toSaveFile = (toSaveFile ? false : true);
 	}
 
-
-	/**
-	 * WARNING: ONLY CALL THIS FUNCTION FROM AN INTENTSERVICE OR AYSNCTASK OR RISK SLOWING DOWN
-	 *			THE UI THREAD OR HAVE IT STOP BECAUSE USER CLOSES APP
-	 *
-	 * This function saves the entire data base stored in ToDoHelper to the
-	 * CalenderContract api (aka google calendar)
-	 * @param cr 
-	 * 
-	 * @param: ToDoHelper that has the data base since this class can't get its
-	 *			calling context.
-	 * @throws ParseException 
-	 */
-	@Deprecated
-	public void syncWithCal(ToDoHelper help, ContentResolver cr) throws ParseException
-	{
-		//if (toSyncCal)  We already checked for this.
-		Cursor c = help.getAll("title");
-		SimpleDateFormat df = new SimpleDateFormat();
-		df.setLenient(true);
-		for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
-			ContentValues cvEvent = new ContentValues();
-			cvEvent.put("calendar_id", 1);
-			cvEvent.put("title", help.getTitle(c));
-			cvEvent.put("dtstart", Date.parse(help.getDate(c)));
-			//cvEvent.put("hasAlarm", 1);
-			cvEvent.put("description",help.getNotes(c));//TODO expand this later to include progress,etc.
-			cvEvent.put("dtend", Date.parse(help.getDate(c))+36E5);
-			cr.insert(Uri.parse("content://com.android.calendar/events"), cvEvent);			
-		}
-		c.close();
-	}
-
 	/**
 	 * WARNING: ONLY CALL THIS FUNCTION FROM AN INTENTSERVICE OR AYSNCTASK OR RISK SLOWING DOWN
 	 *			THE UI THREAD OR HAVE IT STOP BECAUSE USER CLOSES APP

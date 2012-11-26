@@ -6,7 +6,9 @@
 package csci422.CandN.to_dolist;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -368,12 +370,25 @@ public class ToDo extends ListActivity {
 		{
 			if (FileSync.getInstance().isSyncCal())
 			{
-				try {
-					FileSync.getInstance().syncWithCal(helper,getContentResolver());
-				} catch (ParseException e) {
-					Log.e("TodoSync", e.getMessage());
+				//FileSync.getInstance().syncWithCal(helper,getContentResolver());
+				//if (toSyncCal)  We already checked for this.
+				Cursor c = helper.getAll("title");
+				SimpleDateFormat df = new SimpleDateFormat();
+				df.setLenient(true);
+				for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+					ContentValues cvEvent = new ContentValues();
+					cvEvent.put("calendar_id", 1);
+					cvEvent.put("title", helper.getTitle(c));
+					cvEvent.put("dtstart", Date.parse(helper.getDate(c)));
+					//cvEvent.put("hasAlarm", 1);jj j
+					cvEvent.put("description",helper.getNotes(c));//TODO expand this later to include progress,etc.
+					cvEvent.put("dtend", Date.parse(helper.getDate(c))+36E5);
+					cvEvent.put("eventTimezone", Calendar.getInstance().getTimeZone().getDisplayName());
+					getContentResolver().insert(Uri.parse("content://com.android.calendar/events"), cvEvent);			
 				}
+				c.close();
 			}
+			
 			if (FileSync.getInstance().isSaveFile())
 			{
 				FileSync.getInstance().saveToFile(helper);
