@@ -10,16 +10,9 @@ package csci422.CandN.to_dolist;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
 import android.database.Cursor;
-import android.net.MailTo;
 import android.net.Uri;
-import android.provider.CalendarContract;
-import android.text.format.DateFormat;
-import android.text.method.DateTimeKeyListener;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 
