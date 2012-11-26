@@ -364,6 +364,9 @@ public class DetailForm extends Activity {
 		v.setBackgroundResource(R.drawable.highlight);
 	}
 
+	/**
+	 * This code sets up to delete the task or cancel adding the task
+	 */
 	public void deleteTask()
 	{
 		if(!id.isEmpty())
