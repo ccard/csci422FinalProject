@@ -1,4 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/done"
+        android:title="Done"
+        android:orderInCategory="100"
+        android:icon="@drawable/btn_check_buttonless_on"
+        android:showAsAction="ifRoom|withText" />
     <item android:id="@+id/delete"
         android:title="Delete"
         android:orderInCategory="100"
