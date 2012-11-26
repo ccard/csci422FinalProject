@@ -153,7 +153,10 @@ public class ToDo extends ListActivity {
 			if(!helper.getNotified(c))
 			{
 				OnBootReceiver.setAlarm(this, helper, c);
-				
+			}
+			else
+			{
+				OnBootReceiver.cancelAlarm(this, helper, c);
 			}
 		}
 	}
