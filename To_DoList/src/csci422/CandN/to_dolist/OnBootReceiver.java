@@ -46,6 +46,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 		
 		Calendar cal = new GregorianCalendar();
 		
+		
 		AlarmManager mgr = (AlarmManager)ctxt.getSystemService(Context.ALARM_SERVICE);
 		
 		if(!h.getDate(c).isEmpty())
@@ -54,6 +55,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 			if(words.length == 3)
 			{
 				cal.set(getYear(words[0]), getMonth(words[0]), getDay(words[0]), getHour(words[1]), getMin(words[1]));
+				Log.v("OnBootReciever dates","year: "+getYear(words[0])+", month: "+getMonth(words[0])+", day: "+getDay(words[0])+", hour: "+ getHour(words[1])+", min: "+getMin(words[1])+", zone: "+cal.getTimeZone().getDisplayName());
 				
 				if("PM".equals(words[2]))
 				{
@@ -63,7 +65,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 				{
 					cal.set(Calendar.AM_PM, Calendar.AM);
 				}
-				Log.v("OnBootReceiver", cal.getTimeInMillis()+" cur: "+ nowDate.getTimeInMillis());
+				Log.v("OnBootReceiver", cal.getTimeInMillis()+" cur: "+ System.currentTimeMillis());
 				if(cal.getTimeInMillis() < System.currentTimeMillis())
 				{
 					h.notified(c.getString(0), true);
@@ -75,7 +77,9 @@ public class OnBootReceiver extends BroadcastReceiver {
 					
 					i.putExtra(NOTIFY_EXTRA, c.getString(0));
 					
-					mgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), PendingIntent.getBroadcast(ctxt, c.getInt(0), i, 0));
+					PendingIntent pi = PendingIntent.getBroadcast(ctxt, c.getInt(0), i, 0);
+					
+					mgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
 				}
 			}
 		}
