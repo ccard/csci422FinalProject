@@ -32,10 +32,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 		
 		while(c.moveToNext())
 		{
-			if(!helper.getNotified(c))
-			{
-				setAlarm(ctxt,helper,c);
-			}
+			setAlarm(ctxt,helper,c);
 		}
 
 	}
