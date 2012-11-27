@@ -42,14 +42,14 @@ public class WidgetService extends IntentService {
 				c.moveToFirst();
 				updateViews.setTextViewText(R.id.name, c.getString(1));//TODO change add to the textView we are changing.
 				Intent i = new Intent(this, DetailForm.class); 
-				i.putExtra(ToDo.ID_EXTRA, c.getString(0));
+				i.putExtra(DetailForm.DETAIL_EXTRA, c.getString(0));
 				PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 				updateViews.setOnClickPendingIntent(R.id.name, pi);
 				c.close();
 			}
 			else 
 			{
-				updateViews.setTextViewText(R.id.title, this.getString(R.string.empty));
+				updateViews.setTextViewText(R.id.name, this.getString(R.string.empty));
 			}
 		}
 		finally 
