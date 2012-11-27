@@ -111,11 +111,17 @@ public class DetailForm extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		String temp = null;
-		if(savedInstanceState!=null){
+		
+		try{  //TODO THIS LINE generates the exception?????!!!!
+		//if(savedInstanceState!=null){
 			temp=savedInstanceState.getString("IDofTask");
 			if(helper.getById(temp)==null||temp.length()==0)id=null;
 			else id=temp;
+		}catch(NullPointerException n){
+			Log.e(tag, "Error: "+n.getMessage());
+			Log.e(tag, "Local form: "+n.getLocalizedMessage());
 		}
+		
 		setContentView(R.layout.detail_form);
 
 		initWidgets();
