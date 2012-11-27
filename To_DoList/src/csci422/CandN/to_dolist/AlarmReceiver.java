@@ -39,6 +39,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 		
 		note.icon = R.drawable.ic_launcher;
 		
+		note.tickerText = "Task due!";
+		
 		note.when = System.currentTimeMillis();
 		
 		note.flags |= Notification.FLAG_AUTO_CANCEL;
