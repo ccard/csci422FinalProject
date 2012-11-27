@@ -142,8 +142,7 @@ public class DetailForm extends Activity {
 		datetext.setOnFocusChangeListener(new OnFocusChangeListener(){
 
 			public void onFocusChange(View arg0, boolean arg1) {
-	
-				dateAlert.create().show();
+				if(arg1) dateAlert.create().show();
 			}
 			
 		});
