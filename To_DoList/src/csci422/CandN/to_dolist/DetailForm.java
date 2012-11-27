@@ -109,12 +109,12 @@ public class DetailForm extends Activity {
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		String temp = "";
+		String temp = null;
 		if(savedInstanceState!=null){
-			savedInstanceState.getString("IDofTask");
+			temp=savedInstanceState.getString("IDofTask");
 			if(helper.getById(temp)==null||temp.length()==0)id=null;
+			else id=temp;
 		}
-		else id=temp;
 		setContentView(R.layout.detail_form);
 
 		initWidgets();
