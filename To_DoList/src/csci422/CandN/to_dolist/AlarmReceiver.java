@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
