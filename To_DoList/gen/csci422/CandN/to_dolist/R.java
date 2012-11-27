@@ -16,22 +16,24 @@ public final class R {
     }
     public static final class drawable {
         public static final int btn_check_buttonless_on=0x7f020000;
-        public static final int highlight=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_delete=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int ic_menu_add=0x7f020005;
-        public static final int ic_menu_mapmode=0x7f020006;
-        public static final int ic_menu_my_calendar=0x7f020007;
-        public static final int ic_menu_settings_holo_light=0x7f020008;
-        public static final int ic_popup_sync_1=0x7f020009;
-        public static final int priority1=0x7f02000a;
-        public static final int priority2=0x7f02000b;
-        public static final int priorityblank=0x7f02000c;
-        public static final int prioritydot=0x7f02000d;
-        public static final int priorityq=0x7f02000e;
-        public static final int progress=0x7f02000f;
-        public static final int widget_frame=0x7f020010;
+        public static final int checkbox_off_background=0x7f020001;
+        public static final int checkbox_on_background=0x7f020002;
+        public static final int highlight=0x7f020003;
+        public static final int ic_action_search=0x7f020004;
+        public static final int ic_delete=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int ic_menu_add=0x7f020007;
+        public static final int ic_menu_mapmode=0x7f020008;
+        public static final int ic_menu_my_calendar=0x7f020009;
+        public static final int ic_menu_settings_holo_light=0x7f02000a;
+        public static final int ic_popup_sync_1=0x7f02000b;
+        public static final int priority1=0x7f02000c;
+        public static final int priority2=0x7f02000d;
+        public static final int priorityblank=0x7f02000e;
+        public static final int prioritydot=0x7f02000f;
+        public static final int priorityq=0x7f020010;
+        public static final int progress=0x7f020011;
+        public static final int widget_frame=0x7f020012;
     }
     public static final class id {
         public static final int Priorities=0x7f0a0006;
@@ -39,16 +41,17 @@ public final class R {
         public static final int Priority1=0x7f0a0009;
         public static final int Priority2=0x7f0a000a;
         public static final int Priorityq=0x7f0a0007;
-        public static final int add=0x7f0a0021;
+        public static final int add=0x7f0a0022;
         public static final int add1=0x7f0a001f;
         public static final int address=0x7f0a0010;
         public static final int check=0x7f0a0019;
+        public static final int checkImage=0x7f0a0021;
         public static final int completion=0x7f0a0014;
         public static final int completionbar=0x7f0a001c;
         public static final int date=0x7f0a001b;
         public static final int datePicker1=0x7f0a0002;
-        public static final int delete=0x7f0a0025;
-        public static final int done=0x7f0a0024;
+        public static final int delete=0x7f0a0026;
+        public static final int done=0x7f0a0025;
         public static final int doneButton=0x7f0a0016;
         public static final int dueDatePicker=0x7f0a000c;
         public static final int layoutCompletion=0x7f0a0013;
@@ -65,9 +68,9 @@ public final class R {
         public static final int pickList=0x7f0a0012;
         public static final int pleaseWaitMessage=0x7f0a0004;
         public static final int priority=0x7f0a001d;
-        public static final int settings=0x7f0a0022;
+        public static final int settings=0x7f0a0023;
         public static final int street=0x7f0a000f;
-        public static final int sync=0x7f0a0023;
+        public static final int sync=0x7f0a0024;
         public static final int taskName=0x7f0a0005;
         public static final int tasks=0x7f0a0020;
         public static final int timePicker1=0x7f0a0003;

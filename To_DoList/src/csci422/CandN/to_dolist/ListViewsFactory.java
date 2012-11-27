@@ -51,7 +51,17 @@ public class ListViewsFactory implements RemoteViewsFactory {
 		RemoteViews row = new RemoteViews(ctxt.getPackageName(), R.layout.widget_row);
 		tasks.moveToPosition(position);
 		row.setTextViewText(android.R.id.text1, tasks.getString(1));
-
+		
+		if(tasks.getInt(2) < 95)
+		{
+			row.setImageViewResource(R.id.checkImage, R.drawable.checkbox_on_background);
+		}
+		else
+		{
+			row.setImageViewResource(R.id.checkImage, R.drawable.checkbox_off_background);
+		}
+		
+		
 		Intent i = new Intent();
 		Bundle extras = new Bundle();
 
@@ -74,7 +84,7 @@ public class ListViewsFactory implements RemoteViewsFactory {
 	public void onCreate() 
 	{
 		helper = new ToDoHelper(ctxt);
-		tasks = helper.getReadableDatabase().rawQuery("SELECT _ID, title FROM todos", null);
+		tasks = helper.getReadableDatabase().rawQuery("SELECT _ID, title, state FROM todos", null);
 	}
 
 	public void onDataSetChanged() {

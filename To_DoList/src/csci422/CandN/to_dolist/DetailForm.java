@@ -425,6 +425,7 @@ public class DetailForm extends Activity {
 
 		return super.onOptionsItemSelected(item);
 	}
+	
 	public void openCal(View v){ 
 		Log.v(tag, "Opening DatePicker Dialog...");
 		Builder calDialog = new Builder(this);
