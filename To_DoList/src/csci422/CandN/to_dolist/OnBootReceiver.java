@@ -55,7 +55,6 @@ public class OnBootReceiver extends BroadcastReceiver {
 			if(words.length == 3)
 			{
 				cal.set(getYear(words[0]), getMonth(words[0]), getDay(words[0]), getHour(words[1]), getMin(words[1]));
-				Log.v("OnBootReciever dates","year: "+getYear(words[0])+", month: "+getMonth(words[0])+", day: "+getDay(words[0])+", hour: "+ getHour(words[1])+", min: "+getMin(words[1])+", zone: "+cal.getTimeZone().getDisplayName());
 				
 				if("PM".equals(words[2]))
 				{
@@ -65,7 +64,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 				{
 					cal.set(Calendar.AM_PM, Calendar.AM);
 				}
-				Log.v("OnBootReceiver", cal.getTimeInMillis()+" cur: "+ System.currentTimeMillis());
+				
 				if(cal.getTimeInMillis() < System.currentTimeMillis())
 				{
 					h.notified(c.getString(0), true);
