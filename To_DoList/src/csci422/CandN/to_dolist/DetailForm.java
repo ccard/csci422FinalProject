@@ -49,6 +49,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class DetailForm extends Activity {
+	
+	public static final String DETAIL_EXTRA = "csci422.CandN.to_dolist.curItem";
+	
 	public static final String tag = "todoDetail";
 
 	private ImageButton[] priors = new ImageButton[4];
@@ -232,7 +235,7 @@ public class DetailForm extends Activity {
 	private void loadCurrent() 
 	{
 		helper = new ToDoHelper(this);
-		id = getIntent().getStringExtra("csci422.CandN.to_dolist.curItem");
+		id = getIntent().getStringExtra(DETAIL_EXTRA);
 		if(id.length() == 0)return;
 
 		cur = helper.getById(id);

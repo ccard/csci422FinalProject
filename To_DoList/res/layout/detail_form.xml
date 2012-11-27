@@ -209,12 +209,11 @@
         <EditText
             android:id="@+id/notes"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:minLines="2"
             android:maxLines="11"
             android:hint="Notes"
-            android:inputType="textImeMultiLine" >
-        </EditText>
+            android:inputType="textImeMultiLine" />
         <!-- How do I make this EditText fill up any remaining space? -->
 
         <Button

@@ -46,6 +46,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 		
 		Calendar cal = new GregorianCalendar();
 		
+		
 		AlarmManager mgr = (AlarmManager)ctxt.getSystemService(Context.ALARM_SERVICE);
 		
 		if(!h.getDate(c).isEmpty())
@@ -63,7 +64,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 				{
 					cal.set(Calendar.AM_PM, Calendar.AM);
 				}
-				Log.v("OnBootReceiver", cal.getTimeInMillis()+" cur: "+ nowDate.getTimeInMillis());
+				
 				if(cal.getTimeInMillis() < System.currentTimeMillis())
 				{
 					h.notified(c.getString(0), true);
@@ -75,7 +76,9 @@ public class OnBootReceiver extends BroadcastReceiver {
 					
 					i.putExtra(NOTIFY_EXTRA, c.getString(0));
 					
-					mgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), PendingIntent.getBroadcast(ctxt, c.getInt(0), i, 0));
+					PendingIntent pi = PendingIntent.getBroadcast(ctxt, c.getInt(0), i, 0);
+					
+					mgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
 				}
 			}
 		}

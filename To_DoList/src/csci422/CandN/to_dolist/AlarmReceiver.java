@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -34,25 +35,31 @@ public class AlarmReceiver extends BroadcastReceiver {
 		
 		NotificationManager mgr = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 		
-		
 		Notification note = new Notification();
 		
 		note.icon = R.drawable.ic_launcher;
 		
-		note.tickerText = "Task Due: "+help.getTitle(c);
+		note.tickerText = "Task due!";
 		
 		note.when = System.currentTimeMillis();
 		
 		note.flags |= Notification.FLAG_AUTO_CANCEL;
 		
+		RemoteViews content = new RemoteViews(context.getPackageName(), R.layout.notification_layout);
+		
+		content.setTextViewText(R.id.notifyText, "Task Due: "+help.getTitle(c));
+		
+		note.contentView = content;
+		
 		Intent i = new Intent(context, DetailForm.class);
 		
-		i.putExtra(ToDo.ID_EXTRA, id);
+		i.putExtra(DetailForm.DETAIL_EXTRA, id);
 		
-		note.contentIntent = PendingIntent.getActivity(context, 0, i, 0);
+		note.contentIntent = PendingIntent.getActivity(context, Integer.parseInt(id), i, 0);
 		
+		Log.v("AlarmReceiver","got here");
+		c.close();
 		mgr.notify(NOTIFY_ME_ID,note);
-
 	}
 
 }

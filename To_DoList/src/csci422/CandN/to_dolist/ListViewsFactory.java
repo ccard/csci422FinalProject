@@ -52,7 +52,7 @@ public class ListViewsFactory implements RemoteViewsFactory {
 		Intent i = new Intent();
 		Bundle extras = new Bundle();
 
-		extras.putString(ToDo.ID_EXTRA, String.valueOf(tasks.getInt(0)));
+		extras.putString(DetailForm.DETAIL_EXTRA, String.valueOf(tasks.getInt(0)));
 		i.putExtras(extras);
 		row.setOnClickFillInIntent(android.R.id.text1, i);
 		return row;
