@@ -49,9 +49,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class DetailForm extends Activity {
-	
+
 	public static final String DETAIL_EXTRA = "csci422.CandN.to_dolist.curItem";
-	
+
 	public static final String tag = "todoDetail";
 
 	private ImageButton[] priors = new ImageButton[4];
@@ -65,61 +65,67 @@ public class DetailForm extends Activity {
 	private EditText notes;
 	private String[] Listnames = {"Main","Homework","Shopping"};
 	private SeekBar completion;
-	
+
 	/** -1 is ?, 0 is a dot, 1 is one !, 2 is two !!  */
 	private int priority = -1;
 	private Date dueDate;
 	private DateFormat dateFormat;
-	
+
 	//this code is all for waiting to get the gps location
 	private LocationManager locmgr = null;
-	
+
 	private ProgressDialog pd;//show spinning wheel while it is finding the location
-	
+
 	private AtomicBoolean cancelLocation = new AtomicBoolean(false);//thread safe boolean will be using with a listener for location
-	
+
 	private AtomicBoolean continueSearch = new AtomicBoolean(true);
-	
+
 	private AtomicBoolean hasDialogShown = new AtomicBoolean(false);
-	
+
 	private WaitForLocation gpsWait;
-	
+
 	//strings for telling user about latitude and longitude
 	private static final String Lat = "LATITUDE:";
 	private static final String Lon = "LONGITUDE:";
-	
+
 	private static final long gpsWaitDuration = 120000;//wait time for async task
-	
+
 	private Builder alertBuild;
 	private Builder dateAlert;
 	private AlertDialog promptContin;//builder for alert dialog
-	
+
 	//end code get gps location
-	
+
 	//delete fields
-	
+
 	private boolean delete = false;
-	
+
 	//end delete code
-	
+
 	//private boolean hasSaved;
- 
-	private String id = "";//id needs to be accessible to whole class so it can be used with todo helper
+
+	private String id = null;//id needs to be accessible to whole class so it can be used with todo helper
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		String temp = "";
+		if(savedInstanceState!=null){
+			savedInstanceState.getString("IDofTask");
+			if(helper.getById(temp)==null||temp.length()==0)id=null;
+		}
+		else id=temp;
 		setContentView(R.layout.detail_form);
-		
+
 		initWidgets();
-		
+
 		initDateDialog();
-		
+
 		loadCurrent();
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
 
 		initFindLocation();
-		
+
 		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
 		pickList.setAdapter(adpt);
 	}
@@ -130,7 +136,7 @@ public class DetailForm extends Activity {
 	private void initWidgets()
 	{
 		completion = (SeekBar) findViewById(R.id.completion);
-		
+
 		//initializes priortity buttons
 		priors[0] = (ImageButton) findViewById(R.id.Priorityq);
 		priors[1] = (ImageButton) findViewById(R.id.Priority0);
@@ -138,16 +144,16 @@ public class DetailForm extends Activity {
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
 		//date pickers
 		datetext = (EditText)findViewById(R.id.dueDatePicker);
-		
+
 		datetext.setOnFocusChangeListener(new OnFocusChangeListener(){
 
 			public void onFocusChange(View arg0, boolean arg1) {
 				if(arg1) dateAlert.create().show();
 			}
-			
+
 		});
-		
-		
+
+
 		dueDate = new Date(0);//current time
 		dateFormat = new SimpleDateFormat();
 		dateFormat.setLenient(true);
@@ -157,7 +163,7 @@ public class DetailForm extends Activity {
 		address = (EditText)findViewById(R.id.address);
 		street = (EditText)findViewById(R.id.street);
 	}
-	
+
 	/**
 	 * This initalizes datedialog conformation edit
 	 */
@@ -180,9 +186,9 @@ public class DetailForm extends Activity {
 	private void initFindLocation()
 	{
 		locmgr = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-		
+
 		gpsWait = new WaitForLocation();//creates new async task
-		
+
 		//inits the progress dialog with title message
 		pd = new ProgressDialog(this);
 		pd.setTitle("Finding location");
@@ -197,9 +203,9 @@ public class DetailForm extends Activity {
 				cancelLocation.set(true);
 				gpsWait.cancel(true);
 			}
-			
+
 		});
-		
+
 		//inits alertdialog with appropriate listenere and message
 		alertBuild = new AlertDialog.Builder(this);
 		alertBuild.setPositiveButton("Yes", new OnClickListener(){
@@ -209,9 +215,9 @@ public class DetailForm extends Activity {
 				arg0.dismiss();
 				continueSearch.set(true);
 			}
-			
+
 		});
-		
+
 		alertBuild.setNegativeButton("No", new OnClickListener(){
 
 			public void onClick(DialogInterface arg0, int arg1) {
@@ -219,11 +225,11 @@ public class DetailForm extends Activity {
 				gpsWait.cancel(true);
 				arg0.dismiss();
 			}
-			
+
 		});
-		
+
 		alertBuild.setMessage("Do you wish to continue to find your location?");
-		
+
 		promptContin = alertBuild.create();
 	}
 
@@ -234,7 +240,7 @@ public class DetailForm extends Activity {
 	private void loadCurrent() 
 	{
 		helper = new ToDoHelper(this);
-		id = getIntent().getStringExtra(DETAIL_EXTRA);
+		if(id==null)id = getIntent().getStringExtra(DETAIL_EXTRA);
 		if(id.length() == 0)return;
 
 		cur = helper.getById(id);
@@ -265,10 +271,10 @@ public class DetailForm extends Activity {
 		{//if the asyntask is still running for finding the location
 			gpsWait.cancel(true);
 		}
-		
+
 		if(!delete)
 		{//if the user decided to delete the task make sure that
-	     //it doesn't save again
+			//it doesn't save again
 			saveStuff();
 		}
 	}
@@ -308,7 +314,7 @@ public class DetailForm extends Activity {
 			helper.notified(id, false);
 		}
 	}
-	
+
 	/**
 	 * This method takes the text from street and address text fields and parses it for
 	 * the data base
@@ -328,7 +334,7 @@ public class DetailForm extends Activity {
 			return ret;
 		}
 	}
-	
+
 	/**
 	 * This method sets the two address fields if to the passed in string
 	 * or nothing if empty passed in string 
@@ -339,12 +345,12 @@ public class DetailForm extends Activity {
 		if(!addre.isEmpty())
 		{
 			String words[] = addre.split("\\+");
-			
+
 			street.setText(words[0]);
 			address.setText(words[1]);
 		}
 	}
-	
+
 	public void priq(View v){priority=-1;clr(v);}
 	public void prin(View v){priority=0;clr(v);}
 	public void prio(View v){priority=1;clr(v);}
@@ -383,7 +389,7 @@ public class DetailForm extends Activity {
 		}
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.detail_form_menu, menu);
@@ -400,23 +406,23 @@ public class DetailForm extends Activity {
 		else if(item.getItemId() == R.id.delete)
 		{
 			new Builder(this).setTitle("Do you want to delete the task?")
-							 .setMessage("This action cannot be undone!")
-							 .setPositiveButton("Yes", new OnClickListener(){
+			.setMessage("This action cannot be undone!")
+			.setPositiveButton("Yes", new OnClickListener(){
 
-								public void onClick(DialogInterface dialog,
-										int which) {
-									deleteTask();
-									
-								}
-								 
-							 })
-							 .setNegativeButton("No", null)
-							 .create()
-							 .show();
+				public void onClick(DialogInterface dialog,
+						int which) {
+					deleteTask();
+
+				}
+
+			})
+			.setNegativeButton("No", null)
+			.create()
+			.show();
 			return true;
 			/*TODO Double-check*/
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
 	public void openCal(View v){ 
@@ -426,7 +432,7 @@ public class DetailForm extends Activity {
 		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
 		calDialog.setCancelable(true);
 		calDialog.setPositiveButton("Done", new OnClickListener() {
-			
+
 			public void onClick(DialogInterface dialog, int which) {
 				((TextView)((Dialog)dialog).findViewById(R.id.pleaseWaitMessage)).setText("Saving...");
 				DatePicker dp = ((DatePicker)((Dialog)dialog).findViewById(R.id.datePicker1));
@@ -440,7 +446,7 @@ public class DetailForm extends Activity {
 
 		calDialog.show();
 	}
-	
+
 	public void openMaps(View v)
 	{
 		if(!address.getText().toString().isEmpty() && !street.getText().toString().isEmpty())
@@ -449,7 +455,7 @@ public class DetailForm extends Activity {
 			{//if lat and lon keywords are in the text fields
 				String lat[] = street.getText().toString().split(":");
 				String lon[] = address.getText().toString().split(":");
-				
+
 				String uri = "geo:"+lat[1]+","+lon[1];
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
 			}
@@ -464,7 +470,7 @@ public class DetailForm extends Activity {
 			Toast.makeText(this, "Please fill out the two address fields or click the here button", Toast.LENGTH_LONG).show();
 		}
 	}
-	
+
 	//gets location from gps
 	private LocationListener onLocChange = new LocationListener(){
 
@@ -476,30 +482,30 @@ public class DetailForm extends Activity {
 				//correctly
 				street.setText(Lat+(int)(location.getLatitude()*1E6));
 				address.setText(Lon+(int)(location.getLongitude()*1E6));
-				
+
 				cancelLocation.set(true);
-				
+
 				gpsWait.cancel(true);//cancels the async task if the location is gotten
 			}	
 		}
 
 		public void onProviderDisabled(String provider) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		public void onProviderEnabled(String provider) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	};
-	
+
 	//this is a listener for the spinner dialog so when the back button is pressed it performes that tasks bellow
 	private OnCancelListener cancel = new OnCancelListener(){
 
@@ -508,7 +514,7 @@ public class DetailForm extends Activity {
 			gpsWait.cancel(true);
 		}
 	};
-	
+
 	/**
 	 * The method is called by the here button add a locationlistenere to start gps to look for the users location
 	 * shows spinner dialog and starts the async task to wait for the location change
@@ -520,20 +526,20 @@ public class DetailForm extends Activity {
 		{//if the spwwait is still running
 			gpsWait.cancel(true);
 		}
-		
+
 		gpsWait = new WaitForLocation();
-		
-		
+
+
 		if(gpsWait.getStatus() == AsyncTask.Status.PENDING)
 		{//if gpsWait is waiting to run
 			locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
 			pd.show();
 			gpsWait.execute("");
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * This async task will wait until the user cancels or the location is found
 	 * @author Chris Card
@@ -547,15 +553,15 @@ public class DetailForm extends Activity {
 			//while the atomic booleans both are false
 			while(!cancelLocation.get() && continueSearch.get())
 			{
-				
+
 				try{
 					Thread.sleep(gpsWaitDuration);//sleeps the async task thread
-					
+
 					if(!cancelLocation.get() && continueSearch.get())//checks both attomic booleans
 					{//not sure if this part works haven't got here yer
 						pd.dismiss();
 						publishProgress(params);
-						
+
 						Thread.sleep(4000);
 						publishProgress(params);
 					}
@@ -566,7 +572,7 @@ public class DetailForm extends Activity {
 			}
 			return "Finished";
 		}
-		
+
 		@Override
 		protected void onProgressUpdate(String... prog)
 		{
@@ -580,9 +586,9 @@ public class DetailForm extends Activity {
 				promptContin.show();
 				hasDialogShown.set(true);
 			}
-			
+
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result)
 		{
@@ -594,7 +600,7 @@ public class DetailForm extends Activity {
 			continueSearch.set(true);
 			hasDialogShown.set(false);
 		}
-		
+
 		@Override
 		protected void onCancelled()
 		{
@@ -605,7 +611,7 @@ public class DetailForm extends Activity {
 			continueSearch.set(true);
 			hasDialogShown.set(false);
 		}
-		
+
 	}
 
 	public Date getDueDate() {
@@ -615,6 +621,12 @@ public class DetailForm extends Activity {
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 		datetext.setText(dateFormat.format(dueDate));
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString("IDofTask", id);
 	}
 
 
