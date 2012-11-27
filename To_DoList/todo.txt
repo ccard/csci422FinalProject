@@ -1,9 +1,5 @@
-
-
-(B) add address field
-(A) Why does making a priority of 2 cause it to look completed?
-(B) Ondestroy
 (A) Is 0 the id?
 look for a db file on the phone that stores the list
 On focus of date text field, bring up dialog
-Export data to goolge cal
+(A) fix spinner for lists
+(A) fix duplicate events
