@@ -58,7 +58,7 @@ public class DetailForm extends Activity {
 	private EditText datetext;
 	private EditText address;
 	private EditText street;
-	private ToDoHelper helper;
+	private ToDoHelper helper = new ToDoHelper(this);
 	private Cursor cur = null;
 	private Spinner pickList;
 	private EditText taskName;
@@ -105,6 +105,7 @@ public class DetailForm extends Activity {
 	//private boolean hasSaved;
 
 	private String id = null;//id needs to be accessible to whole class so it can be used with todo helper
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -239,7 +240,6 @@ public class DetailForm extends Activity {
 	 */
 	private void loadCurrent() 
 	{
-		helper = new ToDoHelper(this);
 		if(id==null)id = getIntent().getStringExtra(DETAIL_EXTRA);
 		if(id.length() == 0)return;
 
@@ -540,6 +540,22 @@ public class DetailForm extends Activity {
 
 
 	}
+	
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+		datetext.setText(dateFormat.format(dueDate));
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString("IDofTask", id);
+	}
+
 
 	/**
 	 * This async task will wait until the user cancels or the location is found
@@ -615,20 +631,6 @@ public class DetailForm extends Activity {
 
 	}
 
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-		datetext.setText(dateFormat.format(dueDate));
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putString("IDofTask", id);
-	}
 
 
 }
