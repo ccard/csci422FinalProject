@@ -18,7 +18,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 public class ListViewsFactory implements RemoteViewsFactory {
-
+	
 	private Context ctxt = null;
 	private ToDoHelper helper = null;
 	private	Cursor tasks = null;
@@ -51,8 +51,8 @@ public class ListViewsFactory implements RemoteViewsFactory {
 		RemoteViews row = new RemoteViews(ctxt.getPackageName(), R.layout.widget_row);
 		tasks.moveToPosition(position);
 		row.setTextViewText(android.R.id.text1, tasks.getString(1));
-		
-		if(tasks.getInt(2) >= 95)
+
+		if(tasks.getInt(2) >= ToDo.DONE)
 		{
 			row.setImageViewResource(R.id.checkImage, R.drawable.checkbox_on_background);
 		}
@@ -60,7 +60,6 @@ public class ListViewsFactory implements RemoteViewsFactory {
 		{
 			row.setImageViewResource(R.id.checkImage, R.drawable.checkbox_off_background);
 		}
-		
 		
 		Intent i = new Intent();
 		Bundle extras = new Bundle();
