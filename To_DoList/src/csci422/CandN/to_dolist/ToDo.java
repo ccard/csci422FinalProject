@@ -151,14 +151,7 @@ public class ToDo extends ListActivity {
 
 		while(c.moveToNext())
 		{
-			if(!helper.getNotified(c))
-			{
 				OnBootReceiver.setAlarm(this, helper, c);
-			}
-			else
-			{
-				OnBootReceiver.cancelAlarm(this, helper, c);
-			}
 		}
 		c.close();
 	}
@@ -302,11 +295,11 @@ public class ToDo extends ListActivity {
 					save.moveToFirst();
 					if (isChecked)
 					{
-						help.update(ID, help.getTitle(save), help.getAddress(save), "Main", help.getNotes(save), help.getDate(save), 100, help.getPriority(save));
+						help.updateState(ID, 100);
 					}
 					else
 					{
-						help.update(ID, help.getTitle(save), help.getAddress(save), "Main", help.getNotes(save), help.getDate(save), 0, help.getPriority(save));
+						help.updateState(ID, 0);
 					}
 					save = help.getById(ID);
 					save.moveToFirst();
