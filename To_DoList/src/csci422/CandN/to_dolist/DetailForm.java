@@ -329,6 +329,7 @@ public class DetailForm extends Activity {
 		}else {//edit current
 			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 			helper.notified(id, false);
+			OnBootReceiver.setAlarm(this, helper, cur);//sets alarm as well just incase it has been edited from the widget which wont update the alarm
 		}
 	}
 
