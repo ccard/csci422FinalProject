@@ -18,10 +18,26 @@ import android.widget.RemoteViews;
 
 
 public class AppWidget extends AppWidgetProvider {
-
+	
+	//this allows for a force update of the widget if it has been created
+	public static AppWidget widg = null;
+	private static Context ctxt;
+	private static AppWidgetManager mgr;
+	private static int[] appWidgetIds;
+		
 	@Override
 	public void onUpdate(Context ctxt, AppWidgetManager mgr, int[] appWidgetIds)
 	{
+		if(null == ctxt) ctxt = AppWidget.ctxt;
+		if(null == mgr) mgr = AppWidget.mgr;
+		if(null == appWidgetIds) appWidgetIds = AppWidget.appWidgetIds;
+		
+		AppWidget.widg = AppWidget.this;
+		
+		AppWidget.ctxt = ctxt;
+		AppWidget.mgr = mgr;
+		AppWidget.appWidgetIds = appWidgetIds;
+		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) 
 		{
 			onHCUpdate(ctxt, mgr, appWidgetIds);	
@@ -50,6 +66,7 @@ public class AppWidget extends AppWidgetProvider {
 			PendingIntent clickPI = PendingIntent.getActivity(ctxt, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			widget.setPendingIntentTemplate(R.id.tasks, clickPI);
+			
 			appWidgetManager.updateAppWidget(appWidgetIds[i], widget);	
 		}
 		super.onUpdate(ctxt, appWidgetManager, appWidgetIds);
