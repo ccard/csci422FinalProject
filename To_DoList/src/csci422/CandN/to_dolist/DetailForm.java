@@ -286,7 +286,7 @@ public class DetailForm extends Activity {
 			saveStuff();
 		}
 		
-		cur.close();
+		
 		helper.close();
 	}
 
