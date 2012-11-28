@@ -52,7 +52,7 @@ public class ListViewsFactory implements RemoteViewsFactory {
 		tasks.moveToPosition(position);
 		row.setTextViewText(android.R.id.text1, tasks.getString(1));
 		
-		if(tasks.getInt(2) < 95)
+		if(tasks.getInt(2) >= 95)
 		{
 			row.setImageViewResource(R.id.checkImage, R.drawable.checkbox_on_background);
 		}
