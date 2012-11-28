@@ -563,7 +563,8 @@ public class DetailForm extends Activity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(Bundle outState) {//Not working the way you wanted still saveing to the data base
+		//the order of the call is this method then ondestroy
 		super.onSaveInstanceState(outState);
 		outState.putString("IDofTask", id);
 	}
