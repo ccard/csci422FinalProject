@@ -150,8 +150,8 @@ public class ToDoHelper extends SQLiteOpenHelper
 		return c.getInt(8)>0;
 	}
 	
-	public long getNotifyID(Cursor c)
+	public int getNotifyID(Cursor c)
 	{
-		return c.getLong(9);
+		return c.getInt(9);
 	}
 }
