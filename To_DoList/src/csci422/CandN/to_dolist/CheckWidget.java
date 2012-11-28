@@ -65,6 +65,13 @@ public class CheckWidget extends Activity{
 		
 	}
 	
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		help.close();
+	}
+	
 	
 	private OnClickListener cancel = new OnClickListener()
 	{
