@@ -41,17 +41,20 @@ public final class R {
         public static final int Priority1=0x7f0a0009;
         public static final int Priority2=0x7f0a000a;
         public static final int Priorityq=0x7f0a0007;
-        public static final int add=0x7f0a0022;
+        public static final int add=0x7f0a0026;
         public static final int add1=0x7f0a001f;
         public static final int address=0x7f0a0010;
+        public static final int cancel=0x7f0a0024;
         public static final int check=0x7f0a0019;
-        public static final int checkImage=0x7f0a0021;
+        public static final int checkImage=0x7f0a0025;
+        public static final int complete=0x7f0a0022;
         public static final int completion=0x7f0a0014;
         public static final int completionbar=0x7f0a001c;
         public static final int date=0x7f0a001b;
         public static final int datePicker1=0x7f0a0002;
-        public static final int delete=0x7f0a0026;
-        public static final int done=0x7f0a0025;
+        public static final int delete=0x7f0a002a;
+        public static final int dialogMessage=0x7f0a0021;
+        public static final int done=0x7f0a0029;
         public static final int doneButton=0x7f0a0016;
         public static final int dueDatePicker=0x7f0a000c;
         public static final int layoutCompletion=0x7f0a0013;
@@ -64,13 +67,14 @@ public final class R {
         public static final int noteImage=0x7f0a0017;
         public static final int notes=0x7f0a0015;
         public static final int notifyText=0x7f0a0018;
+        public static final int open=0x7f0a0023;
         public static final int pickDateButton=0x7f0a000d;
         public static final int pickList=0x7f0a0012;
         public static final int pleaseWaitMessage=0x7f0a0004;
         public static final int priority=0x7f0a001d;
-        public static final int settings=0x7f0a0023;
+        public static final int settings=0x7f0a0027;
         public static final int street=0x7f0a000f;
-        public static final int sync=0x7f0a0024;
+        public static final int sync=0x7f0a0028;
         public static final int taskName=0x7f0a0005;
         public static final int tasks=0x7f0a0020;
         public static final int timePicker1=0x7f0a0003;
@@ -86,7 +90,8 @@ public final class R {
         public static final int notification_layout=0x7f030003;
         public static final int row=0x7f030004;
         public static final int widget=0x7f030005;
-        public static final int widget_row=0x7f030006;
+        public static final int widget_dialog=0x7f030006;
+        public static final int widget_row=0x7f030007;
     }
     public static final class menu {
         public static final int activity_to_do=0x7f090000;
