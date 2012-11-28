@@ -89,6 +89,16 @@ public class ToDoHelper extends SQLiteOpenHelper
 	{
 		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified FROM todos ORDER BY "+orderBy, null);
 	}
+	
+	public void updateState(String id, int state)
+	{
+		String args[] = {id};
+		ContentValues cv = new ContentValues();
+		
+		cv.put("state", state);
+		
+		getWritableDatabase().update("todos", cv, "_ID=?", args);
+	}
 
 
 	public void notified(String id, boolean val)
@@ -96,7 +106,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 		String args[] = {id};
 		ContentValues cv = new ContentValues();
 		
-		cv.put("notified", val?1:0);//Chris, learn to use the ternary operator. Much less code.
+		cv.put("notified", val?1:0);
 		
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
