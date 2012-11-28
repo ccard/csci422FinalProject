@@ -117,6 +117,7 @@ public class ToDo extends ListActivity {
 		delay.postDelayed(new Runnable(){
 			public void run() {
 				initList();
+				if(null != AppWidget.widg) AppWidget.widg.onUpdate(null, null, null);//updates widget
 			}
 		}, timeDelay);
 	}
