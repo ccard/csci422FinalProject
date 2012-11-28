@@ -24,7 +24,7 @@
         android:gravity="center" >
 
         <Button
-            android:id="@+id/complete"
+            android:id="@+id/completeDia"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -39,11 +39,12 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Cancel"
+            android:text="Edit"
             android:textColor="#000"
             android:textSize="18sp"
             android:textStyle="bold" >
         </Button>
+        
         <Button
             android:id="@+id/cancel"
             android:layout_width="150dp"
