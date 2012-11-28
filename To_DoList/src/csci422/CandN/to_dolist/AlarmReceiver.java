@@ -19,8 +19,6 @@ import android.widget.RemoteViews;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-	private static final int NOTIFY_ME_ID = 1337;
-	
 	@Override
 	public void onReceive(Context context, Intent intent) 
 	{
@@ -58,8 +56,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 		note.contentIntent = PendingIntent.getActivity(context, Integer.parseInt(id), i, 0);
 		
 		Log.v("AlarmReceiver","got here");
+		
+		int notId = help.getNotifyID(c);
 		c.close();
-		mgr.notify(NOTIFY_ME_ID,note);
+		help.close();
+		mgr.notify(notId,note);
 	}
 
 }
