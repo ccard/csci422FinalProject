@@ -31,6 +31,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 		
 		c.moveToFirst();
 		
+		help.notified(id, true);
+		
 		NotificationManager mgr = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 		
 		Notification note = new Notification();
