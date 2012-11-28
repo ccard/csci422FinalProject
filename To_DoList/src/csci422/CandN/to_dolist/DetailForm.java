@@ -58,7 +58,7 @@ public class DetailForm extends Activity {
 	private EditText datetext;
 	private EditText address;
 	private EditText street;
-	private ToDoHelper helper = new ToDoHelper(this);
+	private ToDoHelper helper;
 	private Cursor cur = null;
 	private Spinner pickList;
 	private EditText taskName;
@@ -121,6 +121,8 @@ public class DetailForm extends Activity {
 			Log.e(tag, "Error: "+n.getMessage());
 			Log.e(tag, "Local form: "+n.getLocalizedMessage());
 		}
+		
+		helper = new ToDoHelper(this);
 		
 		setContentView(R.layout.detail_form);
 
@@ -283,6 +285,9 @@ public class DetailForm extends Activity {
 			//it doesn't save again
 			saveStuff();
 		}
+		
+		cur.close();
+		helper.close();
 	}
 
 	/**
