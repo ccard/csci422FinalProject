@@ -47,7 +47,7 @@ public final class R {
         public static final int cancel=0x7f0a0024;
         public static final int check=0x7f0a0019;
         public static final int checkImage=0x7f0a0025;
-        public static final int complete=0x7f0a0022;
+        public static final int completeDia=0x7f0a0022;
         public static final int completion=0x7f0a0014;
         public static final int completionbar=0x7f0a001c;
         public static final int date=0x7f0a001b;

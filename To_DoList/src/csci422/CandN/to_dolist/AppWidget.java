@@ -62,7 +62,7 @@ public class AppWidget extends AppWidgetProvider {
 			
 			widget.setRemoteAdapter(appWidgetIds[i], R.id.tasks, svcIntent);
 			
-			Intent clickIntent = new Intent(ctxt, DetailForm.class); 
+			Intent clickIntent = new Intent(ctxt, CheckWidget.class); 
 			PendingIntent clickPI = PendingIntent.getActivity(ctxt, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			widget.setPendingIntentTemplate(R.id.tasks, clickPI);

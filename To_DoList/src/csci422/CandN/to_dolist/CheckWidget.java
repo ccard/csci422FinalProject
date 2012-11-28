@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class CheckWidget extends Activity{
 
@@ -36,7 +38,30 @@ public class CheckWidget extends Activity{
 		c = help.getById(id);
 		c.moveToFirst();
 		
+		TextView message = (TextView)findViewById(R.id.dialogMessage);
 		
+		String messageText = "Task: "+help.getTitle(c);
+		
+		message.setText(messageText);
+		
+		Button complete = (Button)findViewById(R.id.completeDia);
+		Button canceled = (Button)findViewById(R.id.cancel);
+		Button openD = (Button)findViewById(R.id.open);
+		
+		if(help.getState(c) >= ToDo.DONE)
+		{
+			complete.setText("Task not complete");
+		}
+		else
+		{
+			complete.setText("Task complete");
+		}
+		
+		complete.setOnClickListener(completeion);
+		
+		canceled.setOnClickListener(cancel);
+		
+		openD.setOnClickListener(open);
 		
 	}
 	
@@ -56,11 +81,11 @@ public class CheckWidget extends Activity{
 		{
 			if(help.getState(c) >= ToDo.DONE)
 			{
-				help.update(id, help.getTitle(c), help.getAddress(c), help.getList(c), help.getNotes(c), help.getDate(c), 0, help.getPriority(c));
+				help.updateState(id, 0);
 			}
 			else
 			{
-				help.update(id, help.getTitle(c), help.getAddress(c), help.getList(c), help.getNotes(c), help.getDate(c), 100, help.getPriority(c));
+				help.updateState(id, 100);
 			}
 			
 			if(null != AppWidget.widg) AppWidget.widg.onUpdate(null, null, null);
