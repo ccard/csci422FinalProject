@@ -27,7 +27,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 	public void onCreate(SQLiteDatabase db)
 	{
 		//modify table elements for the todolist rather than restaurants
-		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, list TEXT, notes TEXT, date TEXT, state REAL, priority REAL, notified REAL);");
+		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, list TEXT, notes TEXT, date TEXT, state REAL, priority REAL, notified REAL, notifyID REAL);");
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 	{
 		String[] args = {id};
 
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified FROM todos WHERE _ID=?", args);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified, notifyID FROM todos WHERE _ID=?", args);
 	}
 	
 	public void delete(String id)
@@ -81,13 +81,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 		cv.put("state", state);
 		cv.put("priority", priority);
 		cv.put("notified", 0);
+		cv.put("notifyID", System.currentTimeMillis());//his field should only be set here!!!!
 
 		getWritableDatabase().insert("todos", "title", cv);
 	}
 
 	public Cursor getAll(String orderBy)
 	{
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified FROM todos ORDER BY "+orderBy, null);
+		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified, notifyID FROM todos ORDER BY "+orderBy, null);
 	}
 	
 	public void updateState(String id, int state)
