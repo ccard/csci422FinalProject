@@ -81,7 +81,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 		cv.put("state", state);
 		cv.put("priority", priority);
 		cv.put("notified", 0);
-		cv.put("notifyID", System.currentTimeMillis());//his field should only be set here!!!!
+		cv.put("notifyID", System.currentTimeMillis());//this field should only be set here and not modified any where else!!!!
 
 		getWritableDatabase().insert("todos", "title", cv);
 	}
@@ -148,5 +148,10 @@ public class ToDoHelper extends SQLiteOpenHelper
 	public boolean getNotified(Cursor c)
 	{
 		return c.getInt(8)>0;
+	}
+	
+	public long getNotifyID(Cursor c)
+	{
+		return c.getLong(9);
 	}
 }
