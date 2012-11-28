@@ -386,6 +386,7 @@ public class DetailForm extends Activity {
 			OnBootReceiver.cancelAlarm(this, helper, c);
 			helper.delete(id);
 			delete = true;
+			c.close();
 			finish();//kill activity
 		}
 		else
