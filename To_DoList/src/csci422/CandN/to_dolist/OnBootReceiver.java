@@ -34,6 +34,8 @@ public class OnBootReceiver extends BroadcastReceiver {
 		{
 			setAlarm(ctxt,helper,c);
 		}
+		c.close();
+		helper.close();
 
 	}
 	
