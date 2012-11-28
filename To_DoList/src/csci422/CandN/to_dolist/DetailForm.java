@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
@@ -249,7 +250,11 @@ public class DetailForm extends Activity {
 	private void loadCurrent() 
 	{
 		if(id==null)id = getIntent().getStringExtra(DETAIL_EXTRA);
-		if(id.length() == 0)return;
+		if(id.length() == 0)
+		{
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			return;
+		}
 
 		cur = helper.getById(id);
 		cur.moveToFirst();//need to set cursor to the beginning
@@ -320,6 +325,7 @@ public class DetailForm extends Activity {
 
 		if(cur==null){//make a new one
 			helper.insert(taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		}else {//edit current
 			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 			helper.notified(id, false);
