@@ -264,12 +264,14 @@ public class DetailForm extends Activity {
 		taskName.setText(helper.getTitle(cur));
 		loadAddressFields(helper.getAddress(cur));
 		notes.setText(helper.getNotes(cur));
-		try {
-			dueDate = dateFormat.parse(helper.getDate(cur));
-			datetext.setText(helper.getDate(cur));
-		} catch (ParseException e) {
-			Log.e(tag, "Can't parse the date.");
+		if(!helper.getDate(cur).isEmpty()){
+			try {
+				dueDate = dateFormat.parse(helper.getDate(cur));
+			} catch (ParseException e) {
+				Log.e(tag, "Can't parse the date.");
+			}
 		}
+		datetext.setText(helper.getDate(cur));
 
 		completion.setProgress(helper.getState(cur));
 		priority = helper.getPriority(cur);
@@ -312,12 +314,14 @@ public class DetailForm extends Activity {
 
 		int state = completion.getProgress();
 		//float percent= completion.getProgress()/((float)completion.getMax());
-		try {
-			dueDate = dateFormat.parse(datetext.getText().toString());
-		} catch (ParseException e) {
-			Log.e(tag, "Can't parse the date.");
-			Log.e(tag, e.getMessage());
-			dueDate = new Date();
+		if(!datetext.getText().toString().isEmpty()){
+			try {
+				dueDate = dateFormat.parse(datetext.getText().toString());
+			} catch (ParseException e) {
+				Log.e(tag, "Can't parse the date.");
+				Log.e(tag, e.getMessage());
+				dueDate = new Date();
+			}
 		}
 
 		if(cur==null){//make a new one
