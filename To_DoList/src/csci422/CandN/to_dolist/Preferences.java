@@ -45,21 +45,8 @@ public class Preferences extends PreferenceActivity {
 	{
 		public void onSharedPreferenceChanged(SharedPreferences prefs, String key)
 		{
-			if ("syncCal".equals(key)) 
-			{
-				boolean enabled = prefs.getBoolean(key, false);
-				boolean cal = prefs.getBoolean("syncWcal", false);
-				if (enabled && cal && !FileSync.getInstance().isSyncCal()) 
-				{
-					FileSync.getInstance().toggleCalSync();
-				}
-				else if (!enabled && FileSync.getInstance().isSyncCal()) 
-				{
-					FileSync.getInstance().toggleCalSync();
-				}
-				
-			}
-			else if("syncWcal".equals(key))
+			
+			if("syncWcal".equals(key))
 			{
 				boolean cal = prefs.getBoolean(key, false);
 				if (cal && !FileSync.getInstance().isSyncCal()) 
