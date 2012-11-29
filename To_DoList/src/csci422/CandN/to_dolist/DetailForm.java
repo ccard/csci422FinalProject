@@ -29,6 +29,8 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -307,11 +309,6 @@ public class DetailForm extends Activity {
 	 *This method is called 
 	 */
 	public void saveStuff(){
-		Log.v(tag, "Progress: "+completion.getProgress());
-		Log.v(tag, completion.getKeyProgressIncrement()+" was done with keys");
-		Log.v(tag, "Secondary progress: "+completion.getSecondaryProgress());
-		Log.v(tag, "Thumb offset: "+completion.getThumbOffset());
-		Log.v(tag, "Max is: "+completion.getMax());
 
 		int state = completion.getProgress();
 		//float percent= completion.getProgress()/((float)completion.getMax());
@@ -329,8 +326,34 @@ public class DetailForm extends Activity {
 		}else {//edit current
 			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 			helper.notified(id, false);
-			//OnBootReceiver.setAlarm(this, helper, cur);//sets alarm as well just incase it has been edited from the widget which wont update the alarm
 		}
+		
+		Handler delay = new Handler();
+		delay.postDelayed(new Runnable(){
+
+			public void run() {
+				// TODO Auto-generated method stub
+				if(cur != null)
+				{
+					Log.v(tag, "got here2");
+					Cursor l = helper.getById(id);
+					l.moveToFirst();
+					OnBootReceiver.cancelAlarm(DetailForm.this, helper, l);
+					OnBootReceiver.setAlarm(DetailForm.this, helper, l);//sets alarm as well just incase it has been edited from the widget which wont update the alar
+					l.close();
+				}
+				else
+				{
+					Cursor l = helper.getAll("_id DESC");
+					l.moveToFirst();
+					OnBootReceiver.setAlarm(DetailForm.this, helper, l);//sets alarm as well just incase it has been edited from the widget which wont update the alar
+					l.close();
+					Log.v(tag, "got here");
+				}
+				
+			}
+			
+		}, 650);
 	}
 
 	/**
