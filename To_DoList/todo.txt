@@ -1,5 +1,7 @@
-(A) Is 0 the id?
 look for a db file on the phone that stores the list
 On focus of date text field, bring up dialog
 (A) fix spinner for lists
+(B) add todo.txt sync functionality +justification
 (A) fix duplicate events
+(A) make either cal or file sync disable the sync button
+x 11/29/12 (A) Is 0 the id?  YES
