@@ -34,6 +34,7 @@ public final class R {
         public static final int priorityq=0x7f020010;
         public static final int progress=0x7f020011;
         public static final int widget_frame=0x7f020012;
+        public static final int widget_preview=0x7f020013;
     }
     public static final class id {
         public static final int Priorities=0x7f0a0006;
