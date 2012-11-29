@@ -99,6 +99,8 @@ public class ToDo extends ListActivity {
 			}
 
 		});
+		
+		
 	}
 
 	public void initPD()
@@ -141,8 +143,6 @@ public class ToDo extends ListActivity {
 		adapter = new ToDoAdapter(model);
 
 		setListAdapter(adapter);
-		
-		updateNotifications();
 	}
 
 	private void updateNotifications()
@@ -373,16 +373,19 @@ public class ToDo extends ListActivity {
 				Cursor c = helper.getAll("title");
 				SimpleDateFormat df = new SimpleDateFormat();
 				df.setLenient(true);
-				for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
-					ContentValues cvEvent = new ContentValues();
-					cvEvent.put("calendar_id", 1);
-					cvEvent.put("title", helper.getTitle(c));
-					cvEvent.put("dtstart", Date.parse(helper.getDate(c)));
-					//cvEvent.put("hasAlarm", 1);jj j
-					cvEvent.put("description",helper.getNotes(c));//TODO expand this later to include progress,etc.
-					cvEvent.put("dtend", Date.parse(helper.getDate(c))+36E5);
-					cvEvent.put("eventTimezone", Calendar.getInstance().getTimeZone().getDisplayName());
-					getContentResolver().insert(Uri.parse("content://com.android.calendar/events"), cvEvent);			
+				while(c.moveToNext()){
+					if(!helper.getDate(c).isEmpty())
+					{
+						ContentValues cvEvent = new ContentValues();
+						cvEvent.put("calendar_id", 1);
+						cvEvent.put("title", helper.getTitle(c));
+						cvEvent.put("dtstart", Date.parse(helper.getDate(c)));
+						//cvEvent.put("hasAlarm", 1);jj j
+						cvEvent.put("description",helper.getNotes(c));//TODO expand this later to include progress,etc.
+						cvEvent.put("dtend", Date.parse(helper.getDate(c))+36E5);
+						cvEvent.put("eventTimezone", Calendar.getInstance().getTimeZone().getDisplayName());
+						getContentResolver().insert(Uri.parse("content://com.android.calendar/events"), cvEvent);	
+					}
 				}
 				c.close();
 			}
