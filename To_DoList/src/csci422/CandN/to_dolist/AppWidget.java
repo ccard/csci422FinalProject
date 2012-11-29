@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 
@@ -51,6 +52,7 @@ public class AppWidget extends AppWidgetProvider {
 	@TargetApi(11)
 	public void onHCUpdate(Context ctxt, AppWidgetManager appWidgetManager, int[] appWidgetIds)
 	{
+		Log.v("widget", "updateForced");
 		for (int i = 0; i < appWidgetIds.length; i++) 
 		{
 			Intent svcIntent = new Intent(ctxt, ListWidgetService.class);

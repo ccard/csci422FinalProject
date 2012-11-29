@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -95,7 +96,17 @@ public class CheckWidget extends Activity{
 				help.updateState(id, 100);
 			}
 			
-			if(null != AppWidget.widg) AppWidget.widg.onUpdate(null, null, null);
+			Handler delay = new Handler();
+			delay.postDelayed(new Runnable(){
+
+				public void run() {
+					// TODO Auto-generated method stub
+					Log.v("checkwidge", "updated");
+					if(null != AppWidget.widg) AppWidget.widg.onUpdate(null, null, null);
+				}
+				
+			}, 400);
+			
 			c.close();
 			finish();	
 		}
