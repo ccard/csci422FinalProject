@@ -113,17 +113,6 @@ public class DetailForm extends Activity {
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		String temp = null;
-		
-		try{  //TODO THIS LINE generates the exception?????!!!!
-		//if(savedInstanceState!=null){
-			temp=savedInstanceState.getString("IDofTask");
-			if(helper.getById(temp)==null||temp.length()==0)id=null;
-			else id=temp;
-		}catch(NullPointerException n){
-			Log.e(tag, "Error: "+n.getMessage());
-			Log.e(tag, "Local form: "+n.getLocalizedMessage());
-		}
 		
 		helper = new ToDoHelper(this);
 		
@@ -133,7 +122,6 @@ public class DetailForm extends Activity {
 
 		initDateDialog();
 
-		loadCurrent();
 		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
 
 		initFindLocation();
@@ -141,7 +129,26 @@ public class DetailForm extends Activity {
 		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
 		pickList.setAdapter(adpt);
 	}
+	
+	/**
+	 * only gets called if (by os) if there is a saved instatance state
+	 * @param state
+	 */
+	@Override
+	public void onRestoreInstanceState(Bundle state)
+	{
+		super.onRestoreInstanceState(state);
+		id = state.getString("IDofTask");
+		Log.v(tag, "id is: "+id);
+	}
 
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		loadCurrent();
+	}
+	
 	/**
 	 *This method initializes the widgets in the detail form layout
 	 */
@@ -254,7 +261,20 @@ public class DetailForm extends Activity {
 		if(id==null)id = getIntent().getStringExtra(DETAIL_EXTRA);
 		if(id.length() == 0)
 		{
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			helper.insert("", "", "", "", "", 0, -1);
+			Handler loadDelay = new Handler();
+			loadDelay.postDelayed(new Runnable(){
+
+				public void run() {
+					Log.v(tag,"got here create new task");
+					Cursor v = helper.getAll("_id DESC");
+					v.moveToFirst();
+					id = v.getString(0);
+					v.close();
+					cur = helper.getById(id);
+				}
+				
+			}, 700);
 			return;
 		}
 
@@ -388,7 +408,7 @@ public class DetailForm extends Activity {
 			String words[] = addre.split("\\+");
 
 			street.setText(words[0]);
-			address.setText(words[1]);
+			if(words.length >= 2) address.setText(words[1]);
 		}
 	}
 
