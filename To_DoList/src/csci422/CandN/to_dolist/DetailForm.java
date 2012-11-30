@@ -53,10 +53,22 @@ import android.widget.Toast;
 
 public class DetailForm extends Activity {
 
+	//------------------------------------------------------
+	//Beginning static fields
+	//------------------------------------------------------
+	
 	public static final String DETAIL_EXTRA = "csci422.CandN.to_dolist.curItem";
 
 	public static final String tag = "todoDetail";
+	
+	//------------------------------------------------------
+	//End static fields
+	//------------------------------------------------------
 
+	//------------------------------------------------------
+	//Beginning widget objects
+	//------------------------------------------------------
+	
 	private ImageButton[] priors = new ImageButton[4];
 	private EditText datetext;
 	private EditText address;
@@ -73,8 +85,15 @@ public class DetailForm extends Activity {
 	private int priority = -1;
 	private Date dueDate;
 	private DateFormat dateFormat;
+	
+	//------------------------------------------------------
+	//End widget objects
+	//------------------------------------------------------
 
-	//this code is all for waiting to get the gps location
+	//------------------------------------------------------
+	//Beginning gps Location vars and support objects
+	//------------------------------------------------------
+	
 	private LocationManager locmgr = null;
 
 	private ProgressDialog pd;//show spinning wheel while it is finding the location
@@ -99,13 +118,15 @@ public class DetailForm extends Activity {
 
 	//end code get gps location
 
+	//------------------------------------------------------
 	//delete fields
+	//------------------------------------------------------
 
 	private boolean delete = false;
 
+	//------------------------------------------------------
 	//end delete code
-
-	//private boolean hasSaved;
+	//------------------------------------------------------
 
 	private String id = null;//id needs to be accessible to whole class so it can be used with todo helper
 	
@@ -130,6 +151,10 @@ public class DetailForm extends Activity {
 		pickList.setAdapter(adpt);
 	}
 	
+	//------------------------------------------------------
+	//Begining of Life Cycle Events
+	//------------------------------------------------------
+	
 	/**
 	 * only gets called if (by os) if there is a saved instatance state
 	 * @param state
@@ -148,6 +173,38 @@ public class DetailForm extends Activity {
 		super.onResume();
 		loadCurrent();
 	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString("IDofTask", id);
+	}
+	
+	@Override
+	protected void onDestroy() 
+	{
+		super.onDestroy();
+
+		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
+		{//if the asyntask is still running for finding the location
+			gpsWait.cancel(true);
+		}
+
+		if(!delete)
+		{//if the user decided to delete the task make sure that
+			//it doesn't save again
+			saveStuff();
+		}
+		helper.close();
+	}
+	
+	//------------------------------------------------------
+	//End life cycle events
+	//------------------------------------------------------
+	
+	//------------------------------------------------------
+	//Beginning of initializing 
+	//------------------------------------------------------
 	
 	/**
 	 *This method initializes the widgets in the detail form layout
@@ -295,38 +352,33 @@ public class DetailForm extends Activity {
 		priority = helper.getPriority(cur);
 		priors[priority+1].setBackgroundResource(R.drawable.highlight);
 	}
-
-
-	@Override
-	protected void onDestroy() 
-	{
-		super.onDestroy();
-
-		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
-		{//if the asyntask is still running for finding the location
-			gpsWait.cancel(true);
-		}
-
-		if(!delete)
-		{//if the user decided to delete the task make sure that
-			//it doesn't save again
-			saveStuff();
-		}
-		
-		
-		helper.close();
-	}
-
+	
 	/**
-	 *This method is called by the Done button in the detail_form layout
+	 * This method sets the two address fields if to the passed in string
+	 * or nothing if empty passed in string 
+	 * @param addre the street and address fields seperated by + or empty
 	 */
-	public void onDone(View v)
+	private void loadAddressFields(String addre)
 	{
-		finish();
-	}
+		if(!addre.isEmpty())
+		{
+			String words[] = addre.split("\\+");
 
+			street.setText(words[0]);
+			if(words.length >= 2) address.setText(words[1]);
+		}
+	}
+	
+	//------------------------------------------------------
+	//End initializing
+	//------------------------------------------------------
+
+	//------------------------------------------------------
+	//Beginning save code
+	//------------------------------------------------------
+	
 	/**
-	 *This method is called 
+	 *This method is called when need to
 	 */
 	public void saveStuff(){
 
@@ -342,7 +394,6 @@ public class DetailForm extends Activity {
 
 		if(cur==null){//make a new one
 			helper.insert(taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		}else {//edit current
 			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
 			helper.notified(id, false);
@@ -395,28 +446,21 @@ public class DetailForm extends Activity {
 			return ret;
 		}
 	}
+	
+	//------------------------------------------------------
+	//End save code
+	//------------------------------------------------------
 
-	/**
-	 * This method sets the two address fields if to the passed in string
-	 * or nothing if empty passed in string 
-	 * @param addre the street and address fields seperated by + or empty
-	 */
-	private void loadAddressFields(String addre)
-	{
-		if(!addre.isEmpty())
-		{
-			String words[] = addre.split("\\+");
-
-			street.setText(words[0]);
-			if(words.length >= 2) address.setText(words[1]);
-		}
-	}
 
 	public void priq(View v){priority=-1;clr(v);}
 	public void prin(View v){priority=0;clr(v);}
 	public void prio(View v){priority=1;clr(v);}
 	public void prit(View v){priority=2;clr(v);}
 
+	//------------------------------------------------------
+	//Beginning of Calls from buttons in detail_form layout file
+	//------------------------------------------------------
+	
 	/**
 	 * Clears the backgrounds for all priority buttons except one.
 	 * @param v the view to give an active background.
@@ -428,64 +472,13 @@ public class DetailForm extends Activity {
 		}
 		v.setBackgroundResource(R.drawable.highlight);
 	}
-
+	
 	/**
-	 * This code sets up to delete the task or cancel adding the task
+	 *This method is called by the Done button in the detail_form layout
 	 */
-	public void deleteTask()
+	public void onDone(View v)
 	{
-		if(!id.isEmpty())
-		{//if there is an id 
-			Cursor c = helper.getById(id);
-			c.moveToFirst();
-			OnBootReceiver.cancelAlarm(this, helper, c);
-			helper.delete(id);
-			delete = true;
-			c.close();
-			finish();//kill activity
-		}
-		else
-		{//if no id just don't save
-			delete = true;
-			finish();
-		}
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.detail_form_menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		if(item.getItemId() == R.id.done)
-		{
-			finish();
-		}
-		else if(item.getItemId() == R.id.delete)
-		{
-			new Builder(this).setTitle("Do you want to delete the task?")
-			.setMessage("This action cannot be undone!")
-			.setPositiveButton("Yes", new OnClickListener(){
-
-				public void onClick(DialogInterface dialog,
-						int which) {
-					deleteTask();
-
-				}
-
-			})
-			.setNegativeButton("No", null)
-			.create()
-			.show();
-			return true;
-			/*TODO Double-check*/
-		}
-
-		return super.onOptionsItemSelected(item);
+		finish();
 	}
 	
 	public void openCal(View v){ 
@@ -508,6 +501,29 @@ public class DetailForm extends Activity {
 		});
 
 		calDialog.show();
+	}
+	
+	/**
+	 * The method is called by the here button add a locationlistenere to start gps to look for the users location
+	 * shows spinner dialog and starts the async task to wait for the location change
+	 * @param v
+	 */
+	public void getLoc(View v)
+	{
+		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
+		{//if the spwwait is still running
+			gpsWait.cancel(true);
+		}
+
+		gpsWait = new WaitForLocation();
+
+
+		if(gpsWait.getStatus() == AsyncTask.Status.PENDING)
+		{//if gpsWait is waiting to run
+			locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
+			pd.show();
+			gpsWait.execute("");
+		}
 	}
 
 	public void openMaps(View v)
@@ -533,7 +549,77 @@ public class DetailForm extends Activity {
 			Toast.makeText(this, "Please fill out the two address fields or click the here button", Toast.LENGTH_LONG).show();
 		}
 	}
+	
+	//------------------------------------------------------
+	//End of Calls from buttons in detail_form layout file
+	//------------------------------------------------------
+	
+	//------------------------------------------------------
+	//Beginning menu code from detail_form menu
+	//------------------------------------------------------
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.detail_form_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if(item.getItemId() == R.id.done)
+		{
+			finish();
+		}
+		else if(item.getItemId() == R.id.delete)
+		{
+			new Builder(this).setTitle("Do you want to delete the task?")
+			.setMessage("This action cannot be undone!")
+			.setPositiveButton("Yes", new OnClickListener(){
+				public void onClick(DialogInterface dialog,int which) {
+					deleteTask();
+				}
+			})
+			.setNegativeButton("No", null)
+			.create()
+			.show();
+			return true;
+			/*TODO Double-check*/
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+
+	/**
+	 * This code sets up to delete the task or cancel adding the task
+	 */
+	public void deleteTask()
+	{
+		if(!id.isEmpty())
+		{//if there is an id 
+			Cursor c = helper.getById(id);
+			c.moveToFirst();
+			OnBootReceiver.cancelAlarm(this, helper, c);
+			helper.delete(id);
+			delete = true;
+			c.close();
+			finish();//kill activity
+		}
+		else
+		{//if no id just don't save
+			delete = true;
+			finish();
+		}
+	}
+	
+	//------------------------------------------------------	
+	//End menu code from detail_form menu
+	//------------------------------------------------------
+	
+	//------------------------------------------------------
+	//Beginning listeners
+	//------------------------------------------------------
+	
 	//gets location from gps
 	private LocationListener onLocChange = new LocationListener(){
 
@@ -578,30 +664,7 @@ public class DetailForm extends Activity {
 		}
 	};
 
-	/**
-	 * The method is called by the here button add a locationlistenere to start gps to look for the users location
-	 * shows spinner dialog and starts the async task to wait for the location change
-	 * @param v
-	 */
-	public void getLoc(View v)
-	{
-		if(gpsWait.getStatus() == AsyncTask.Status.RUNNING)
-		{//if the spwwait is still running
-			gpsWait.cancel(true);
-		}
-
-		gpsWait = new WaitForLocation();
-
-
-		if(gpsWait.getStatus() == AsyncTask.Status.PENDING)
-		{//if gpsWait is waiting to run
-			locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
-			pd.show();
-			gpsWait.execute("");
-		}
-
-
-	}
+	
 	
 	public Date getDueDate() {
 		return dueDate;
@@ -611,13 +674,9 @@ public class DetailForm extends Activity {
 		this.dueDate = dueDate;
 		datetext.setText(dateFormat.format(dueDate));
 	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {//Not working the way you wanted still saveing to the data base
-		//the order of the call is this method then ondestroy
-		super.onSaveInstanceState(outState);
-		outState.putString("IDofTask", id);
-	}
+	//------------------------------------------------------
+	//End listeners
+	//------------------------------------------------------	
 
 
 	/**
