@@ -99,25 +99,36 @@ public final class R {
         public static final int detail_form_menu=0x7f090001;
     }
     public static final class string {
-        public static final int addresshint=0x7f07000b;
+        public static final int addresshint=0x7f07000a;
         public static final int app_name=0x7f070000;
-        public static final int calSumm=0x7f07000f;
-        public static final int calSync=0x7f07000e;
+        public static final int calSumm=0x7f070016;
+        public static final int calSync=0x7f070015;
+        public static final int completion_title=0x7f070011;
+        public static final int date_title=0x7f07000e;
         public static final int empty=0x7f070005;
         public static final int hello_world=0x7f070001;
+        public static final int list_title=0x7f070010;
+        public static final int location_title=0x7f07000f;
         public static final int menuNotice=0x7f070004;
-        public static final int menu_settings=0x7f070002;
-        public static final int newtask_hint=0x7f070007;
-        public static final int prefs=0x7f070009;
-        public static final int ques=0x7f070008;
-        public static final int streethint=0x7f07000a;
-        public static final int syncMenTitle=0x7f070010;
-        public static final int syncSumm=0x7f07000d;
+        /**  todo activty strings 
+         */
+        public static final int menu_settings=0x7f070003;
+        public static final int newtask_hint=0x7f070006;
+        public static final int notes_hint=0x7f070012;
+        public static final int prefs=0x7f070007;
+        public static final int priority_title=0x7f07000d;
+        public static final int ques=0x7f07000c;
+        public static final int save_btn_txt=0x7f070013;
+        public static final int streethint=0x7f070009;
+        public static final int syncMenTitle=0x7f070017;
+        public static final int task_title_hint=0x7f07000b;
         /**  preference layout strings 
          */
-        public static final int titleSync=0x7f07000c;
-        public static final int title_activity_detail_form=0x7f070006;
-        public static final int title_activity_to_do=0x7f070003;
+        public static final int titleSync=0x7f070014;
+        /**  detail Form strings 
+         */
+        public static final int title_activity_detail_form=0x7f070008;
+        public static final int title_activity_to_do=0x7f070002;
     }
     public static final class style {
         public static final int AppTheme=0x7f080000;

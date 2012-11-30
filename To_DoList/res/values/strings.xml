@@ -2,20 +2,31 @@
 
     <string name="app_name">To_DoList</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Add Task</string>
     <string name="title_activity_to_do">ToDo</string>
+    
+    <!-- todo activty strings -->
+    <string name="menu_settings">Add Task</string>
     <string name="menuNotice">Please add a task!</string>
     <string name="empty">No Tasks</string>
-    <string name="title_activity_detail_form">Task Details</string>
     <string name="newtask_hint">Type new task here</string>
-    <string name="ques">question mark</string>
     <string name="prefs">Settings</string>
+    
+    <!-- detail Form strings -->
+    <string name="title_activity_detail_form">Task Details</string>
     <string name="streethint">street</string>
     <string name="addresshint">City State Zip</string>
+    <string name="task_title_hint">Enter Task Title</string>
+    <string name="ques">question mark</string>
+    <string name="priority_title">Priority:</string>
+    <string name="date_title">Due: </string>
+    <string name="location_title">Location: </string>
+    <string name="list_title">List: </string>
+    <string name="completion_title">Completion:</string>
+    <string name="notes_hint">Notes</string>
+    <string name="save_btn_txt">Save</string>
 
     <!-- preference layout strings -->
 	<string name="titleSync">Sync todo list with:</string>
-	<string name="syncSumm">Sync with google calenders or save to a file</string>
     <string name="calSync">Sync with Google calenders</string>
     <string name="calSumm">Check this if you want to sync with Google Calenders</string>
 

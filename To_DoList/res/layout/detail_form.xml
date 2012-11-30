@@ -13,7 +13,7 @@
             android:id="@+id/taskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Task Title" 
+            android:hint="@string/task_title_hint" 
             android:inputType="text"
             android:maxLines="1"  />
 
@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:text="Priority:"
+                android:text="@string/priority_title"
                 android:textSize="16pt" />
 
             <ImageButton
@@ -75,7 +75,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Due: "
+                android:text="@string/date_title"
                 android:textSize="10pt" />
 
             <EditText
@@ -108,16 +108,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location: "
+                    android:text="@string/location_title"
                     android:textSize="10pt" />
 
-                <Button
+              <!--  until we get location listener to work commented this out <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:onClick="getLoc"
                     android:text="Here"
-                    android:textSize="13dp" />
+                    android:textSize="13dp" /> -->
             </LinearLayout>
 
             <LinearLayout
@@ -159,7 +159,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="List: "
+                android:text="@string/list_title"
                 android:textSize="12pt" />
 
             <Spinner
@@ -178,7 +178,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Completion:"
+                android:text="@string/completion_title"
                 android:textSize="10pt" />
 
             <LinearLayout
@@ -212,7 +212,7 @@
             android:layout_height="wrap_content"
             android:minLines="2"
             android:maxLines="11"
-            android:hint="Notes"
+            android:hint="@string/notes_hint"
             android:inputType="textImeMultiLine" />
         <!-- How do I make this EditText fill up any remaining space? -->
 
@@ -221,7 +221,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onDone"
-            android:text="Save" />
+            android:text="@string/save_btn_txt" />
     </LinearLayout>
 
 </ScrollView>
