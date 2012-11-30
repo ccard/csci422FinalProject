@@ -124,7 +124,7 @@ public final class R {
         public static final int ques=0x7f07000c;
         public static final int save_btn_txt=0x7f070013;
         public static final int streethint=0x7f070009;
-        public static final int syncMenTitle=0x7f070019;
+        public static final int syncMenTitle=0x7f07001a;
         public static final int task_title_hint=0x7f07000b;
         /**  preference layout strings 
          */
@@ -133,6 +133,9 @@ public final class R {
          */
         public static final int title_activity_detail_form=0x7f070008;
         public static final int title_activity_to_do=0x7f070002;
+        /**  widget strings 
+         */
+        public static final int widget_title=0x7f070019;
     }
     public static final class style {
         public static final int AppTheme=0x7f080000;
