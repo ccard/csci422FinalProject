@@ -32,6 +32,7 @@ public class Preferences extends PreferenceActivity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(onChange);
 	}
+	
 	@Override 
 	public void onPause()
 	{
@@ -39,13 +40,10 @@ public class Preferences extends PreferenceActivity {
 		prefs.unregisterOnSharedPreferenceChangeListener(onChange);
 	}
 
-
-
 	OnSharedPreferenceChangeListener onChange = new OnSharedPreferenceChangeListener()
 	{
 		public void onSharedPreferenceChanged(SharedPreferences prefs, String key)
 		{
-			
 			if("syncWcal".equals(key))
 			{
 				boolean cal = prefs.getBoolean(key, false);
