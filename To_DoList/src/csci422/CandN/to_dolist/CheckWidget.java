@@ -2,7 +2,7 @@
  * Chris Card
  * Nathan Harvey
  * 11/28/12
- * This class is spawned when the user clicks the check button in the widget
+ * This class is spawned when the user clicks a task in the widget
  */
 package csci422.CandN.to_dolist;
 
@@ -101,7 +101,6 @@ public class CheckWidget extends Activity{
 
 				public void run() {
 					// TODO Auto-generated method stub
-					Log.v("checkwidge", "updated");
 					if(null != AppWidget.widg) AppWidget.widg.onUpdate(null, null, null);
 				}
 				
