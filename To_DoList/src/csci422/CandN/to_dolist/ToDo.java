@@ -2,6 +2,8 @@
  * Chris Card
  * Nathan Harvey
  * 10/24/12
+ * This activity contains the primary list that he user will see when they first
+ * open the application
  */
 package csci422.CandN.to_dolist;
 
@@ -84,9 +86,7 @@ public class ToDo extends ListActivity {
 		newTypeTask = (EditText)findViewById(R.id.newTypeTask);
 		newTypeTask.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
 		newTypeTask.setOnEditorActionListener(new OnEditorActionListener(){
-
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE)
 				{
 					helper.insert(newTypeTask.getText().toString(), "", "Main", "", "", 0, -1);
@@ -97,7 +97,6 @@ public class ToDo extends ListActivity {
 				}
 				return false;
 			}
-
 		});
 		
 		
