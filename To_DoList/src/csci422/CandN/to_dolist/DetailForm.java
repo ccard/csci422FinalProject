@@ -164,7 +164,6 @@ public class DetailForm extends Activity {
 	{
 		super.onRestoreInstanceState(state);
 		id = state.getString("IDofTask");
-		Log.v(tag, "id is: "+id);
 	}
 
 	@Override
@@ -218,17 +217,14 @@ public class DetailForm extends Activity {
 		priors[1] = (ImageButton) findViewById(R.id.Priority0);
 		priors[2] = (ImageButton) findViewById(R.id.Priority1);
 		priors[3] = (ImageButton) findViewById(R.id.Priority2);
+		
 		//date pickers
 		datetext = (EditText)findViewById(R.id.dueDatePicker);
-
 		datetext.setOnFocusChangeListener(new OnFocusChangeListener(){
-
 			public void onFocusChange(View arg0, boolean arg1) {
 				if(arg1) dateAlert.create().show();
 			}
-
 		});
-
 
 		dueDate = new Date(0);//current time
 		dateFormat = new SimpleDateFormat();
@@ -273,35 +269,29 @@ public class DetailForm extends Activity {
 		pd.setIndeterminate(true);//this sets the spinning animation instead of progress
 		pd.setOnCancelListener(cancel);
 		pd.setButton(pd.BUTTON_NEUTRAL, "Cancel", new OnClickListener(){
-
 			public void onClick(DialogInterface dialog, int which) 
 			{
 				cancelLocation.set(true);
 				gpsWait.cancel(true);
 			}
-
 		});
 
 		//inits alertdialog with appropriate listenere and message
 		alertBuild = new AlertDialog.Builder(this);
 		alertBuild.setPositiveButton("Yes", new OnClickListener(){
-
 			public void onClick(DialogInterface arg0, int arg1) {
 				//nothing needed to be done
 				arg0.dismiss();
 				continueSearch.set(true);
 			}
-
 		});
 
 		alertBuild.setNegativeButton("No", new OnClickListener(){
-
 			public void onClick(DialogInterface arg0, int arg1) {
 				continueSearch.set(false);
 				gpsWait.cancel(true);
 				arg0.dismiss();
 			}
-
 		});
 
 		alertBuild.setMessage("Do you wish to continue to find your location?");
@@ -321,16 +311,13 @@ public class DetailForm extends Activity {
 			helper.insert("", "", "", "", "", 0, -1);
 			Handler loadDelay = new Handler();
 			loadDelay.postDelayed(new Runnable(){
-
 				public void run() {
-					Log.v(tag,"got here create new task");
 					Cursor v = helper.getAll("_id DESC");
 					v.moveToFirst();
 					id = v.getString(0);
 					v.close();
 					cur = helper.getById(id);
 				}
-				
 			}, 700);
 			return;
 		}
@@ -383,7 +370,6 @@ public class DetailForm extends Activity {
 	public void saveStuff(){
 
 		int state = completion.getProgress();
-		//float percent= completion.getProgress()/((float)completion.getMax());
 		try {
 			dueDate = dateFormat.parse(datetext.getText().toString());
 		} catch (ParseException e) {
@@ -401,12 +387,10 @@ public class DetailForm extends Activity {
 		
 		Handler delay = new Handler();
 		delay.postDelayed(new Runnable(){
-
-			public void run() {
-				// TODO Auto-generated method stub
+			public void run() 
+			{
 				if(cur != null)
 				{
-					Log.v(tag, "got here2");
 					Cursor l = helper.getById(id);
 					l.moveToFirst();
 					OnBootReceiver.cancelAlarm(DetailForm.this, helper, l);
@@ -419,11 +403,8 @@ public class DetailForm extends Activity {
 					l.moveToFirst();
 					OnBootReceiver.setAlarm(DetailForm.this, helper, l);//sets alarm as well just incase it has been edited from the widget which wont update the alar
 					l.close();
-					Log.v(tag, "got here");
 				}
-				
 			}
-			
 		}, 650);
 	}
 
@@ -481,8 +462,12 @@ public class DetailForm extends Activity {
 		finish();
 	}
 	
+	/**
+	 * This method opens our date_dialog so user can select a date
+	 * and we can keep it in a certain formate
+	 * @param v
+	 */
 	public void openCal(View v){ 
-		Log.v(tag, "Opening DatePicker Dialog...");
 		Builder calDialog = new Builder(this);
 		LayoutInflater inf = getLayoutInflater();
 		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
@@ -517,7 +502,6 @@ public class DetailForm extends Activity {
 
 		gpsWait = new WaitForLocation();
 
-
 		if(gpsWait.getStatus() == AsyncTask.Status.PENDING)
 		{//if gpsWait is waiting to run
 			locmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, onLocChange);//starts gps and listening for location change
@@ -526,9 +510,14 @@ public class DetailForm extends Activity {
 		}
 	}
 
+	/**
+	 * This method opens the google maps app with a search based on what the user stores in the
+	 * address and street fields
+	 * @param v
+	 */
 	public void openMaps(View v)
 	{
-		if(!address.getText().toString().isEmpty() && !street.getText().toString().isEmpty())
+		if(!address.getText().toString().isEmpty() || !street.getText().toString().isEmpty())
 		{//add code here for lat and lon if applicable
 			if(street.getText().toString().contains(Lat) && address.getText().toString().contains(Lon))
 			{//if lat and lon keywords are in the text fields
@@ -657,7 +646,6 @@ public class DetailForm extends Activity {
 
 	//this is a listener for the spinner dialog so when the back button is pressed it performes that tasks bellow
 	private OnCancelListener cancel = new OnCancelListener(){
-
 		public void onCancel(DialogInterface arg0) {
 			cancelLocation.set(true);
 			gpsWait.cancel(true);
@@ -674,6 +662,7 @@ public class DetailForm extends Activity {
 		this.dueDate = dueDate;
 		datetext.setText(dateFormat.format(dueDate));
 	}
+	
 	//------------------------------------------------------
 	//End listeners
 	//------------------------------------------------------	
