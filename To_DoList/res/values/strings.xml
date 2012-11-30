@@ -13,7 +13,7 @@
     
     <!-- detail Form strings -->
     <string name="title_activity_detail_form">Task Details</string>
-    <string name="streethint">street</string>
+    <string name="streethint">Street</string>
     <string name="addresshint">City State Zip</string>
     <string name="task_title_hint">Enter Task Title</string>
     <string name="ques">question mark</string>

@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/task_title_hint" 
             android:inputType="text"
-            android:maxLines="1"  />
+            android:maxLines="1"  
+            android:textSize="20pt"/>
 
         <LinearLayout
             android:id="@+id/Priorities"
@@ -27,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:text="@string/priority_title"
-                android:textSize="16pt" />
+                android:textSize="13pt" />
 
             <ImageButton
                 android:id="@+id/Priorityq"
@@ -76,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/date_title"
-                android:textSize="10pt" />
+                android:textSize="13pt" />
 
             <EditText
                 android:id="@+id/dueDatePicker"
@@ -109,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/location_title"
-                    android:textSize="10pt" />
+                    android:textSize="13pt" />
 
               <!--  until we get location listener to work commented this out <Button
                     android:layout_width="match_parent"
@@ -132,7 +133,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1.98"
                     android:hint="@string/streethint"
-                    android:inputType="textPostalAddress" />
+                    android:inputType="textPostalAddress" 
+                    android:textSize="13pt"/>
 
                 <EditText
                     android:id="@+id/address"
@@ -140,7 +142,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:hint="@string/addresshint"
-                    android:inputType="textPostalAddress" />
+                    android:inputType="textPostalAddress" 
+                    android:textSize="13pt"/>
             </LinearLayout>
 
             <ImageButton
@@ -160,7 +163,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/list_title"
-                android:textSize="12pt" />
+                android:textSize="13pt" />
 
             <Spinner
                 android:id="@+id/pickList"
@@ -179,7 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/completion_title"
-                android:textSize="10pt" />
+                android:textSize="13pt" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,7 +216,8 @@
             android:minLines="2"
             android:maxLines="11"
             android:hint="@string/notes_hint"
-            android:inputType="textImeMultiLine" />
+            android:inputType="textImeMultiLine" 
+            android:textSize="13pt"/>
         <!-- How do I make this EditText fill up any remaining space? -->
 
         <Button
