@@ -22,7 +22,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) 
 	{
-		Log.d("AlaramReceiver","got here");
 		String id = intent.getExtras().getString(OnBootReceiver.NOTIFY_EXTRA);
 		
 		ToDoHelper help = new ToDoHelper(context);
@@ -35,18 +34,21 @@ public class AlarmReceiver extends BroadcastReceiver {
 		
 		NotificationManager mgr = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 		
+		//initializes the notification with all necessary fields
 		Notification note = new Notification();
 		
-		note.icon = R.drawable.ic_launcher;
+		note.icon = R.drawable.ic_launcher;//app icon
 		
-		note.tickerText = "Task due!";
+		note.tickerText = "Task due!";//text that appears across top of screen in notification bar
 		
-		note.when = System.currentTimeMillis();
+		note.when = System.currentTimeMillis();//when it was posted
 		
-		note.flags |= Notification.FLAG_AUTO_CANCEL;
+		note.flags |= Notification.FLAG_AUTO_CANCEL;//clears notification when user clicks on it
 		
+		//sets the layout of notification to our custom layout
 		RemoteViews content = new RemoteViews(context.getPackageName(), R.layout.notification_layout);
 		
+		//sets the text filed in custom layout
 		content.setTextViewText(R.id.notifyText, "Task Due: "+help.getTitle(c));
 		
 		note.contentView = content;
@@ -55,14 +57,16 @@ public class AlarmReceiver extends BroadcastReceiver {
 		
 		i.putExtra(DetailForm.DETAIL_EXTRA, id);
 		
+		//sets the notifications action to start the pending intent
 		note.contentIntent = PendingIntent.getActivity(context, Integer.parseInt(id), i, 0);
 		
-		Log.v("AlarmReceiver","got here");
-		
+		//gets the notification id from from the data base
+		//then closes the data base
 		int notId = help.getNotifyID(c);
 		c.close();
 		help.close();
-		mgr.notify(notId,note);
+		
+		mgr.notify(notId,note);//this sends the notification to the os
 	}
 
 }

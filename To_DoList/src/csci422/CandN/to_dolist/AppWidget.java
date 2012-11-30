@@ -29,6 +29,7 @@ public class AppWidget extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context ctxt, AppWidgetManager mgr, int[] appWidgetIds)
 	{
+		//if null values are passed into this method assigns them to the static fields
 		if(null == ctxt) ctxt = AppWidget.ctxt;
 		if(null == mgr) mgr = AppWidget.mgr;
 		if(null == appWidgetIds) appWidgetIds = AppWidget.appWidgetIds;
@@ -52,7 +53,7 @@ public class AppWidget extends AppWidgetProvider {
 	@TargetApi(11)
 	public void onHCUpdate(Context ctxt, AppWidgetManager appWidgetManager, int[] appWidgetIds)
 	{
-		Log.v("widget", "updateForced");
+		//goes through all possible widget ids and updates them
 		for (int i = 0; i < appWidgetIds.length; i++) 
 		{
 			Intent svcIntent = new Intent(ctxt, ListWidgetService.class);

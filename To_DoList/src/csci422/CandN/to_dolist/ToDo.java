@@ -2,6 +2,8 @@
  * Chris Card
  * Nathan Harvey
  * 10/24/12
+ * This activity contains the primary list that he user will see when they first
+ * open the application
  */
 package csci422.CandN.to_dolist;
 
@@ -84,9 +86,7 @@ public class ToDo extends ListActivity {
 		newTypeTask = (EditText)findViewById(R.id.newTypeTask);
 		newTypeTask.setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
 		newTypeTask.setOnEditorActionListener(new OnEditorActionListener(){
-
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE)
 				{
 					helper.insert(newTypeTask.getText().toString(), "", "Main", "", "", 0, -1);
@@ -97,19 +97,9 @@ public class ToDo extends ListActivity {
 				}
 				return false;
 			}
-
 		});
 		
 		
-	}
-
-	public void initPD()
-	{	
-		//inits the progress dialog with title message
-		pd = new ProgressDialog(this);
-		pd.setTitle("Syncing");
-		pd.setMessage("Please wait...");
-		pd.setIndeterminate(true);//this sets the spinning animation instead of progress
 	}
 
 	@Override
@@ -123,7 +113,27 @@ public class ToDo extends ListActivity {
 			}
 		}, timeDelay);
 	}
+	
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		helper.close();
+		FileSync.getInstance().save(syncHelp);
+	}
 
+	/**
+	 * this initializes the progress dialog for syncing
+	 */
+	public void initPD()
+	{	
+		//inits the progress dialog with title message
+		pd = new ProgressDialog(this);
+		pd.setTitle("Syncing");
+		pd.setMessage("Please wait...");
+		pd.setIndeterminate(true);//this sets the spinning animation instead of progress
+	}
+	
 	/**
 	 * this initializes the list from the cursor
 	 */
@@ -143,32 +153,6 @@ public class ToDo extends ListActivity {
 		adapter = new ToDoAdapter(model);
 
 		setListAdapter(adapter);
-	}
-
-	private void updateNotifications()
-	{
-		Cursor c = helper.getAll("date");
-
-		while(c.moveToNext())
-		{
-			if(!helper.getNotified(c))
-			{
-				OnBootReceiver.setAlarm(this, helper, c);
-			}
-			else
-			{
-				OnBootReceiver.cancelAlarm(this, helper, c);
-			}
-		}
-		c.close();
-	}
-
-	@Override
-	public void onDestroy()
-	{
-		super.onDestroy();
-		helper.close();
-		FileSync.getInstance().save(syncHelp);
 	}
 
 	@Override
@@ -368,8 +352,6 @@ public class ToDo extends ListActivity {
 		{
 			if (FileSync.getInstance().isSyncCal())
 			{
-				//FileSync.getInstance().syncWithCal(helper,getContentResolver());
-				//if (toSyncCal)  We already checked for this.
 				Cursor c = helper.getAll("title");
 				SimpleDateFormat df = new SimpleDateFormat();
 				df.setLenient(true);

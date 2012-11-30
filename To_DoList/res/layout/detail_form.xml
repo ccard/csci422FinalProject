@@ -13,9 +13,10 @@
             android:id="@+id/taskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Task Title" 
+            android:hint="@string/task_title_hint" 
             android:inputType="text"
-            android:maxLines="1"  />
+            android:maxLines="1"  
+            android:textSize="20pt"/>
 
         <LinearLayout
             android:id="@+id/Priorities"
@@ -26,8 +27,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:text="Priority:"
-                android:textSize="16pt" />
+                android:text="@string/priority_title"
+                android:textSize="13pt" />
 
             <ImageButton
                 android:id="@+id/Priorityq"
@@ -75,8 +76,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Due: "
-                android:textSize="10pt" />
+                android:text="@string/date_title"
+                android:textSize="13pt" />
 
             <EditText
                 android:id="@+id/dueDatePicker"
@@ -108,16 +109,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location: "
-                    android:textSize="10pt" />
+                    android:text="@string/location_title"
+                    android:textSize="13pt" />
 
-                <Button
+              <!--  until we get location listener to work commented this out <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:onClick="getLoc"
                     android:text="Here"
-                    android:textSize="13dp" />
+                    android:textSize="13dp" /> -->
             </LinearLayout>
 
             <LinearLayout
@@ -132,7 +133,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1.98"
                     android:hint="@string/streethint"
-                    android:inputType="textPostalAddress" />
+                    android:inputType="textPostalAddress" 
+                    android:textSize="13pt"/>
 
                 <EditText
                     android:id="@+id/address"
@@ -140,7 +142,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:hint="@string/addresshint"
-                    android:inputType="textPostalAddress" />
+                    android:inputType="textPostalAddress" 
+                    android:textSize="13pt"/>
             </LinearLayout>
 
             <ImageButton
@@ -159,8 +162,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="List: "
-                android:textSize="12pt" />
+                android:text="@string/list_title"
+                android:textSize="13pt" />
 
             <Spinner
                 android:id="@+id/pickList"
@@ -178,8 +181,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Completion:"
-                android:textSize="10pt" />
+                android:text="@string/completion_title"
+                android:textSize="13pt" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -212,8 +215,9 @@
             android:layout_height="wrap_content"
             android:minLines="2"
             android:maxLines="11"
-            android:hint="Notes"
-            android:inputType="textImeMultiLine" />
+            android:hint="@string/notes_hint"
+            android:inputType="textImeMultiLine" 
+            android:textSize="13pt"/>
         <!-- How do I make this EditText fill up any remaining space? -->
 
         <Button
@@ -221,7 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onDone"
-            android:text="Save" />
+            android:text="@string/save_btn_txt" />
     </LinearLayout>
 
 </ScrollView>

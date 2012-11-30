@@ -2,8 +2,9 @@
  * Chris card
  * Nathan Harvey
  * 11/15/12
- * This class provides code to sync with google calandars or other files
+ * This class provides code to sync with other files
  * and will be started by a intent service and will be using a singleton pattern
+ * also stores the user preferences for sync
  */
 
 package csci422.CandN.to_dolist;

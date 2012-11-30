@@ -1,8 +1,7 @@
 /*
  * Chris Card
  * 9/14/12
- * This is a data base adapter to query and set sql data tables for restaurnts to persit states of
- * restaurants
+ * This is a data base adapter to query and set tasks and their elements
  */
 package csci422.CandN.to_dolist;
 
@@ -17,7 +16,12 @@ public class ToDoHelper extends SQLiteOpenHelper
 
 	private static final String DATABASE_NAME = "ToDo.db";
 	private static final int SCHEMA_VERSION = 1;
-
+	
+	//quieres to data base to initialize or get elements in the table
+	private static final String DATABASE_INIT = "CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, list TEXT, notes TEXT, date TEXT, state REAL, priority REAL, notified REAL, notifyID REAL);";
+	private static final String DATABASE_BYID_Q = "SELECT _id, title, address, list, notes, date, state, priority, notified, notifyID FROM todos WHERE _ID=?";
+	private static final String DATABASE_GETALL_Q = "SELECT _id, title, address, list, notes, date, state, priority, notified, notifyID FROM todos ORDER BY ";
+	
 	public ToDoHelper(Context context)
 	{
 		super(context, DATABASE_NAME, null, SCHEMA_VERSION);
@@ -27,7 +31,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 	public void onCreate(SQLiteDatabase db)
 	{
 		//modify table elements for the todolist rather than restaurants
-		db.execSQL("CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, list TEXT, notes TEXT, date TEXT, state REAL, priority REAL, notified REAL, notifyID REAL);");
+		db.execSQL(DATABASE_INIT);
 	}
 
 	@Override
@@ -36,24 +40,51 @@ public class ToDoHelper extends SQLiteOpenHelper
 	   /*ToDo on upgrade if schema changes*/
 	}
 
+	/**
+	 * This returns a cursor that contains the element in data base with that id
+	 * @param id of the element in the data base
+	 * @return cursor containing the requested element
+	 */
 	public Cursor getById(String id)
 	{
 		String[] args = {id};
 
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified, notifyID FROM todos WHERE _ID=?", args);
+		return getReadableDatabase().rawQuery(DATABASE_BYID_Q, args);
 	}
 	
+	/**
+	 * This gets all entries in data base and returns them in the order based on the passed in
+	 * request
+	 * @param orderBy  the sql syntax order query to pass to the database
+	 * @return a cursor containing all rows in the table
+	 */
+	public Cursor getAll(String orderBy)
+	{
+		return getReadableDatabase().rawQuery(DATABASE_GETALL_Q+orderBy, null);
+	}
+	
+	/**
+	 * Removes the row in the table specified by the id
+	 * @param id the id of row to remove
+	 */
 	public void delete(String id)
 	{
 		String ID[] ={id};
 		
 		getWritableDatabase().delete("todos", "_ID=?", ID);
 	}
-	
-	public String getId(Cursor c){
-		return c.getString(0);//TODO is this the right number?
-	}
 
+	/**
+	 * This updates the fields of the id passed
+	 * @param id of element to update
+	 * @param title of task
+	 * @param address of task
+	 * @param list the list he task is contained in
+	 * @param notes
+	 * @param date task is due
+	 * @param state the completion status of the task
+	 * @param priority of task
+	 */
 	public void update(String id, String title, String address, String list, String notes, String date, int state, int priority)
 	{
 		ContentValues cv = new ContentValues();
@@ -70,6 +101,16 @@ public class ToDoHelper extends SQLiteOpenHelper
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
 
+	/**
+	 * This inserts a new task
+	 * @param title of task
+	 * @param address of task
+	 * @param list task is in
+	 * @param notes
+	 * @param date task is due
+	 * @param state completion
+	 * @param priority of task
+	 */
 	public void insert(String title, String address, String list, String notes, String date, int state, int priority)
 	{
 		ContentValues cv = new ContentValues();
@@ -85,12 +126,12 @@ public class ToDoHelper extends SQLiteOpenHelper
 
 		getWritableDatabase().insert("todos", "title", cv);
 	}
-
-	public Cursor getAll(String orderBy)
-	{
-		return getReadableDatabase().rawQuery("SELECT _id, title, address, list, notes, date, state, priority, notified, notifyID FROM todos ORDER BY "+orderBy, null);
-	}
 	
+	/**
+	 * This updates the stat of a task in a much more expedient fashon than calling update
+	 * @param id of task
+	 * @param state new state of task (0-100)
+	 */
 	public void updateState(String id, int state)
 	{
 		String args[] = {id};
@@ -101,7 +142,12 @@ public class ToDoHelper extends SQLiteOpenHelper
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
 
-
+	/**
+	 * This updates the notified field when the alarm has sent the notification
+	 * for the task with this id
+	 * @param id of task to update
+	 * @param val true if has been notified false for not notified
+	 */
 	public void notified(String id, boolean val)
 	{
 		String args[] = {id};
@@ -112,44 +158,104 @@ public class ToDoHelper extends SQLiteOpenHelper
 		getWritableDatabase().update("todos", cv, "_ID=?", args);
 	}
 	
+	public String getId(Cursor c){
+		return c.getString(0);//TODO is this the right number?
+	}
+	
+	/**
+	 * This returns title of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return string containing the title
+	 */
 	public String getTitle(Cursor c)
 	{
 		return c.getString(1);
 	}
 
+	/**
+	 * This returns address of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return string containing the address
+	 */
 	public String getAddress(Cursor c)
 	{
 		return c.getString(2);
 	}
 
+	/**
+	 * This returns list the task is in of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return string containing the list the task is associated with
+	 */
 	public String getList(Cursor c)
 	{
 		return c.getString(3);
 	}
 
+	/**
+	 * This returns notes of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return string containing the notes of the task
+	 */
 	public String getNotes(Cursor c)
 	{
 		return c.getString(4);
 	}
 
+	/**
+	 * This returns due date of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return string containing the due date
+	 */
 	public String getDate(Cursor c)
 	{
 		return c.getString(5);
 	}
 
+	/**
+	 * This returns state of completion of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return int that is the state of completion
+	 */
 	public int getState(Cursor c)
 	{
 		return c.getInt(6);
 	}
+	
+	/**
+	 * This returns priority of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return int representing priority
+	 */
 	public int getPriority(Cursor c)
 	{
 		return c.getInt(7);
 	}
+	
+	/**
+	 * This returns if the task has notified the user of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return true if it has been notified false other wise
+	 */
 	public boolean getNotified(Cursor c)
 	{
 		return c.getInt(8)>0;
 	}
 	
+	/**
+	 * This returns the unique notifyID used for posting notifications of task in cursor
+	 * @note the cursor that is passed into this must be generated from either getAll or getById
+	 * @param c the cursor that contains (or marks) the place of the task
+	 * @return int that is the notifyID
+	 */
 	public int getNotifyID(Cursor c)
 	{
 		return c.getInt(9);

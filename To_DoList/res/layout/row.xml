@@ -8,18 +8,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-
-
-       <!-- <ImageView
-            android:id="@+id/checkPrg"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:adjustViewBounds="false"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/progress" /> -->
-        
-        
+            
         <CheckBox
             android:id="@+id/check"
             android:layout_width="wrap_content"
@@ -56,8 +45,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="10dp" />
-        <!-- Let the theme determine the color.
-        deleted:             android:textColor="@android:color/black" -->
 
         <ProgressBar
             android:id="@+id/completionbar"
