@@ -224,7 +224,7 @@ public class DetailForm extends Activity {
 			}
 		});
 
-		dueDate = new Date(0);//current time
+		dueDate = new Date();//current time
 		dateFormat = new SimpleDateFormat();
 		dateFormat.setLenient(true);
 		//pickList = ((Spinner) findViewById(R.id.pickList)); //for future functionality
@@ -374,21 +374,23 @@ public class DetailForm extends Activity {
 
 		int state = completion.getProgress();
 		
-		//float percent= completion.getProgress()/((float)completion.getMax());
+		String dateString;
+
 		if(!datetext.getText().toString().isEmpty()){
 			try {
 				dueDate = dateFormat.parse(datetext.getText().toString());
 			} catch (ParseException e) {
-				Log.e(tag, "Can't parse the date.");
+				Log.e(tag, "Can't parse the date. User probably edited manually:");
 				Log.e(tag, e.getMessage());
-				dueDate = new Date();
+				dueDate = new Date();//default to current time if user goofed up.
 			}
-		}
+			dateString = dateFormat.format(dueDate);
+		}else dateString = "";
 
 		if(cur==null){//make a new one
-			helper.insert(taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.insert(taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateString, state, priority);
 		}else {//edit current
-			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateString, state, priority);
 			helper.notified(id, false);
 		}
 		

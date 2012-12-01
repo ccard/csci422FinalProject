@@ -8,3 +8,5 @@ x (A) make either cal or file sync disable the sync button
 (B) other stuff from useability studies
 x (A) Start with CalSync checkbox unchecked
 (A) WHY ISN'T CALENDAR SYNC WORKING???
+(A) Make Sync button enable based on prefs (ToDo.java)
+
