@@ -7,6 +7,7 @@
 package csci422.CandN.to_dolist;
 
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -479,7 +480,23 @@ public class DetailForm extends Activity {
 	public void openCal(View v){ 
 		Builder calDialog = new Builder(this);
 		LayoutInflater inf = getLayoutInflater();
-		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
+		View dialogView = inf.inflate(R.layout.date_dialog, null);
+		DatePicker date1 = ((DatePicker) dialogView.findViewById(R.id.datePicker1));
+		try {
+			dueDate = dateFormat.parse(datetext.getText().toString());
+		} catch (ParseException e) {
+			Log.e(tag, "Can't parse the date. User probably edited manually:");
+			Log.e(tag, e.getMessage());
+			dueDate = new Date();//default to current time if user goofed up.
+		}
+		Calendar c = new GregorianCalendar();
+		c.setTime(dueDate);
+		date1.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), null);
+		TimePicker time1 = ((TimePicker) dialogView.findViewById(R.id.timePicker1));
+		time1.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+		time1.setCurrentMinute(c.get(Calendar.MINUTE));
+		calDialog.setView(dialogView);
+		dialogView.invalidate();
 		calDialog.setCancelable(true);
 		calDialog.setPositiveButton("Done", new OnClickListener() {
 
@@ -493,7 +510,6 @@ public class DetailForm extends Activity {
 				DetailForm.this.setDueDate(gc.getTime());
 			}
 		});
-
 		calDialog.show();
 	}
 	
