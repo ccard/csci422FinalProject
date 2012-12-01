@@ -27,8 +27,10 @@
 
     <!-- preference layout strings -->
 	<string name="titleSync">Sync todo list with:</string>
-    <string name="calSync">Sync with Google calenders</string>
-    <string name="calSumm">Check this if you want to sync with Google Calenders</string>
+    <string name="calSync">Sync with Google Calendar</string>
+    <string name="calSumm">Check this to sync (one-way) to Google Calendars on your device.</string>
+     <string name="fileSync">Sync with a todo.txt file</string>
+    <string name="fileSumm">Check this to sync (both ways) with a todo.txt file (See todo.info for more info).</string>
     
     <!-- Widget dialog strings -->
     <string name="edit_btn_txt">Edit</string>

@@ -103,13 +103,15 @@ public final class R {
         public static final int app_name=0x7f070000;
         public static final int calSumm=0x7f070016;
         public static final int calSync=0x7f070015;
-        public static final int cancel_btn_txt=0x7f070018;
+        public static final int cancel_btn_txt=0x7f07001a;
         public static final int completion_title=0x7f070011;
         public static final int date_title=0x7f07000e;
         /**  Widget dialog strings 
          */
-        public static final int edit_btn_txt=0x7f070017;
+        public static final int edit_btn_txt=0x7f070019;
         public static final int empty=0x7f070005;
+        public static final int fileSumm=0x7f070018;
+        public static final int fileSync=0x7f070017;
         public static final int hello_world=0x7f070001;
         public static final int list_title=0x7f070010;
         public static final int location_title=0x7f07000f;
@@ -124,7 +126,7 @@ public final class R {
         public static final int ques=0x7f07000c;
         public static final int save_btn_txt=0x7f070013;
         public static final int streethint=0x7f070009;
-        public static final int syncMenTitle=0x7f07001a;
+        public static final int syncMenTitle=0x7f07001c;
         public static final int task_title_hint=0x7f07000b;
         /**  preference layout strings 
          */
@@ -135,7 +137,7 @@ public final class R {
         public static final int title_activity_to_do=0x7f070002;
         /**  widget strings 
          */
-        public static final int widget_title=0x7f070019;
+        public static final int widget_title=0x7f07001b;
     }
     public static final class style {
         public static final int AppTheme=0x7f080000;
