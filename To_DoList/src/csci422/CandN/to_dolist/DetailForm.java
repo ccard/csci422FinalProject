@@ -75,7 +75,7 @@ public class DetailForm extends Activity {
 	private EditText street;
 	private ToDoHelper helper;
 	private Cursor cur = null;
-	private Spinner pickList;
+	private Spinner pickList;//for future multi-list functionality
 	private EditText taskName;
 	private EditText notes;
 	private String[] Listnames = {"Main","Homework","Shopping"};
@@ -113,7 +113,7 @@ public class DetailForm extends Activity {
 	private static final long gpsWaitDuration = 120000;//wait time for async task
 
 	private Builder alertBuild;
-	private Builder dateAlert;
+	//private Builder dateAlert;  //TODO removed because
 	private AlertDialog promptContin;//builder for alert dialog
 
 	//end code get gps location
@@ -141,14 +141,12 @@ public class DetailForm extends Activity {
 
 		initWidgets();
 
-		initDateDialog();
-
-		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
+		//initDateDialog();
 
 		initFindLocation();
 
-		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
-		pickList.setAdapter(adpt);
+		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_list_item_single_choice, Listnames);
+		//pickList.setAdapter(adpt); //for future functionality
 	}
 	
 	//------------------------------------------------------
@@ -222,14 +220,14 @@ public class DetailForm extends Activity {
 		datetext = (EditText)findViewById(R.id.dueDatePicker);
 		datetext.setOnFocusChangeListener(new OnFocusChangeListener(){
 			public void onFocusChange(View arg0, boolean arg1) {
-				if(arg1) dateAlert.create().show();
+				if(arg1) openCal(datetext);
 			}
 		});
 
 		dueDate = new Date(0);//current time
 		dateFormat = new SimpleDateFormat();
 		dateFormat.setLenient(true);
-		pickList = ((Spinner) findViewById(R.id.pickList));
+		//pickList = ((Spinner) findViewById(R.id.pickList)); //for future functionality
 		taskName = ((EditText) findViewById(R.id.taskName));
 		notes = ((EditText) findViewById(R.id.notes));
 		address = (EditText)findViewById(R.id.address);
@@ -237,8 +235,10 @@ public class DetailForm extends Activity {
 	}
 
 	/**
-	 * This initalizes datedialog conformation edit
+	 * This initalizes datedialog confirmation.
+	 * TODO We removed this because 
 	 */
+	/*
 	private void initDateDialog()
 	{
 		dateAlert = new AlertDialog.Builder(this);
@@ -251,6 +251,7 @@ public class DetailForm extends Activity {
 		dateAlert.setTitle("Warning");
 		dateAlert.setMessage("Editing the date manually tends to lead to Date Parse Errors.\n  Would you like to select a date instead?");
 	}
+	*/
 
 	/**
 	 *This method sets up everything needed for the task of finding users location
@@ -579,7 +580,6 @@ public class DetailForm extends Activity {
 			.create()
 			.show();
 			return true;
-			/*TODO Double-check*/
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -633,24 +633,12 @@ public class DetailForm extends Activity {
 			}	
 		}
 
-		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-
-		}
-
+		public void onProviderDisabled(String provider) {}
+		public void onProviderEnabled(String provider) {}
+		public void onStatusChanged(String provider, int status, Bundle extras) {}
 	};
 
-	//this is a listener for the spinner dialog so when the back button is pressed it performes that tasks bellow
+	//this is a listener for the spinner dialog so when the back button is pressed it performs that tasks below
 	private OnCancelListener cancel = new OnCancelListener(){
 		public void onCancel(DialogInterface arg0) {
 			cancelLocation.set(true);

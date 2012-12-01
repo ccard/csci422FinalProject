@@ -158,6 +158,9 @@ public class ToDo extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_to_do, menu);
+		if(prefs.getBoolean("", false)){
+			//TODO enable sync button.
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 

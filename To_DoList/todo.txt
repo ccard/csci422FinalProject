@@ -1,10 +1,10 @@
 look for a db file on the phone that stores the list
-(A) fix spinner for lists
+(A) fix spinner for lists (comment and say potential future functionality)
 (B) add todo.txt sync functionality +justification
-(A) fix duplicate events
-(A) make either cal or file sync disable the sync button
+(A) fix duplicate events (Stack Overflow)
+x (A) make either cal or file sync disable the sync button
 (A) Make notes field larger (at least two lines)
 (A) make date dialog come up with selected, not current, date
 (B) other stuff from useability studies
-(A) Start with CalSync checkbox unchecked
+x (A) Start with CalSync checkbox unchecked
 (A) WHY ISN'T CALENDAR SYNC WORKING???

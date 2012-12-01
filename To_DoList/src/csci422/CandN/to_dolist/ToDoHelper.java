@@ -9,6 +9,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
+import android.util.Log;
 import android.content.ContentValues;
 
 public class ToDoHelper extends SQLiteOpenHelper
@@ -16,6 +18,7 @@ public class ToDoHelper extends SQLiteOpenHelper
 
 	private static final String DATABASE_NAME = "ToDo.db";
 	private static final int SCHEMA_VERSION = 1;
+	public static final String tag = "ToDoHelper";
 	
 	//quieres to data base to initialize or get elements in the table
 	private static final String DATABASE_INIT = "CREATE TABLE todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, address TEXT, list TEXT, notes TEXT, date TEXT, state REAL, priority REAL, notified REAL, notifyID REAL);";
@@ -159,7 +162,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 	}
 	
 	public String getId(Cursor c){
-		return c.getString(0);//TODO is this the right number?
+		String datum;
+		try {
+			datum =  c.getString(0);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = "Error: Can't read database";
+		}
+		return datum;
 	}
 	
 	/**
@@ -170,7 +180,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 	 */
 	public String getTitle(Cursor c)
 	{
-		return c.getString(1);
+		String datum;
+		try {
+			datum =  c.getString(1);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = "Error: Can't read database";
+		}
+		return datum;
 	}
 
 	/**
@@ -181,7 +198,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 	 */
 	public String getAddress(Cursor c)
 	{
-		return c.getString(2);
+		String datum;
+		try {
+			datum =  c.getString(2);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = "Error: Can't read database";
+		}
+		return datum;
 	}
 
 	/**
@@ -192,7 +216,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 	 */
 	public String getList(Cursor c)
 	{
-		return c.getString(3);
+		String datum;
+		try {
+			datum =  c.getString(3);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = "Error: Can't read database";
+		}
+		return datum;
 	}
 
 	/**
@@ -203,7 +234,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 	 */
 	public String getNotes(Cursor c)
 	{
-		return c.getString(4);
+		String datum;
+		try {
+			datum =  c.getString(4);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = "Error: Can't read database";
+		}
+		return datum;
 	}
 
 	/**
@@ -214,20 +252,34 @@ public class ToDoHelper extends SQLiteOpenHelper
 	 */
 	public String getDate(Cursor c)
 	{
-		return c.getString(5);
+		String datum;
+		try {
+			datum =  c.getString(5);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = "Error: Can't read database";
+		}
+		return datum;	
 	}
 
 	/**
-	 * This returns state of completion of task in cursor
+	 * This returns state of completion of task in cursor, from 0 to 100.
 	 * @note the cursor that is passed into this must be generated from either getAll or getById
 	 * @param c the cursor that contains (or marks) the place of the task
 	 * @return int that is the state of completion
 	 */
 	public int getState(Cursor c)
 	{
-		return c.getInt(6);
+		int datum;
+		try {
+			datum =  c.getInt(6);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = 0;
+		}
+		return datum;	
 	}
-	
+
 	/**
 	 * This returns priority of task in cursor
 	 * @note the cursor that is passed into this must be generated from either getAll or getById
@@ -236,7 +288,14 @@ public class ToDoHelper extends SQLiteOpenHelper
 	 */
 	public int getPriority(Cursor c)
 	{
-		return c.getInt(7);
+		int datum;
+		try {
+			datum =  c.getInt(7);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = 0;
+		}
+		return datum;
 	}
 	
 	/**
@@ -258,6 +317,13 @@ public class ToDoHelper extends SQLiteOpenHelper
 	 */
 	public int getNotifyID(Cursor c)
 	{
-		return c.getInt(9);
+		int datum;
+		try {
+			datum =  c.getInt(9);
+		} catch (CursorIndexOutOfBoundsException e) {
+			Log.e(tag, "Cursor: " + c.toString() + " Out of bounds");
+			datum = -1;
+		}
+		return datum;
 	}
 }
