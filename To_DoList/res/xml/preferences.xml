@@ -13,5 +13,11 @@
         android:key="syncWcal"
         android:title="@string/calSync"
         android:summary="@string/calSumm"
-        android:defaultValue="true"/>
+        android:defaultValue="false"/>
+    
+   <!--  <CheckBoxPreference
+        android:key="syncWfile"
+        android:title="@string/fileSync"
+        android:summary="@string/fileSumm"
+        android:defaultValue="false"/>  -->
 </PreferenceScreen>

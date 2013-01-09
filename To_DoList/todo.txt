@@ -1,7 +1,10 @@
-look for a db file on the phone that stores the list
-On focus of date text field, bring up dialog
-(A) fix spinner for lists
+x (A) fix spinner for lists (comment and say potential future functionality)
 (B) add todo.txt sync functionality +justification
-(A) fix duplicate events
-(A) make either cal or file sync disable the sync button
-x 11/29/12 (A) Is 0 the id?  YES
+(A) fix duplicate events (Stack Overflow)
+x (A) make either cal or file sync disable the sync button
+(A) Make notes field larger (at least two lines)
+(A) make date dialog come up with selected, not current, date
+(B) other stuff from useability studies +Chris
+x (A) Start with CalSync checkbox unchecked
+x (A) Make Sync button enable based on prefs (ToDo.java)
+

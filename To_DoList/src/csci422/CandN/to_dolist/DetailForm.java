@@ -7,6 +7,7 @@
 package csci422.CandN.to_dolist;
 
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -75,7 +76,7 @@ public class DetailForm extends Activity {
 	private EditText street;
 	private ToDoHelper helper;
 	private Cursor cur = null;
-	private Spinner pickList;
+	private Spinner pickList;//for future multi-list functionality
 	private EditText taskName;
 	private EditText notes;
 	private String[] Listnames = {"Main","Homework","Shopping"};
@@ -113,7 +114,7 @@ public class DetailForm extends Activity {
 	private static final long gpsWaitDuration = 120000;//wait time for async task
 
 	private Builder alertBuild;
-	private Builder dateAlert;
+	//private Builder dateAlert;  //TODO removed because
 	private AlertDialog promptContin;//builder for alert dialog
 
 	//end code get gps location
@@ -141,14 +142,12 @@ public class DetailForm extends Activity {
 
 		initWidgets();
 
-		initDateDialog();
-
-		//pickList = ((ExpandableListView) findViewById(R.id.pickList));
+		//initDateDialog();
 
 		initFindLocation();
 
-		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, Listnames);
-		pickList.setAdapter(adpt);
+		ArrayAdapter<CharSequence> adpt = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_list_item_single_choice, Listnames);
+		//pickList.setAdapter(adpt); //for future functionality
 	}
 	
 	//------------------------------------------------------
@@ -222,14 +221,14 @@ public class DetailForm extends Activity {
 		datetext = (EditText)findViewById(R.id.dueDatePicker);
 		datetext.setOnFocusChangeListener(new OnFocusChangeListener(){
 			public void onFocusChange(View arg0, boolean arg1) {
-				if(arg1) dateAlert.create().show();
+				if(arg1) openCal(datetext);
 			}
 		});
 
-		dueDate = new Date(0);//current time
+		dueDate = new Date();//current time
 		dateFormat = new SimpleDateFormat();
 		dateFormat.setLenient(true);
-		pickList = ((Spinner) findViewById(R.id.pickList));
+		//pickList = ((Spinner) findViewById(R.id.pickList)); //for future functionality
 		taskName = ((EditText) findViewById(R.id.taskName));
 		notes = ((EditText) findViewById(R.id.notes));
 		address = (EditText)findViewById(R.id.address);
@@ -237,8 +236,10 @@ public class DetailForm extends Activity {
 	}
 
 	/**
-	 * This initalizes datedialog conformation edit
+	 * This initalizes datedialog confirmation.
+	 * TODO We removed this because 
 	 */
+	/*
 	private void initDateDialog()
 	{
 		dateAlert = new AlertDialog.Builder(this);
@@ -251,6 +252,7 @@ public class DetailForm extends Activity {
 		dateAlert.setTitle("Warning");
 		dateAlert.setMessage("Editing the date manually tends to lead to Date Parse Errors.\n  Would you like to select a date instead?");
 	}
+	*/
 
 	/**
 	 *This method sets up everything needed for the task of finding users location
@@ -328,12 +330,14 @@ public class DetailForm extends Activity {
 		taskName.setText(helper.getTitle(cur));
 		loadAddressFields(helper.getAddress(cur));
 		notes.setText(helper.getNotes(cur));
-		try {
-			dueDate = dateFormat.parse(helper.getDate(cur));
-			datetext.setText(helper.getDate(cur));
-		} catch (ParseException e) {
-			Log.e(tag, "Can't parse the date.");
+		if(!helper.getDate(cur).isEmpty()){
+			try {
+				dueDate = dateFormat.parse(helper.getDate(cur));
+			} catch (ParseException e) {
+				Log.e(tag, "Can't parse the date.");
+			}
 		}
+		datetext.setText(helper.getDate(cur));
 
 		completion.setProgress(helper.getState(cur));
 		priority = helper.getPriority(cur);
@@ -370,18 +374,24 @@ public class DetailForm extends Activity {
 	public void saveStuff(){
 
 		int state = completion.getProgress();
-		try {
-			dueDate = dateFormat.parse(datetext.getText().toString());
-		} catch (ParseException e) {
-			Log.e(tag, "Can't parse the date.");
-			Log.e(tag, e.getMessage());
-			dueDate = new Date();
-		}
+		
+		String dateString;
+
+		if(!datetext.getText().toString().isEmpty()){
+			try {
+				dueDate = dateFormat.parse(datetext.getText().toString());
+			} catch (ParseException e) {
+				Log.e(tag, "Can't parse the date. User probably edited manually:");
+				Log.e(tag, e.getMessage());
+				dueDate = new Date();//default to current time if user goofed up.
+			}
+			dateString = dateFormat.format(dueDate);
+		}else dateString = "";
 
 		if(cur==null){//make a new one
-			helper.insert(taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.insert(taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateString, state, priority);
 		}else {//edit current
-			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateFormat.format(dueDate), state, priority);
+			helper.update(id, taskName.getText().toString(), parseAddressSave(), "Main", notes.getText().toString(), dateString, state, priority);
 			helper.notified(id, false);
 		}
 		
@@ -470,7 +480,23 @@ public class DetailForm extends Activity {
 	public void openCal(View v){ 
 		Builder calDialog = new Builder(this);
 		LayoutInflater inf = getLayoutInflater();
-		calDialog.setView(inf.inflate(R.layout.date_dialog, null));
+		View dialogView = inf.inflate(R.layout.date_dialog, null);
+		DatePicker date1 = ((DatePicker) dialogView.findViewById(R.id.datePicker1));
+		try {
+			dueDate = dateFormat.parse(datetext.getText().toString());
+		} catch (ParseException e) {
+			Log.e(tag, "Can't parse the date. User probably edited manually:");
+			Log.e(tag, e.getMessage());
+			dueDate = new Date();//default to current time if user goofed up.
+		}
+		Calendar c = new GregorianCalendar();
+		c.setTime(dueDate);
+		date1.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), null);
+		TimePicker time1 = ((TimePicker) dialogView.findViewById(R.id.timePicker1));
+		time1.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+		time1.setCurrentMinute(c.get(Calendar.MINUTE));
+		calDialog.setView(dialogView);
+		dialogView.invalidate();
 		calDialog.setCancelable(true);
 		calDialog.setPositiveButton("Done", new OnClickListener() {
 
@@ -484,7 +510,6 @@ public class DetailForm extends Activity {
 				DetailForm.this.setDueDate(gc.getTime());
 			}
 		});
-
 		calDialog.show();
 	}
 	
@@ -573,7 +598,6 @@ public class DetailForm extends Activity {
 			.create()
 			.show();
 			return true;
-			/*TODO Double-check*/
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -627,24 +651,12 @@ public class DetailForm extends Activity {
 			}	
 		}
 
-		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-
-		}
-
+		public void onProviderDisabled(String provider) {}
+		public void onProviderEnabled(String provider) {}
+		public void onStatusChanged(String provider, int status, Bundle extras) {}
 	};
 
-	//this is a listener for the spinner dialog so when the back button is pressed it performes that tasks bellow
+	//this is a listener for the spinner dialog so when the back button is pressed it performs that tasks below
 	private OnCancelListener cancel = new OnCancelListener(){
 		public void onCancel(DialogInterface arg0) {
 			cancelLocation.set(true);

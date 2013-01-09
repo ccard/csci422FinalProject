@@ -153,6 +153,7 @@
                 android:src="@drawable/ic_menu_mapmode" />
         </LinearLayout>
 
+        <!-- FOR FUTURE FUNCTIONALITY:
         <LinearLayout
             android:id="@+id/layoutPickList"
             android:layout_width="match_parent"
@@ -170,7 +171,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
             </Spinner>
-        </LinearLayout>
+        </LinearLayout> 
+        -->
 
         <LinearLayout
             android:id="@+id/layoutCompletion"
@@ -216,7 +218,8 @@
             android:minLines="2"
             android:maxLines="11"
             android:hint="@string/notes_hint"
-            android:inputType="textImeMultiLine" 
+            android:inputType="textMultiLine" 
+            android:scrollHorizontally="false"
             android:textSize="13pt"/>
         <!-- How do I make this EditText fill up any remaining space? -->
 

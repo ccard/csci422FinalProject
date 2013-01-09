@@ -42,44 +42,42 @@ public final class R {
         public static final int Priority1=0x7f0a0009;
         public static final int Priority2=0x7f0a000a;
         public static final int Priorityq=0x7f0a0007;
-        public static final int add=0x7f0a0026;
-        public static final int add1=0x7f0a001f;
+        public static final int add=0x7f0a0024;
+        public static final int add1=0x7f0a001d;
         public static final int address=0x7f0a0010;
-        public static final int cancel=0x7f0a0024;
-        public static final int check=0x7f0a0019;
-        public static final int checkImage=0x7f0a0025;
-        public static final int completeDia=0x7f0a0022;
-        public static final int completion=0x7f0a0014;
-        public static final int completionbar=0x7f0a001c;
-        public static final int date=0x7f0a001b;
+        public static final int cancel=0x7f0a0022;
+        public static final int check=0x7f0a0017;
+        public static final int checkImage=0x7f0a0023;
+        public static final int completeDia=0x7f0a0020;
+        public static final int completion=0x7f0a0012;
+        public static final int completionbar=0x7f0a001a;
+        public static final int date=0x7f0a0019;
         public static final int datePicker1=0x7f0a0002;
-        public static final int delete=0x7f0a002a;
-        public static final int dialogMessage=0x7f0a0021;
-        public static final int done=0x7f0a0029;
-        public static final int doneButton=0x7f0a0016;
+        public static final int delete=0x7f0a0028;
+        public static final int dialogMessage=0x7f0a001f;
+        public static final int done=0x7f0a0027;
+        public static final int doneButton=0x7f0a0014;
         public static final int dueDatePicker=0x7f0a000c;
-        public static final int layoutCompletion=0x7f0a0013;
+        public static final int layoutCompletion=0x7f0a0011;
         public static final int layoutDueDate=0x7f0a000b;
         public static final int layoutHere=0x7f0a000e;
-        public static final int layoutPickList=0x7f0a0011;
         public static final int mainLayout=0x7f0a0000;
-        public static final int name=0x7f0a001e;
+        public static final int name=0x7f0a001c;
         public static final int newTypeTask=0x7f0a0001;
-        public static final int noteImage=0x7f0a0017;
-        public static final int notes=0x7f0a0015;
-        public static final int notifyText=0x7f0a0018;
-        public static final int open=0x7f0a0023;
+        public static final int noteImage=0x7f0a0015;
+        public static final int notes=0x7f0a0013;
+        public static final int notifyText=0x7f0a0016;
+        public static final int open=0x7f0a0021;
         public static final int pickDateButton=0x7f0a000d;
-        public static final int pickList=0x7f0a0012;
         public static final int pleaseWaitMessage=0x7f0a0004;
-        public static final int priority=0x7f0a001d;
-        public static final int settings=0x7f0a0027;
+        public static final int priority=0x7f0a001b;
+        public static final int settings=0x7f0a0025;
         public static final int street=0x7f0a000f;
-        public static final int sync=0x7f0a0028;
+        public static final int sync=0x7f0a0026;
         public static final int taskName=0x7f0a0005;
-        public static final int tasks=0x7f0a0020;
+        public static final int tasks=0x7f0a001e;
         public static final int timePicker1=0x7f0a0003;
-        public static final int title=0x7f0a001a;
+        public static final int title=0x7f0a0018;
     }
     public static final class integer {
         public static final int maxline=0x7f060000;
@@ -103,9 +101,15 @@ public final class R {
         public static final int app_name=0x7f070000;
         public static final int calSumm=0x7f070016;
         public static final int calSync=0x7f070015;
+        public static final int cancel_btn_txt=0x7f07001a;
         public static final int completion_title=0x7f070011;
         public static final int date_title=0x7f07000e;
+        /**  Widget dialog strings 
+         */
+        public static final int edit_btn_txt=0x7f070019;
         public static final int empty=0x7f070005;
+        public static final int fileSumm=0x7f070018;
+        public static final int fileSync=0x7f070017;
         public static final int hello_world=0x7f070001;
         public static final int list_title=0x7f070010;
         public static final int location_title=0x7f07000f;
@@ -120,7 +124,7 @@ public final class R {
         public static final int ques=0x7f07000c;
         public static final int save_btn_txt=0x7f070013;
         public static final int streethint=0x7f070009;
-        public static final int syncMenTitle=0x7f070017;
+        public static final int syncMenTitle=0x7f07001c;
         public static final int task_title_hint=0x7f07000b;
         /**  preference layout strings 
          */
@@ -129,6 +133,9 @@ public final class R {
          */
         public static final int title_activity_detail_form=0x7f070008;
         public static final int title_activity_to_do=0x7f070002;
+        /**  widget strings 
+         */
+        public static final int widget_title=0x7f07001b;
     }
     public static final class style {
         public static final int AppTheme=0x7f080000;

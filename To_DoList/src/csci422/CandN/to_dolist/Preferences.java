@@ -54,8 +54,18 @@ public class Preferences extends PreferenceActivity {
 				else if (!cal && FileSync.getInstance().isSyncCal()) 
 				{
 					FileSync.getInstance().toggleCalSync();
+				}				
+			}
+			else if("syncWfile".equals(key)){
+				boolean cal = prefs.getBoolean(key, false);
+				if (cal && !FileSync.getInstance().isSaveFile()) 
+				{
+					FileSync.getInstance().toggleSaveFile();
 				}
-				
+				else if (!cal && FileSync.getInstance().isSaveFile()) 
+				{
+					FileSync.getInstance().toggleSaveFile();
+				}
 			}
 		}
 	};
